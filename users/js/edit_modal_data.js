@@ -1,8 +1,6 @@
+const editFormRow = $("#editForm");
+
 const editModalData = function (user_id) {
-  let failureInfo = document.querySelector('#failureInfo');
-  failureInfo.innerHTML = '';
-  failureInfo.classList.add('d-none');
-  document.editForm.elements.address.innerHTML = '';
 
 
   fetch('api/edit_modal_data_api.php', {
@@ -13,44 +11,305 @@ const editModalData = function (user_id) {
   }).then(r => r.json()).then(data => {
     let user_data = data['user_data'];
     let address_data = data['address_data'];
-    editFormFillOut(user_data, address_data);
+    addModalData(user_data, address_data);
     // console.log(address_data);
   });
+};
 
-  let editModal = new bootstrap.Modal(document.getElementById('editModal'));
+const ModalData = function (user_data, address_data) {
+  let isSet = Object.keys(user_data).length;
+  let ModalData = '';
+
+  ModalData += `<input type="hidden" name="user_id" value="${user_data.user_id || ''}">`;
+
+
+  ModalData +=
+    `<div class="row align-items-center">
+        <div class="col-12 d-flex flex-column align-items-center">
+          <input type="hidden" name="avatar" id="avatar" value="${user_data.avatar || ''}">
+            <img src="images/${user_data.avatar || ''}" id="avatar_img" alt="頭像" class="rounded-circle opacity-100" style="width: 200px;height: 200px;transition: all 500ms ease-out;object-fit: cover;">  
+          <button type="button" class="btn btn-primary" onclick="avatar_upload.click()">上傳頭像</button>
+        </div>
+      </div>`;
+
+
+  ModalData +=
+    `<div class="row align-items-center">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <label for="account" class="col-form-label">帳號 <span class="badge bg-danger">必填</span></label>
+          </div>
+          <div class="col-8"> 
+            <input type="text" name="account" class="form-control" 
+            value="${user_data.account || ''}">
+            <div class="form-text"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <label for="password" class="col-form-label">密碼 <span class="badge bg-danger">必填</span></label>
+          </div>
+          <div class="col-8"> 
+            <input type="password" name="password" class="form-control" 
+            value="${user_data.password || ''}">
+            <div class="form-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  ModalData +=
+    `<div class="row align-items-center">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-4">
+        <label for="name" class="col-form-label">姓名 <span class="badge bg-danger">必填</span></label>
+      </div>
+      <div class="col-8">
+        <input type="text" name="name" class="form-control" 
+        value="${user_data.name || ''}">
+        <div class="form-text"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col-4">
+        <label for="nick_name" class="col-form-label">暱稱</label>
+      </div>
+      <div class="col-8">
+        <input type="text" name="nick_name" class="form-control" value="${user_data.nick_name || ''}">
+        <div class="form-text"></div>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+  ModalData +=
+    `<div class="row align-items-center">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-4">
+        <span class="col-form-label">性別</span>
+      </div>
+      <div class="col-8">
+        <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="gender" value="0" ${user_data.gender == 0 ? 'checked' : ''}>
+            男
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="gender" value="1" ${user_data.gender == 1 ? 'checked' : ''}>
+            女
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+  ModalData +=
+    `<div class="row align-items-center">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-4">
+        <label for="birthday" class="col-form-label">生日</label>
+      </div>
+      <div class="col-8">
+        <input type="date" name="birthday" class="form-control" value="${user_data.birthday || ''}">
+        <div class="form-text"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col-4">
+        <label for="mobile_phone" class="col-form-label">手機號碼</label>
+      </div>
+      <div class="col-8">
+        <input type="text" name="mobile_phone" class="form-control" value="${user_data.mobile_phone || ''}">
+        <div class="form-text"></div>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+
+  ModalData +=
+    `<div class="row align-items-center">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-4">
+        <label for="invoice_carrier_id" class="col-form-label">常用載具</label>
+      </div>
+      <div class="col-8">
+        <input type="text" name="invoice_carrier_id" class="form-control" 
+        value="${user_data.invoice_carrier_id || ''}">
+        <div class="form-text"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col-4">
+        <label for="tax_id" class="col-form-label">常用統編</label>
+      </div>
+      <div class="col-8">
+        <input type="text" name="tax_id" class="form-control" 
+        value="${user_data.tax_id || ''}">
+        <div class="form-text"></div>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+
+
+  if (isSet !== 0) {
+    ModalData +=
+      `<div class="row align-items-center">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-2">
+              <label for="address" class="col-form-label">常用地址</label>
+            </div>
+            <div class="col-10">
+              <div class="input-group">
+                <select class="form-select" name="address">
+                  ${addressOptions(address_data) || ''}
+                </select>
+                <button type="button" class="btn btn-warning" onclick="addressModalData()" id="openAddressModal">編輯地址</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  ModalData +=
+    `<div class="row align-items-center">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-2">
+          <label for="note" class="form-label">備註</label>
+        </div>
+        <div class="col-10">
+          <textarea class="form-control" name="note" rows="3">${user_data.note || ''}</textarea>
+          <div class="form-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  if (isSet !== 0) {
+    ModalData +=
+      `<div class="row align-items-center" >
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <span class="col-form-label">帳號狀態</span>
+          </div>
+          <div class="col-8">
+            <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="user_status" value="1" ${user_data.user_status == 1 ? 'checked' : ''}>
+                啟用
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="user_status" value="0" ${user_data.user_status == 0 ? 'checked' : ''}>
+                停用
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <span class="col-form-label">建立時間</span>
+          </div>
+          <div class="col-8">
+            <span class="col-form-label">${user_data.created_at || ''}</span>
+          </div>
+        </div>
+      </div>
+    </div >
+    <div class="row align-items-center">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <span class="col-form-label">修改時間</span>
+          </div>
+          <div class="col-8">
+            <span class="col-form-label">${user_data.created_at || ''}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <span class="col-form-label">修改人員</span>
+          </div>
+          <div class="col-8">
+            <span class="col-form-label">${user_data.last_modified_by || ''}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  };
+
+
+  ModalData +=
+    `<div class="row align-items-center">
+      <div class="col-6">
+        <div class="alert opacity-0 m-0" role="alert" style="transition: all 500ms ease-out;">資料</div>
+      </div>
+      <div class="col-6 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">送出</button>
+      </div>
+    </div>`
+
+  return ModalData;
+};
+
+
+const addressOptions = (addressData = []) => {
+  // console.log(addressData);
+  if (!Array.isArray(addressData)) {
+    return `<option value="">請選擇</option>`;
+  } else {
+    let options = "";
+    addressData.forEach((item) => {
+      let selected = item.type === '1' ? "selected" : "";
+      options +=
+        `<option value="${item.address_id}" ${selected}>
+    ${item.postal_codes}${item.city_name}${item.district_name}${item.address}
+    </option>`;
+    });
+    return options;
+  };
+};
+
+const addModalData = (user_data = {}, address_data = {}) => {
+  editFormRow.empty()
+  editFormRow.append(ModalData(user_data, address_data));
   editModal.show();
+
+
+
   let modalTitle = document.getElementById('editModalLabel');
-  modalTitle.innerText = `編輯客戶 No.${user_id}`;
-}
-
-
-
-
-const editFormFillOut = function (user_data, address_data) {
-  editForm.elements.user_id.value = user_data.user_id;
-  editForm.elements.account.value = user_data.account;
-  editForm.elements.password.value = user_data.password;
-  editForm.elements.name.value = user_data.name;
-  editForm.elements.nick_name.value = user_data.nick_name;
-  editForm.elements.gender.value = user_data.gender;
-  editForm.elements.birthday.value = user_data.birthday;
-  editForm.elements.mobile_phone.value = user_data.mobile_phone;
-  editForm.elements.mobile_barcode.value = user_data.invoice_carrier_id;
-  editForm.elements.gui_number.value = user_data.tax_id;
-  editForm.elements.note.value = user_data.note;
-  editForm.elements.status.value = user_data.user_status;
-  editAvatar.src = `../imgs/${user_data.avatar}`;
-  editCreateTime.innerText = user_data.created_at;
-  editUpdateTime.innerText = user_data.last_modified_by;
-  editFKUpdateId.innerText = user_data.last_modified_at;
-
-  address_data.forEach(item => {
-    let option = document.createElement('option');
-    option.value = item.address_id;
-    option.innerText = `${item.postal_codes}${item.city_name}${item.district_name}${item.address}`;
-    if (item.type === '1') {
-      option.selected = true;
-    };
-    editForm.elements.address.appendChild(option);
-  });
+  let text = '';
+  if (typeof user_data.user_id !== 'undefined') {
+    text = `編輯客戶 No.${user_data.user_id}`;
+  } else {
+    text = '新增客戶';
+  }
+  modalTitle.innerText = text;
 };

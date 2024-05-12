@@ -1,13 +1,3 @@
-const {
-  account: accountEl,
-  name: nameEl,
-  nick_name: nick_nameEl,
-  birthday: birthdayEl,
-  mobile_phone: mobile_phoneEl,
-} = document.editForm;
-
-const fields = [accountEl, nameEl, nick_nameEl, birthdayEl, mobile_phoneEl];
-
 function validateAccount(account) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(account);
@@ -19,7 +9,27 @@ function validatemobile_phone(mobile_phone) {
 }
 
 
-const editSend = function (e) {
+const userModalSendData = function (e) {
+  let from = document.querySelector('#editForm')
+  const {
+    account: accountEl,
+    password: passwordEl,
+    name: nameEl,
+    nick_name: nick_nameEl,
+    birthday: birthdayEl,
+    mobile_phone: mobile_phoneEl,
+  } = from;
+
+  const fields = [accountEl, passwordEl, nameEl, nick_nameEl, birthdayEl, mobile_phoneEl];
+
+
+
+
+
+
+
+
+
   e.preventDefault(); // 不要讓表單以傳統的方式送出
   let isPass = true; // 整個表單有沒有通過檢查
 
@@ -33,11 +43,18 @@ const editSend = function (e) {
 
   // TODO: 檢查各個欄位的資料, 有沒有符合規定
 
-  if (accountEl.value && !validateAccount(accountEl.value)) {
+  if (accountEl.value.length == 0 && !validateAccount(accountEl.value)) {
     isPass = false;
     console.log(`${isPass} accountEl`);
     accountEl.style.border = '1px solid red';
     accountEl.nextElementSibling.innerHTML = '請填寫正確的 Email ! 並請勿超過100字元';
+  }
+
+  if (passwordEl.value.length < 8) {
+    isPass = false;
+    console.log(`${isPass} passwordEl`);
+    passwordEl.style.border = '1px solid red';
+    passwordEl.nextElementSibling.innerHTML = '請填寫密碼，至少8字元以上';
   }
 
 
@@ -66,33 +83,40 @@ const editSend = function (e) {
     birthdayEl.nextElementSibling.innerHTML = '未成年請勿申請喔!';
   }
 
-
-  if (mobile_phoneEl.value.length !== 10 || !validatemobile_phone(mobile_phoneEl.value)) {
-    isPass = false;
-    console.log(`${isPass} mobile_phoneEl`);
-    mobile_phoneEl.style.border = '1px solid red';
-    mobile_phoneEl.nextElementSibling.innerHTML = '請填寫正確的手機10碼數字，勿填寫其他標記';
+  if (mobile_phoneEl.value.length !== 0) {
+    if (mobile_phoneEl.value.length !== 10 || !validatemobile_phone(mobile_phoneEl.value)) {
+      isPass = false;
+      console.log(`${isPass} mobile_phoneEl`);
+      mobile_phoneEl.style.border = '1px solid red';
+      mobile_phoneEl.nextElementSibling.innerHTML = '請填寫正確的手機10碼數字，勿填寫其他標記';
+    }
   }
 
   // 有通過檢查才發送表單
   if (isPass) {
-    const fd = new FormData(document.editForm); // 沒有外觀的表單物件
+    let sendData = new FormData(document.editForm); // 沒有外觀的表單物件
 
-    fetch(`api/edit_send_api.php`, {
+    fetch(`api/user_modal_send_data_api.php`, {
       method: 'POST',
-      body: fd,
+      body: sendData,
     }).then(r => r.json()).then(data => {
-      let failureInfo = document.querySelector('#failureInfo');
+      let failureInfo = document.querySelector('#editForm .alert');
+
       failureInfo.innerHTML = '';
-      failureInfo.classList = 'alert';
       if (data.success) {
+        failureInfo.classList.remove('alert-danger');
         failureInfo.classList.add('alert-success');
         failureInfo.innerHTML = '資料修改成功';
-
       } else {
+        failureInfo.classList.remove('alert-success');
         failureInfo.classList.add('alert-danger');
         failureInfo.innerHTML = data.error;
       }
+      failureInfo.classList.replace('opacity-0', 'opacity-100');
+      setTimeout(function () {
+        failureInfo.classList.replace('opacity-100', 'opacity-0');
+        editModal.hide();
+      }, 2000);
     })
   }
 
@@ -103,3 +127,4 @@ const editSend = function (e) {
 
 
 }
+

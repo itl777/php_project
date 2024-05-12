@@ -1,45 +1,7 @@
-<?php
-require __DIR__ . '/../config/pdo-connect.php';
-$title = '通訊錄列表';
-$pageName = 'list';
-
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-if ($page < 1) {
-  header('Location: ?page=1');
-  exit;
-}
-
-$perPage = 20; # 每頁有幾筆
-# 算總筆數 $totalRows
-$t_sql = "SELECT COUNT(1) FROM users";
-$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
-$totalPages = ceil($totalRows / $perPage); # 總頁數
-
-$rows = []; # 預設值
-# 如果有資料的話
-if ($totalRows) {
-  #如果指定頁數大於總頁數，限制跳轉頁數=總頁數
-  if ($page > $totalPages) {
-    header('Location: ?page=' . $totalPages);
-    exit;
-  }
-  # 顯示第幾頁到第幾頁
-  $sql = sprintf("SELECT user_id,name,account,gender FROM `users` ORDER BY user_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
-  $rows = $pdo->query($sql)->fetchAll();
-}
-?>
-
-
-
-
-
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <div class="container">
-
-  <button type="button" class="btn btn-warning" onclick="addModalData()">新增</button>
 
   <!-- table start -->
   <div class="row">
@@ -125,11 +87,11 @@ if ($totalRows) {
 
 
 <!-- edit_modal -->
-<?php include __DIR__ . '/include/edit_modal.php' ?>
+<?php include __DIR__ . '/parts/edit_modal.php' ?>
 <!-- address_modal -->
-<?php include __DIR__ . '/include/address_modal.php' ?>
+<?php include __DIR__ . '/parts/address_modal.php' ?>
 <!-- scripts_map -->
-<?php include __DIR__ . '/include/scripts_map.php' ?>
+<?php include __DIR__ . '/parts/scripts_map.php' ?>
 
 
 
