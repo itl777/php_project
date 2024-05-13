@@ -27,10 +27,10 @@ WHERE user_id = $user_id";
 
 $address_data = $pdo->query($sql_address)->fetchAll();
 
-$response = array(
-  "user_data" => $user_data,
-  "address_data" => $address_data
-);
+$output = [
+  'user_data' => $user_data,
+  'address_data' => $address_data
+];
 
-$data = json_encode($response);
+$data = json_encode($output);
 echo $data;
