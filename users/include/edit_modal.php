@@ -20,7 +20,7 @@
 
         </form>
         <form name="avatarForm" hidden>
-          <input type="file" name="avatar_upload" accept="image/*" />
+          <input type="file" name="avatar_upload" accept="image/.jpg,.jpeg,.png,.bmp,.gif,.svg,.webp" />
         </form>
         <!-- edit form end -->
 

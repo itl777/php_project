@@ -56,21 +56,21 @@
   <!-- bootstrap script -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   <script>
-    // 获取模态框实例
+
     const modalA = new bootstrap.Modal(document.getElementById('modalA'));
     const modalB = new bootstrap.Modal(document.getElementById('modalB'));
 
-    // 当点击 A 按钮时显示 modalA
+
     document.getElementById('openModalA').addEventListener('click', function() {
       modalA.show();
     });
 
-    // 当点击 B 按钮时显示 modalB
+
     document.getElementById('openModalB').addEventListener('click', function() {
       modalB.show();
     });
 
-    // 当在 A 模态框中点击打开 B 按钮时，关闭 modalA 并显示 modalB
+
     document.getElementById('openModalBFromA').addEventListener('click', function() {
       modalA.hide();
       modalB.show();

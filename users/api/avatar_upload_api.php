@@ -7,7 +7,7 @@ $output = [
 # 做檔案的篩選, 決定副檔名
 $exts = [
   'image/jpg' => '.jpg',
-  'image/jpeg' => '.jpg',
+  'image/jpeg' => '.jpeg',
   'image/png' => '.png',
   'image/bmp' => '.bmp',
   'image/gif' => '.gif',
