@@ -8,6 +8,7 @@ $output = [
   'postData' => $_POST,
   'error' => '資料沒有修改',
   'code' => 0, # 追踨程式執行的編號
+  'user_id' => $_POST['user_id']
 ];
 
 
@@ -174,8 +175,8 @@ if (!empty($_POST)) {
   `note`=?,
   `avatar`=?,
   `user_status`=?,
-  `last_modified_at`=now()
-  WHERE `user_id`=?";
+  `last_modified_at`= NOW()
+  WHERE `user_id`= ?";
 
     $data = [
       $account,

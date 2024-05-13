@@ -100,31 +100,32 @@ const userModalSendData = function (e) {
       method: 'POST',
       body: sendData,
     }).then(r => r.json()).then(data => {
-      let failureInfo = document.querySelector('#editForm .alert');
-
+      let failureInfo = document.querySelector('#successModal .alert');
       failureInfo.innerHTML = '';
+
       if (data.success) {
         failureInfo.classList.remove('alert-danger');
         failureInfo.classList.add('alert-success');
         failureInfo.innerHTML = '資料修改成功';
+
       } else {
         failureInfo.classList.remove('alert-success');
         failureInfo.classList.add('alert-danger');
         failureInfo.innerHTML = data.error;
       }
-      failureInfo.classList.replace('opacity-0', 'opacity-100');
+      successModal.show();
       setTimeout(function () {
-        failureInfo.classList.replace('opacity-100', 'opacity-0');
-        editModal.hide();
-      }, 2000);
+        successModal.hide();
+        if (data.user_id.length !== 0){
+          fetchModalData(data.user_id);
+        } else {
+          editModal.hide();
+        }
+      }, 1000);
+
     })
+    .catch((error) => console.error("Error:", error));
   }
-
-
-
-  // 地址: 兩層選單的參考
-  // https://dennykuo.github.io/tw-city-selector/#/
-
-
+  
 }
 

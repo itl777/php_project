@@ -39,7 +39,7 @@ if ($totalRows) {
 
 <div class="container">
 
-  <button type="button" class="btn btn-warning" onclick="addModalData()">新增</button>
+  <button type="button" class="btn btn-warning" onclick="addModalShow()">新增</button>
 
   <!-- table start -->
   <div class="row">
@@ -66,7 +66,7 @@ if ($totalRows) {
                 <td><?= $r['gender'] == 0 ? '男' : '女' ?></td>
                 <td><?= $r['account'] ?></td>
                 <td>
-                  <button type="button" class="btn btn-warning" onclick="editModalData(<?= $r['user_id'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                  <button type="button" class="btn btn-warning" onclick="editModalShow(<?= $r['user_id'] ?>)"><i class="bi bi-pencil-square"></i></button>
                 </td>
               </tr>
             <?php endforeach ?>
@@ -128,6 +128,8 @@ if ($totalRows) {
 <?php include __DIR__ . '/include/edit_modal.php' ?>
 <!-- address_modal -->
 <?php include __DIR__ . '/include/address_modal.php' ?>
+<!-- address_modal -->
+<?php include __DIR__ . '/include/successModal.php' ?>
 <!-- scripts_map -->
 <?php include __DIR__ . '/include/scripts_map.php' ?>
 

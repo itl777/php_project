@@ -84,16 +84,29 @@ const addressSendData = function (e) {
     console.log(formData);
 
     let url = `api/address_send_data_api.php`;
+
     fetchJsonData(url, formData)
       .then((data) => {
-        console.log(data);
+        let failureInfo = document.querySelector('#successModal .alert');
+        failureInfo.innerHTML = '';
 
-        failureInfo.classList.replace("opacity-0", "opacity-100");
+        if (data.success_delete || data.success_update) {
+          failureInfo.classList.remove('alert-danger');
+          failureInfo.classList.add('alert-success');
+          failureInfo.innerHTML = '資料修改成功';
+        } else {
+          failureInfo.classList.remove('alert-success');
+          failureInfo.classList.add('alert-danger');
+          failureInfo.innerHTML = data.error;
+        }
+        successModal.show();
+
         setTimeout(function () {
-          failureInfo.classList.replace("opacity-100", "opacity-0");
+          successModal.hide();
           addressModal.hide();
           editModal.show();
-        }, 2000);
+          fetchModalData(addressForm.user_id.value);
+        }, 1000);
       })
       .catch((error) => console.error("Error:", error));
   } else {

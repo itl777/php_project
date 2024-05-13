@@ -11,10 +11,9 @@ header('Content-Type: application/json');
 $data = json_decode(file_get_contents('php://input'), true);
 
 $output = [
-  'success_delete' => false, # 有沒有新增成功
-  'success_update' => false, # 有沒有新增成功
+  'success' => false, # 有沒有新增成功
   'postData' => $data,
-  'error' => '地址修改失敗，請填寫正確的地址',
+  'error' => '請填寫正確的地址',
   'code' => 0, # 追踨程式執行的編號
 ];
 
@@ -37,18 +36,13 @@ try {
   if (!empty($delete)) {
     foreach ($delete as $item) {
       $delete_id = $item['address_id'];
-      $sql = "DELETE FROM `address` WHERE id = $delete_id;";
+      $sql = "DELETE FROM `address` WHERE user_id = $delete_id;";
       // DELETE FROM products WHERE id IN (1, 4)
-      $stmt1 = $pdo->prepare($sql);
-      $stmt1->execute();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
     };
     $output['code'] = 201;
-    $output['success_delete'] = boolval($stmt1->rowCount());
   };
-
-
-
-
 
   if (!empty($update)) {
     $sql1 = 
@@ -58,7 +52,8 @@ try {
       `postal_codes`, 
       `address`, 
       `recipient_name`, 
-      `mobile_phone`
+      `mobile_phone`,
+      type
       ) VALUES ";
 
     $sql2 = [];
@@ -78,19 +73,19 @@ try {
           echo json_encode($output, JSON_UNESCAPED_UNICODE);
           exit;
         }
-        $addressLine = "'" . $item['addressLine'] . "'";
+        $addressLine = $item['addressLine'];
         if (strlen($addressLine) <= 0) {
           $output['code'] = 103;
           echo json_encode($output, JSON_UNESCAPED_UNICODE);
           exit;
         }
-        $recipient_name = "'" . $item['recipient_name'] . "'";
+        $recipient_name = $item['recipient_name'];
         if (strlen($recipient_name) < 2) {
           $output['code'] = 106;
           echo json_encode($output, JSON_UNESCAPED_UNICODE);
           exit;
         }
-        $mobile_phone = "'" . $item['mobile_phone'] . "'";
+        $mobile_phone = $item['mobile_phone'];
         if (!preg_match("/09[0-9]{2}[0-9]{6}/", $mobile_phone) && strlen($data['mobile_phone']) != 10) {
           $output['code'] = 104;
           echo json_encode($output, JSON_UNESCAPED_UNICODE);
@@ -99,6 +94,14 @@ try {
 
 
         $insert_row = '(' . implode(',', [$address_id, $user_id, $postal_codes, $addressLine, $recipient_name, $mobile_phone]) . ')';
+
+
+        if ($isFirst) {
+          !$insert_row = ',' . $insert_row;
+      } else {
+          $isFirst = false;
+      };
+
 
         $sql2[] = $insert_row;
       };
@@ -114,19 +117,27 @@ try {
 
 
 
-      $sql = $sql1 . implode(',',$sql2) . $sql3;
-
-      $stmt2 = $pdo->prepare($sql);
-      $stmt2->execute();
-      
-      $output['success_update'] = boolval($stmt2->rowCount());
     };
 
 
 
+
+
+
+
+
+
+      
+
+    $sql = $sql1 . $sql2 . $sql3;
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
   $pdo->commit();
 
   $output['code'] = 200;
+  $output['success'] = boolval($stmt->rowCount());
 
   echo json_encode($output, JSON_UNESCAPED_UNICODE);
 
