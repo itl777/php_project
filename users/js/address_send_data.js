@@ -105,7 +105,7 @@ const addressSendData = function (e) {
           successModal.hide();
           addressModal.hide();
           editModal.show();
-          fetchModalData(addressForm.user_id.value);
+          fetchEditModalData(addressForm.user_id.value);
         }, 1000);
       })
       .catch((error) => console.error("Error:", error));

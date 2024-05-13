@@ -2,7 +2,7 @@ const editFormRow = $("#editForm");
 
 const editModalShow = function (user_id) {
 editModal.show();
-fetchModalData(user_id);
+fetchEditModalData(user_id);
 };
 
 const addModalShow = function () {
@@ -11,7 +11,7 @@ const addModalShow = function () {
   };
 
 
-const fetchModalData = function (user_id) {
+const fetchEditModalData = function (user_id) {
   fetch("api/edit_modal_data_api.php", {
     method: "POST",
     body: JSON.stringify({

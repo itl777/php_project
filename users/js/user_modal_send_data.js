@@ -117,7 +117,7 @@ const userModalSendData = function (e) {
       setTimeout(function () {
         successModal.hide();
         if (data.user_id.length !== 0){
-          fetchModalData(data.user_id);
+          fetchEditModalData(data.user_id);
         } else {
           editModal.hide();
         }
