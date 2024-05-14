@@ -1,1 +1,5 @@
-.vscode/settings.json
+.vscode/
+config/connect-config.php
+.gitignore
+config/connect-config.php
+database/.DS_Store
