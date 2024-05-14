@@ -88,6 +88,9 @@
 
           <!-- row end -->
         </tbody>
+        <tfoot>
+
+        </tfoot>
       </table>
 
     </div>
@@ -113,27 +116,26 @@
 
 <script>
   let userListData;
-  const fetchUserListData = function() {
+  const fetchUserListData = function () {
     userListData = ''; //清空變數重新fetch
 
     let url = `api/user_list_data_api.php`;
     fetchJsonData(url)
       .then(data => {
-        userListData = data;
-        userTable(data);
+        // userListData = data; 考量一下有沒有存資料到變數的必要
+        userTable(data['user_data']);
+        userTablePagination(data['page'], data['totalPages']);
+
       });
   };
   fetchUserListData();
 
 
-  const userTable = function(data) {
-
-    let user_data = data['user_data'];
-    let page = data['page'];
+  const userTable = function (data) {
 
     let userTable = '';
 
-    user_data.forEach(item => {
+    data.forEach(item => {
       userTable += `<tr onclick="editModalShow(${item['user_id']})">`;
 
       userTable += `<td class="align-middle"><img src="images/${item['avatar']}" class="rounded-circle" style="width: 40px;height: 40px"></td>`;
@@ -149,15 +151,63 @@
         ${item['blacklist'] === '1' ? '<i class="bi btn btn-danger bi-exclamation-circle-fill"></i>' : ''}
         </div>
         </td>`;
-
       //原本的編輯按鈕，函式改加在整個tr上了
       // userTable += `<td class="align-middle"><button type="button" class="btn btn-warning" onclick="editModalShow(${item['user_id']})"><i class="bi bi-pencil-square"></i></button></td>`;
-
       userTable += `<tr>`;
     });
 
     $("#userList tbody").append(userTable);
   };
+
+  const userTablePagination = function (page, totalPages) {
+    console.log(page);
+    console.log(totalPages);
+
+    // 值=page 就加 active class
+    // 值<0 就加 disabled class
+    // 值>totalPages 就加 disabled class
+    let userTablePagination = '';
+
+    userTablePagination +=
+      `<tr><td colspan=6>
+      <nav>
+      <ul class="pagination">
+        <li class="page-item ${page <= 1 ? 'disabled' : ''}">
+          <a class="page-link">上一頁</a>
+        </li>`
+
+
+
+    for (let i = page - 3; i <= totalPages; i++) {
+      if (i < 1) continue;
+      if (i > totalPages) con
+
+
+
+
+      }
+      < li class="page-item" > <a class="page-link" href="#">${page - 1}</a></ >
+        <li class="page-item active" aria-current="page"><a class="page-link" href="#">${page}</a></li>
+        <li class="page-item"><a class="page-link" href="#">${page + 1}</a></li>
+
+
+    userTablePagination +=
+      `<li class="page-item ${page >= totalPages ? 'disabled' : ''}">
+          <a class="page-link" href="#">下一頁</a>
+        </li>
+      </ul>
+    </nav>
+    </td></tr>`;
+
+
+
+
+    console.log(userTablePagination);
+    $("#userList tfoot").append(userTablePagination);
+
+
+
+  }
 
 
 

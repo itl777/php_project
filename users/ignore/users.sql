@@ -483,10 +483,10 @@ last_modified_by INT);
 CREATE TABLE address (
 id INT AUTO_INCREMENT PRIMARY KEY,
 user_id INT NOT NULL,
-postal_codes INT NOT NULL,
+district_id INT NOT NULL,
 address VARCHAR(100) NOT NULL,
 recipient_name VARCHAR(20) NOT NULL,
 mobile_phone CHAR(10) NOT NULL,
 type CHAR(1),
 FOREIGN KEY (user_id) REFERENCES users(user_id),
-FOREIGN KEY (postal_codes) REFERENCES district(id));
+FOREIGN KEY (district_id) REFERENCES district(id));
