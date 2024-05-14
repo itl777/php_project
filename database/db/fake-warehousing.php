@@ -2,7 +2,7 @@
 exit;
 // 庫存列表的假資料
 
-require __DIR__ . '/../config/PDO-config.php';  // 引入資料庫設定
+require __DIR__ . '/../../config/pdo-connect.php';  // 引入資料庫設定
 
 
 

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/config/PDO-config.php';  // 引入資料庫設定
+require __DIR__ . '/../config/pdo-connect.php';  // 引入資料庫設定
 
 // 確認warehousing_id有沒有值，如果有轉成數字
 $warehousing_id = isset($_GET['warehousing_id']) ? intval($_GET['warehousing_id']) : 0;
