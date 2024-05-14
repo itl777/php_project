@@ -39,82 +39,53 @@ document.addEventListener('DOMContentLoaded', function () {
           .then((data) => {
             resultsContainer.innerHTML = "";
             if (data.length) {
-
               data.forEach((item) => {
                 let option = document.createElement("a");
 
                 // 如果會員狀態為啟用 1，建立會員選項
-                if (item.status === 1) {
+                if (item.user_status == 1) {
                   option.className = "dropdown-item";
                   option.href = "#";
-                  const displayName = item.member_name ? `(${item.id}) ${item.member_name}` : `(${item.id}) 無紀錄會員姓名`;
+                  const displayName = item.name ? `(${item.user_id}) ${item.name}` : `(${item.user_id}) 無紀錄會員姓名`;
                   option.textContent = displayName;
                   resultsContainer.appendChild(option);
                 }
 
                 // 點擊選項後將資料帶入到 memberId, memberName 當中
                 option.addEventListener("click", function () {
-                  document.getElementById("memberId").value = item.id;
-                  document.getElementById("memberName").value = item.member_name || "無紀錄會員姓名";
+                  document.getElementById("memberId").value = item.user_id;
+                  document.getElementById("memberName").value = item.name || "無紀錄會員姓名";
                   document.getElementById('useMemberInvoice').checked = false;
                   document.getElementById('useMobileInvoice').checked = false;
                   document.getElementById('useTaxId').checked = false;
                   resultsContainer.classList.remove("show");
 
                   // 儲存會員姓名、手機至變數裡
-                  fetchMemberName = item.member_name;
+                  fetchMemberName = item.name;
                   fetchMemberPhone = item.mobile_phone;
-                  fetchMemberMobileInvoice = item.invoice_carrier;
+                  fetchMemberMobileInvoice = item.invoice_carrier_id;
                   fetchMemberTaxId = item.tax_id;
 
                   // 若有勾選「帶入會員資料」，會連動變更收件人與收件手機欄位內容
                   if (document.getElementById("useMemberInfo").checked == true) {
-                    document.getElementById("recipientName").value = item.member_name;
+                    document.getElementById("recipientName").value = item.name;
                     document.getElementById("recipientMobile").value = item.mobile_phone || '';
                   }
                   
 
-                  if (item.invoice_carrier) {
+                  if (item.invoice_carrier_id) {
                     document.getElementById('useMobileInvoice').checked = true;
-                    document.getElementById('mobileInvoice').value = item.invoice_carrier;
+                    document.getElementById('mobileInvoice').value = item.invoice_carrier_id;
                   }
                   if (item.tax_id) {
                     document.getElementById('taxId').value = item.tax_id;
                   }
-                  if (!item.invoice_carrier && item.tax_id) {
+                  if (!item.invoice_carrier_id && item.tax_id) {
                     document.getElementById('useTaxId').checked = true;
                   }
-                  if(!item.tax_id && !item.invoice_carrier) {
+                  if(!item.tax_id && !item.invoice_carrier_id) {
                     document.getElementById('useMemberInvoice').checked = true;
                   }
-
-
-                  // // 如果會員有紀錄統一發票的話，會預設帶入並勾選。
-                  // if (item.tax_id) {
-                  //   document.getElementById('useTaxId').checked = true;
-                  //   document.getElementById('taxId').value = item.tax_id;
-                  //   // toggleInvoiceType();
-                    
-                  //   document.querySelector('.save-tax-id').classList.add('d-none');
-                  // } else {
-                  //   document.getElementById('taxId').value = '';
-                  // }
-
-                  // // 如果會員有紀錄手機載具的話，會預設帶入並勾選。
-                  // if (item.invoice_carrier) {
-                  //   document.getElementById('useMobileInvoice').checked = true;
-                  //   document.getElementById('mobileInvoice').value = item.invoice_carrier;
-                  //   // toggleInvoiceType();
-                  // } else {
-                  //   document.getElementById('mobileInvoice').value = '';
-                  // }
-
-                  // if(!item.tax_id && !item.invoice_carrier) {
-                  //   document.getElementById('useMemberInvoice').checked = true;
-                  // }
-
-                  // 若有勾選手機載具或統一編號儲存至會員資料的話，會取消勾選
-                  // saveInvoice();
                                   
                   toggleInvoiceType();
 

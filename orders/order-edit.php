@@ -1,5 +1,5 @@
-<?php include __DIR__ . '/parts/head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <div class="container">
   <h2 class="my-5">編輯訂單</h2>
@@ -207,7 +207,8 @@
 
 </div>
 
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
+
 <script src="js/get-order.js"></script>
 <script src="js/order-general.js"></script>
 <script src="js/search-member.js"></script>
@@ -221,4 +222,5 @@
   // 設定 <title>
   document.title = '編輯訂單';
 </script>
-<?php include __DIR__ . '/parts/foot.php' ?>
+
+<?php include __DIR__ . '/../parts/html-foot.php' ?>

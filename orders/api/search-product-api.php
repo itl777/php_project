@@ -3,26 +3,28 @@ require __DIR__ . '/../../config/pdo-connect.php';
 
 $query = $_GET['query'] ?? '';
 
-$sql = "SELECT p.id,
+$sql = "SELECT
+  p.product_id,
   p.product_name,
-  p.unit_price,
-  p.product_status,
+  p.price,
+  p.status AS product_status,
   COALESCE(wh.total_quantity, 0) AS warehousing_quantity,
   COALESCE(od.total_ordered, 0) AS ordered_quantity,
   (COALESCE(wh.total_quantity, 0) - COALESCE(od.total_ordered, 0)) AS stock_quantity
-  FROM products p
+  FROM product_management AS p
   LEFT JOIN (
   SELECT product_id, SUM(quantity) AS total_quantity
   FROM product_warehousing
   GROUP BY product_id
-  ) wh ON p.id = wh.product_id
+  ) wh ON p.product_id = wh.product_id
   LEFT JOIN (
-  SELECT product_id, SUM(quantity) AS total_ordered
+  SELECT order_product_id, SUM(order_quantity) AS total_ordered
   FROM order_details
-  GROUP BY product_id
-  ) od ON p.id = od.product_id
-  WHERE p.id LIKE ? OR p.product_name LIKE ?
+  GROUP BY order_product_id
+  ) od ON p.product_id = od.order_product_id
+  WHERE p.product_id LIKE ? OR p.product_name LIKE ?
 ";
+
 $stmt = $pdo->prepare($sql);
 $stmt->execute(["%{$query}%", "%{$query}%"]);
 

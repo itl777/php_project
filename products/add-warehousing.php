@@ -1,6 +1,5 @@
 <?php
-require __DIR__ . '/config/PDO-config.php';  // 引入資料庫設定
-
+require __DIR__ . '/../config/pdo-connect.php';  // 引入資料庫設定
 
 // 搜尋所有商品
 include 'db_select/select_product.php';

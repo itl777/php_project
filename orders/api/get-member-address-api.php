@@ -13,20 +13,21 @@ $response = [
 if ($memberId) {
   $sql = "SELECT
   a.id,
+  a.user_id,
   c.id AS city_id,
   c.city_name,
   d.id AS district_id,
   d.district_name,
   a.address,
   a.recipient_name,
-  a.recipient_mobile,
-  a.default_address
+  a.mobile_phone,
+  a.type
   FROM `address` AS a
-  JOIN districts d
+  JOIN district AS d
   ON a.district_id = d.id
-  JOIN cities c
-  ON d.city_id = c.id
-  WHERE a.member_id = ?";
+  JOIN city AS c
+  ON d.city_id = c.id 
+  WHERE a.user_id =  ?";
   $stmt = $pdo->prepare($sql);
   $stmt->execute([$memberId]);
   $addresses = $stmt->fetchAll();
@@ -42,8 +43,8 @@ if ($memberId) {
         'districtId' => $address['district_id'],
         'address' => $address['address'],
         'recipientName' => $address['recipient_name'],
-        'recipientMobile' => $address['recipient_mobile'],
-        'defaultAddress' => $address['default_address'],
+        'recipientMobile' => $address['mobile_phone'],
+        'defaultAddress' => $address['type'],
       ];
       array_push($response['addresses'], $formattedAddress);
     }
