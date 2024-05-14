@@ -1,1 +1,3 @@
-.vscode/settings.json
+.vscode/
+config/connect-config.php
+.gitignore
