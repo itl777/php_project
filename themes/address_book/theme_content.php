@@ -5,7 +5,7 @@ $pageName = 'theme_content';
 ?>
 <?php
 
-require __DIR__ . '/../../config/pdo-content.php';
+require __DIR__ . '/../../config/pdo-connect.php';
 
 
 ?>

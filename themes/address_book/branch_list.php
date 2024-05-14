@@ -5,7 +5,7 @@ $pageName = 'branch_list';
 ?>
 <?php
 
-require __DIR__ . '/../../config/pdo-content.php';
+require __DIR__ . '/../../config/pdo-connect.php';
 
 $perPage = 20; # 每一頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
