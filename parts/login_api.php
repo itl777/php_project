@@ -43,7 +43,7 @@ if (password_verify($_POST['password'], $row['password'])) {
   $_SESSION['admin'] = [
     'id' => $row['b2b_id'],
     'account' => $row['account'],
-    'b2b_name' => $row['b2b_name'],
+    'nickname' => $row['b2b_name'],
   ];
 } else {
   # 密碼是錯的

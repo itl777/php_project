@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = "團隊列表";
 $pageName = 'list';
 
@@ -30,7 +30,7 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT team_id, team_title, leader_id, nickname, tour, theme_name, team_limit, status_text
+        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, status_text
         FROM `teams` 
         join `users` on leader_id = users.user_id
         join `themes` on tour = themes.theme_id
@@ -53,8 +53,8 @@ if ($totalRows) {
 // $members = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-<?php include __DIR__ . '/parts/html-head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <div class="container">
     <!-- 分頁選擇欄 -->
@@ -126,7 +126,7 @@ if ($totalRows) {
                             <td>
                             <a href="./teams/team_view.php?team_id=<?= $r['team_id'] ?>">
                                 <?= $r['team_title'] ?></a></td>
-                            <td><?= $r['nickname'] ?></td>
+                            <td><?= $r['nick_name'] ?></td>
                             <td><?= $r['theme_name'] ?></td>
                             <td> / <?= $r['team_limit'] ?></td>
                             <td><?= $r['status_text'] ?></td>
@@ -143,7 +143,7 @@ if ($totalRows) {
     </div>
 </div>
 
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <script>
     const deleteOne = (team_id) => {
     if (confirm(`是否要刪除編號為 ${team_id} 的資料?`)) {
@@ -153,4 +153,4 @@ if ($totalRows) {
 </script>
 
 
-    <?php include __DIR__ . '/parts/html-foot.php' ?>
+    <?php include __DIR__ . '/../parts/html-foot.php' ?>

@@ -35,7 +35,7 @@
       method: 'POST',
       body: sendData,
     }).then(r => r.json()).then(data => {
-      console.log(output);
+      console.log(data);
     });
   }
 </script>
