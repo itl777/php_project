@@ -42,9 +42,6 @@ function saveInvoice () {
   } else {
     saveTaxIdCheckbox.parentElement.classList.remove('d-none');
   }
-  console.log('save invoice function');
-  console.log('tax'+taxIdInput.value+'tax-fetch'+fetchMemberMobileInvoice);
-  console.log('mi'+mobileInvoiceInput.value+'mi-fetch'+fetchMemberTaxId);
 }
 
 

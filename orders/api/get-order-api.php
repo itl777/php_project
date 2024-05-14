@@ -13,26 +13,26 @@ if ($id < 1) {
 // get orders data
 $orderSql = "SELECT
 o.id AS order_id,
-m.id AS member_id,
-member_name,
+user_id,
+u.name,
 d.id AS order_district_id,
 c.id AS order_city_id,
 order_date,
 payment_method,
 delivery_method,
-address,
+order_address,
 recipient_name,
-o.mobile_phone AS order_mobile_phone,
-o.invoice_carrier AS order_invoice_carrier,
-o.tax_id AS order_tax_id,
+recipient_mobile,
+recipient_invoice_carrier,
+recipient_tax_id,
 member_carrier,
 order_status
 FROM orders AS o
-LEFT JOIN members AS m
-ON m.id = o.member_id
-LEFT JOIN districts AS d
-ON d.id = o.district_id
-LEFT JOIN cities AS c
+LEFT JOIN users AS u
+ON u.user_id = o.member_id
+LEFT JOIN district AS d
+ON d.id = o.order_district_id
+LEFT JOIN city AS c
 ON c.id = d.city_id
 WHERE o.id = $id";
 
