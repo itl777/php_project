@@ -17,16 +17,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // 如果確定是點擊到 deleteButton，則 .delete-product 的父層，且 class 有 .order-item
 
     if (deleteButton) {
-      const orderItem = deleteButton.closest('.order-item');
+      const orderItem = deleteButton.closest(".order-item");
       // 從 orderItem 中獲取商品 ID，並轉為正整數
-      const productId = parseInt(orderItem.querySelector('[name="productIds[]"]').value);
+      const productId = parseInt(
+        orderItem.querySelector('[name="productIds[]"]').value
+      );
       // 刪除商品元素
       orderItem.remove();
       // 從集合中移除商品 ID
       addedProductIds.delete(productId);
       // 更新訂單總金額
       updateOrderTotal();
-  }
+    }
   });
 
   // 更新商品總金額
@@ -47,6 +49,35 @@ document.addEventListener("DOMContentLoaded", function () {
         .querySelector(".product-total-price").textContent = totalPrice;
       // 更新訂單總金額
       updateOrderTotal();
+    }
+  });
+
+  orderItemContainer.addEventListener("input", function (event) {
+    // 檢查是否是商品數量的輸入框引發了事件
+    if (event.target.name === "productQuantities[]") {
+      const quantityInput = event.target;
+      // 將輸入的數字轉成整數
+      let quantityValue = parseInt(quantityInput.value, 10);
+      const orderItem = quantityInput.closest(".order-item"); // 取得商品卡片
+      const stockSpan = orderItem.querySelector(".stock-quantity").textContent; // 取得庫存 span
+      const stockQuantity = parseInt(stockSpan.split("：")[1]); // 將庫存 span 的字串以：分開，取 index[1]
+      const helperText = orderItem.querySelector(".helper-text"); // 獲取對應的 helper text
+
+      // 設置最小值和最大值(庫存量)
+      quantityInput.min = 1;
+      quantityInput.max = stockQuantity;
+
+      if (quantityValue > stockQuantity) {
+        quantityInput.value = stockQuantity; // 如果輸入的值大於庫存，自動修正為庫存的最大值
+        helperText.textContent = "訂購商品數量不足";
+      } else if (quantityValue < 1) {
+        quantityInput.value = 1; // 如果輸入的值小於1，自動修正為1
+        helperText.textContent = "最低訂購數量1";
+      } else {
+        quantityInput.value = quantityValue; // 轉為整數
+        helperText.textContent = ""; // 清除任何錯誤消息
+      }
+      
     }
   });
 
@@ -105,8 +136,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         <button type="button" class="delete-item delete-product"><i class="fa-solid fa-xmark"></i></button>
                         <div class="col-4 mb-3">
                           <input type="number" class="form-control" id="productQuantity${orderItemNum}" name="productQuantities[]" value="1" placeholder="商品數量">
+                          <span class="helper-text"></span>
                         </div>
-                        <span>剩餘庫存：${item.stock_quantity}</span>
+                        <span class="stock-quantity">剩餘庫存：${item.stock_quantity}</span>
                         <p class="mb-0">商品單價：${item.price}</p>
                         <p class="mb-0">商品總金額：<span class="product-total-price">${item.price}</span></p>
                         <input type="text" class="d-none" id="productId${orderItemNum}" name="productIds[]" value="${item.product_id}">
@@ -114,7 +146,10 @@ document.addEventListener("DOMContentLoaded", function () {
                       </div>          
                     `;
                     // 將商品卡片添加到 order-item-container 的最下方
-                    orderItemContainer.insertAdjacentHTML("beforeend",productCardHtml);
+                    orderItemContainer.insertAdjacentHTML(
+                      "beforeend",
+                      productCardHtml
+                    );
                     // 更新訂單總金額
                     updateOrderTotal();
                   }

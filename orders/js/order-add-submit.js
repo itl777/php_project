@@ -2,10 +2,12 @@ document.orderAddForm.addEventListener('submit', function (e) {
   e.preventDefault();
 
   if (validateForm()) {
-    invoicePrepareToSubmit();
     toggleFormElements(true); 
+    invoicePrepareToSubmit();
     submitForm();
-    memberInvoiceSubmit();
+    if (saveToMembersOrNot()){
+      memberInvoiceSubmit();
+    } 
   }
 });
 
@@ -54,6 +56,11 @@ function toggleFormElements(disable = true) {
   document.querySelectorAll('[name^="group"]').forEach(input => {
     input.removeAttribute('name');
   });
+
+  // 補回去 useMemberInvoice 選項（用來傳遞 0 or 1）
+  const useMemberInvoice = document.getElementById('useMemberInvoice');
+  useMemberInvoice.setAttribute('name', 'memberInvoice');
+  useMemberInvoice.checked ? useMemberInvoice.value = 1 : useMemberInvoice.value = 0;
 
   // invoiceOptions();
 }
@@ -170,16 +177,34 @@ function submitForm() {
   });
 }
 
+function saveToMembersOrNot () {
+  const useMobileInvoice = document.getElementById('useMobileInvoice').checked;
+  const saveMobileInvoice = document.getElementById('saveMobileInvoice').checked;
+  const mobileInvoice = document.getElementById('mobileInvoice').value;
+  const useTaxId = document.getElementById('useTaxId').checked;
+  const saveTaxId = document.getElementById('saveTaxId').checked;
+  const taxId = document.getElementById('taxId').value;
+
+  if (useMobileInvoice && saveMobileInvoice && emptyChecked(mobileInvoice)) {
+    return true;
+  } else if (useTaxId && saveTaxId && emptyChecked(taxId)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function memberInvoiceSubmit() {
   const memberId = document.getElementById('memberId').value;
   const useMobileInvoice = document.getElementById('useMobileInvoice').checked;
+  const saveMobileInvoice = document.getElementById('saveMobileInvoice').checked;
   const mobileInvoice = document.getElementById('mobileInvoice').value;
   const useTaxId = document.getElementById('useTaxId').checked;
+  const saveTaxId = document.getElementById('saveTaxId').checked;
   const taxId = document.getElementById('taxId').value;
   
 
-  if (useMobileInvoice && mobileInvoice) {
+  if (useMobileInvoice && saveMobileInvoice  && emptyChecked(mobileInvoice)) {
     const data = {
       memberId: memberId,
       mobileInvoice: mobileInvoice,
@@ -196,7 +221,7 @@ function memberInvoiceSubmit() {
       .catch(error => console.error('Error:', error));
   }
 
-  if (useTaxId && taxId) {
+  if (useTaxId && saveTaxId && emptyChecked(taxId)) {
     const data = {
       memberId: memberId,
       taxId: taxId,

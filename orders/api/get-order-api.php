@@ -26,7 +26,7 @@ recipient_mobile,
 recipient_invoice_carrier,
 recipient_tax_id,
 member_carrier,
-order_status
+order_status_id
 FROM orders AS o
 LEFT JOIN users AS u
 ON u.user_id = o.member_id
@@ -38,18 +38,6 @@ WHERE o.id = $id";
 
 $orderRow = $pdo->query($orderSql)->fetch();
 
-// $orderDetailsSql = "SELECT
-// p.product_name,
-// p.unit_price,
-// od.product_id,
-// od.quantity
-// FROM order_details AS od
-// LEFT JOIN products AS p ON p.id = od.product_id
-// WHERE od.order_id = ?";
-
-// $orderDetailsSqlStmt = $pdo->prepare($orderDetailsSql);
-// $orderDetailsSqlStmt->execute([$id]);
-// $products = $stmt->fetchAll();
 
 if ($orderRow) {
   echo json_encode($orderRow);

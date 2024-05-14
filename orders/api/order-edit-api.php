@@ -25,7 +25,7 @@ try {
     recipient_invoice_carrier = ?, 
     recipient_tax_id = ?, 
     member_carrier = ?,
-    order_status = ?,
+    order_status_id = ?,
     last_modified_at = now() 
     WHERE id = ?";
 
@@ -43,7 +43,7 @@ try {
         $mobileInvoice,
         $taxId,
         $memberCarrier,
-        'unpaid',
+        $_POST['orderStatus'],
         $orderId
     ]);
 
@@ -57,7 +57,7 @@ try {
     $idsToDelete = array_diff($originalProductIdsArray, $submittedProductIds);
 
     foreach ($idsToDelete as $productIdToDelete) {
-        $orderDeleteStmt = $pdo->prepare("DELETE FROM order_details WHERE order_id = ? AND product_id = ?");
+        $orderDeleteStmt = $pdo->prepare("DELETE FROM order_details WHERE order_id = ? AND order_product_id = ?");
         $orderDeleteStmt->execute([$orderId, $productIdToDelete]);
     }
 
@@ -82,7 +82,7 @@ try {
 
 
     foreach ($idsToDelete as $productIdToDelete) {
-        $orderDeleteStmt = $pdo->prepare("DELETE FROM order_details WHERE order_id = ? AND product_id = ?");
+        $orderDeleteStmt = $pdo->prepare("DELETE FROM order_details WHERE order_id = ? AND order_product_id = ?");
         $orderDeleteStmt->execute([$orderId, $productIdToDelete]);
     }
 

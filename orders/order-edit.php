@@ -7,7 +7,7 @@
   <div class="container">
     <form name="orderEditForm" class="row justify-content-between">
 
-      <div class="col-7 d-flex flex-wrap p-0 pe-5" style="height: 800px">
+      <div class="col-7 d-flex flex-wrap p-0 pe-5" style="height: 960px">
 
         <input type="number" class="form-control d-none" id="orderId" name="orderId">
         <input type="hidden" id="originalProductIds" name="originalProductIds" value="">
@@ -43,6 +43,15 @@
               <label class="form-check-label" for="linePay">LINE PAY</label>
             </div>
           </div>
+        </div>
+
+
+        <div class="col-6 mb-3 pe-3">
+          <label for="orderStatus" class="form-label">訂單狀態</label>
+          <select class="form-select" id="orderStatus" name="orderStatus">
+            <option disabled>請選擇</option>
+          </select>
+          <span class="helper-text"></span>
         </div>
 
 
@@ -148,8 +157,8 @@
 
 
               <div class="col-6 form-check d-none">
-                <input class="form-check-input" type="checkbox" id="saveMobileInvoice" value="">
-                <label class="col-12 form-check-label" for="saveMobileInvoice">儲存至會員資料</label>
+                <input class="form-check-input d-none" type="checkbox" id="saveMobileInvoice" value="">
+                <label class="col-12 form-check-label  d-none" for="saveMobileInvoice">儲存至會員資料</label>
               </div>
             </div>
 
@@ -166,8 +175,8 @@
               </div>
 
               <div class="col-6 form-check d-none">
-                <input class="form-check-input" type="checkbox" id="savedTaxId" value="option1">
-                <label class="col-12 form-check-label" for="savedTaxId">儲存至會員資料</label>
+                <input class="form-check-input d-none" type="checkbox" id="saveTaxId" value="option1">
+                <label class="col-12 form-check-label  d-none" for="saveTaxId">儲存至會員資料</label>
               </div>
             </div>
 
@@ -211,6 +220,7 @@
 
 <script src="js/get-order.js"></script>
 <script src="js/order-general.js"></script>
+<script src="js/order-status-list.js"></script>
 <script src="js/search-member.js"></script>
 <!-- <script src="js/address.js"></script> -->
 <script src="js/city-district-selection.js"></script>
