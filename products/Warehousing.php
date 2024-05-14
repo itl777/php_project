@@ -78,7 +78,7 @@ require __DIR__ . '/db_select/select_warehousing.php';
     </div>
 </div>
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <script>
     const deleteOne = (warehousing_id) => {
         if (confirm(`是否要刪除編號為 ${warehousing_id} 的資料?`)) {

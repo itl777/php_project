@@ -220,7 +220,7 @@ $product_img_row = $stmt->fetchAll();
 
 
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <script>
     // BT表單驗證
     (function() {

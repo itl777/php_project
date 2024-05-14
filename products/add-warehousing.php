@@ -107,7 +107,7 @@ include 'db_select/select_product.php';
 
 
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 
 <script>

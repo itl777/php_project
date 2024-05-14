@@ -1,7 +1,7 @@
+<?php include 'db_select/select_coupon.php' ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include 'components/navbar.php' ?>
 
-<?php include 'db_select/select_coupon.php' ?>
 
 
 
@@ -11,7 +11,6 @@
     </div>
     <div class="row">
 
-     
         <div class="col-8 mx-auto">
 
             <nav class="navbar navbar-light bg-light">
@@ -90,7 +89,7 @@
 </div>
 
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
     const deleteOne = (coupon_id) => {

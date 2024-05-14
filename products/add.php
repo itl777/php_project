@@ -9,8 +9,8 @@
 
 
 <!-- 新增form -->
-<div class="container mt-5 py-2">
-    <div class="row mt-5">
+<div class="container mt-3 py-2">
+    <div class="row">
         <div class="col-10 col-lg-6 mx-auto">
             <h2 class="text-center p-3 mt-3">新商品上架</h2>
 
@@ -154,7 +154,7 @@
 
 
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 
 <script>
@@ -240,7 +240,7 @@
         if (Number(priceField.value) < 1) {
             isPass = false;
         }
-        if (cateField.value = '') {
+        if (cateField.value === '') {
             isPass = false;
 
         }

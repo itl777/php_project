@@ -144,7 +144,7 @@ include 'db_select/select_category.php';
     </div>
 </div>
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
     const deleteOne = (product_id) => {

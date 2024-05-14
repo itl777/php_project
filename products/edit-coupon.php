@@ -6,7 +6,7 @@
         <div class="col-10 col-lg-6 mx-auto">
             <h2 class="text-center p-3 mt-3">編輯優惠券</h2>
 
-
+<!-- 還沒做 -->
 
             <form name="form1">
 
@@ -82,5 +82,5 @@
 
 
 <script src="coupon/coupon.js"></script>
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <?php include 'components/foot.php' ?>

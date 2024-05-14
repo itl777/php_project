@@ -89,7 +89,7 @@
 <!-- modal 元件 -->
 <?php include 'components/modal-add.php' ?>
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <script>
 
      // BT表單驗證
