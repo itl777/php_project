@@ -1,6 +1,5 @@
 create database themes_database;
 use themes_database;
-drop database themes_database;
 
 -- Themes table
 CREATE TABLE themes (
@@ -34,8 +33,29 @@ VALUES
 ('幽靈屋', '09:00:00', '10:30:00', 60, 30, '在一間幽靈屋中解開它的魔咒，找到出口。', 4, '5~8人', 'haunted_house.jpg', 600, '2024-12-01', '2025-12-01'),
 ('星際探險', '09:00:00', '10:30:00', 90, 60, '在太空船上進行一次星際探險，找到失踪的船員和他們的秘密。', 5, '4~6人', 'space_exploration.jpg', 600, '2025-01-01', '2026-01-01'),
 ('失落的實驗室', '09:00:00', '10:30:00', 90, 30, '在一個神秘的實驗室中尋找脫逃的方法，記住，時間是有限的！', 4, '5~8人', 'ultimate_challenge.jpg', 600, '2025-02-01', '2026-02-01');
-select * from themes;
-SELECT * FROM branches;
+
+-- Branches table
+CREATE TABLE branches (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    branch_name VARCHAR(20),
+    theme_id INT,
+    branch_address VARCHAR(50),
+    branch_phone VARCHAR(20),
+    branch_img VARCHAR(255),
+    open_time VARCHAR(20),
+    close_time VARCHAR(20),
+    branch_status VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by VARCHAR(255),
+    last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (theme_id) REFERENCES themes(theme_id)
+);
+
+INSERT INTO branches (branch_name, branch_address, branch_phone, branch_img, open_time, close_time, branch_status, last_modified_by)
+VALUES 
+('探秘-北分店', '台北市大安區永恆街4號3樓', '02-12345678', 'branch_north.jpg', '09:00:00', '21:00:00', 'open', 'Admin'),
+('探秘-中分店', '台中市三民區一中街27號5樓', '04-23456789', 'branch_central.jpg', '09:00:00', '21:00:00', 'open', 'Admin'),
+('探秘-南分店', '高雄市鳳山區四維路50號2樓', '06-34567890', 'branch_south.jpg', '09:00:00', '21:00:00', 'open', 'Admin');
 
 CREATE TABLE reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,30 +92,3 @@ VALUES
 (3, 9, '2024-05-28 12:30:00', 8),
 (1, 10, '2024-05-29 13:00:00', 3),
 (3, 1, '2024-05-30 13:30:00', 6);
-select * from reservations;
-
-
--- Branches table
-CREATE TABLE branches (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    branch_name VARCHAR(20),
-    theme_id INT,
-    branch_address VARCHAR(50),
-    branch_phone VARCHAR(20),
-    branch_img VARCHAR(255),
-    open_time TIME,
-    close_time TIME,
-    branch_status VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_modified_by VARCHAR(255),
-    last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (theme_id) REFERENCES themes(theme_id)
-);
-
-INSERT INTO branches (branch_name, branch_address, branch_phone, branch_img, open_time, close_time, branch_status, last_modified_by)
-VALUES 
-('探秘-北分店', '台北市大安區永恆街4號3樓', '02-12345678', 'branch_north.jpg', '09:00:00', '21:00:00', 'open', 'Admin'),
-('探秘-中分店', '台中市三民區一中街27號5樓', '04-23456789', 'branch_central.jpg', '09:00:00', '21:00:00', 'open', 'Admin'),
-('探秘-南分店', '高雄市鳳山區四維路50號2樓', '06-34567890', 'branch_south.jpg', '09:00:00', '21:00:00', 'open', 'Admin');
-
-select * from branches;
