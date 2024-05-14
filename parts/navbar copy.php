@@ -29,19 +29,22 @@ $pageName='';?>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'list' ? 'active' : '' ?>" href="../users/users.php">會員</a>
+            <a class="nav-link px-2 <?= $pageName == 'list' ? 'active' : '' ?>" href="/ispanproject/users/users.php">會員</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="../themes/address_book/theme_list.php">行程</a>
+            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="/ispanproject/themes/address_book/theme_list.php">行程</a>
           </li>          
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="../products/index.php">商品</a>
+            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="/ispanproject/products/index.php">商品</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="../orders/order-list.php">訂單</a>
+            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="/ispanproject/orders/order-list.php">訂單</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="../teams/teams.php">糾團</a>
+            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="/ispanproject/teams/teams.php">糾團</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 <?= $pageName == 'list' ? 'active' : '' ?>" href="/ispanproject/users/users.php">會員</a>
           </li>
         </ul>
 
