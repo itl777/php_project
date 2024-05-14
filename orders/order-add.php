@@ -1,5 +1,5 @@
-<?php include __DIR__ . '/parts/head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <div class="container">
   <h2 class="my-5">新增訂單</h2>
@@ -214,7 +214,7 @@
 
 </div>
 
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <script src="js/order-general.js"></script>
 <script src="js/order-add-submit.js"></script>
 <script src="js/search-member.js"></script>
@@ -231,4 +231,4 @@
   document.orderAddForm.orderDate.valueAsDate = new Date();
 </script>
 
-<?php include __DIR__ . '/parts/foot.php' ?>
+<?php include __DIR__ . '/../parts/html-foot.php' ?>

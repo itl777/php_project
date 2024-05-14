@@ -47,29 +47,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (item.status === 1) {
                   option.className = "dropdown-item";
                   option.href = "#";
-                  const displayName = item.member_name ? `(${item.id}) ${item.member_name}` : `(${item.id}) 無紀錄會員姓名`;
+                  const displayName = item.name ? `(${item.user_id}) ${item.name}` : `(${item.user_id}) 無紀錄會員姓名`;
                   option.textContent = displayName;
                   resultsContainer.appendChild(option);
                 }
 
                 // 點擊選項後將資料帶入到 memberId, memberName 當中
                 option.addEventListener("click", function () {
-                  document.getElementById("memberId").value = item.id;
-                  document.getElementById("memberName").value = item.member_name || "無紀錄會員姓名";
+                  document.getElementById("memberId").value = item.user_id;
+                  document.getElementById("memberName").value = item.name || "無紀錄會員姓名";
                   document.getElementById('useMemberInvoice').checked = false;
                   document.getElementById('useMobileInvoice').checked = false;
                   document.getElementById('useTaxId').checked = false;
                   resultsContainer.classList.remove("show");
 
                   // 儲存會員姓名、手機至變數裡
-                  fetchMemberName = item.member_name;
+                  fetchMemberName = item.name;
                   fetchMemberPhone = item.mobile_phone;
                   fetchMemberMobileInvoice = item.invoice_carrier;
                   fetchMemberTaxId = item.tax_id;
 
                   // 若有勾選「帶入會員資料」，會連動變更收件人與收件手機欄位內容
                   if (document.getElementById("useMemberInfo").checked == true) {
-                    document.getElementById("recipientName").value = item.member_name;
+                    document.getElementById("recipientName").value = item.name;
                     document.getElementById("recipientMobile").value = item.mobile_phone || '';
                   }
                   
