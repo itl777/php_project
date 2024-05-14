@@ -8,10 +8,10 @@
       </div>
       <div class="modal-body">
 
-        <form>
+        <form name="loginForm" id="loginForm" onsubmit="loginData(event)">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">帳號</label>
-            <input type="email" class="form-control" name="account">
+            <input type="text" class="form-control" name="account">
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">密碼</label>
@@ -25,3 +25,17 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  const loginData = function(e){
+    e.preventDefault();
+    let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
+    fetch(`login_api.php`, {
+      method: 'POST',
+      body: sendData,
+    }).then(r => r.json()).then(data => {
+      console.log(output);
+    });
+  }
+</script>
