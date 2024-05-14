@@ -1,4 +1,0 @@
-預設路徑:
-C:\ProgramData\MySQL\MySQL Server 8.0\Data
-
-table副檔名 .ibd

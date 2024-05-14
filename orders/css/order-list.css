@@ -1,0 +1,43 @@
+.order-list {
+  background-color: #f2f2f2;
+  border-radius: 0.5rem;
+}
+
+.order-item {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.delete-item {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  color: red;
+  background-color: transparent;
+  border: none;
+  height: 1rem;
+}
+
+.delete-item:hover {
+  color: #c12a00;
+}
+
+
+
+.new-address {
+  background-color: #f9f9f9;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+}
+
+
+.saved-address-row {
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid lightgray;
+}
+
+.helper-text {
+  color: red;
+  font-size: 0.85rem;
+}
