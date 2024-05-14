@@ -16,10 +16,10 @@ try {
 
   if (isset($inputData['memberId'])) {
     if (isset($inputData['mobileInvoice'])) {
-      $updateMemberMobileCarrierSql = "UPDATE `members` SET 
-          invoice_carrier = ?,
+      $updateMemberMobileCarrierSql = "UPDATE `users` SET 
+          invoice_carrier_id = ?,
           last_modified_at = now()
-          WHERE id = ?";
+          WHERE user_id = ?";
       $updateMemberMobileCarrierStmt = $pdo->prepare($updateMemberMobileCarrierSql);
       if (!$updateMemberMobileCarrierStmt->execute([$inputData['mobileInvoice'], $inputData['memberId']])) {
         throw new Exception("Failed to update mobile invoice: " . implode(", ", $updateMemberMobileCarrierStmt->errorInfo()));
@@ -27,10 +27,10 @@ try {
     }
 
     if (isset($inputData['taxId'])) {
-      $updateMemberTaxIdSql = "UPDATE `members` SET 
+      $updateMemberTaxIdSql = "UPDATE `users` SET 
           tax_id = ?,
           last_modified_at = now()
-          WHERE id = ?";
+          WHERE user_id = ?";
       $updateMemberTaxIdStmt = $pdo->prepare($updateMemberTaxIdSql);
       if (!$updateMemberTaxIdStmt->execute([$inputData['taxId'], $inputData['memberId']])) {
         throw new Exception("Failed to update tax ID: " . implode(", ", $updateMemberTaxIdStmt->errorInfo()));

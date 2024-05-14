@@ -1,6 +1,12 @@
 <?php
+include __DIR__ . '/../basic-url.php';
+
+
 if(!isset($pageName))
 $pageName='';?>
+
+
+
 
 <style>
   .container .navbar-nav .nav-link.active {
@@ -28,10 +34,10 @@ $pageName='';?>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <a class="nav-link px-2 <?= $pageName == 'list' ? 'active' : '' ?>" href="./list.php">List</a>
+        <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>" href="<?= BASE_URL ?>orders/order-list.php">訂單列表</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'add' ? 'active' : '' ?>" href="./add.php">Add</a>
+          <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>" href="<?= BASE_URL ?>users/users.php">會員列表</a>
           </li>
         </ul>
 

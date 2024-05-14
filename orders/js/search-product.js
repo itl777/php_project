@@ -80,12 +80,12 @@ document.addEventListener("DOMContentLoaded", function () {
               let option = document.createElement("a");
 
               // 如果商品狀態為啟用 1，建立商品選項
-              if (item.product_status === 1) {
+              if (item.product_status == 1) {
                 option.className = "dropdown-item";
                 option.href = "#";
                 const displayName = item.product_name
-                  ? `(${item.id}) ${item.product_name}`
-                  : `(${item.id}) 無紀錄商品名稱`;
+                  ? `(${item.product_id}) ${item.product_name}`
+                  : `(${item.product_id}) 無紀錄商品名稱`;
                 option.textContent = displayName;
                 productResultsAllDisabled = false; // 有搜到至少一個啟用的商品
                 productResults.classList.add("show");
@@ -94,23 +94,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 // 點擊後新增商品卡片
                 option.addEventListener("click", function () {
                   // 如果已存在此商品，不能新增
-                  if (addedProductIds.has(item.id)) {
-                    productResultsHelp.innerText = `(${item.id}) ${item.product_name}已存在於訂單中`;
+                  if (addedProductIds.has(item.product_id)) {
+                    productResultsHelp.innerText = `(${item.product_id}) ${item.product_name}已存在於訂單中`;
                   } else {
-                    addedProductIds.add(item.id);
+                    addedProductIds.add(item.product_id);
 
                     const productCardHtml = `
                       <div class="col-12 position-relative order-item mb-4">
-                        <h6 class="mb-3">(${item.id}) ${item.product_name}</h6>
+                        <h6 class="mb-3">(${item.product_id}) ${item.product_name}</h6>
                         <button type="button" class="delete-item delete-product"><i class="fa-solid fa-xmark"></i></button>
                         <div class="col-4 mb-3">
                           <input type="number" class="form-control" id="productQuantity${orderItemNum}" name="productQuantities[]" value="1" placeholder="商品數量">
                         </div>
                         <span>剩餘庫存：${item.stock_quantity}</span>
-                        <p class="mb-0">商品單價：${item.unit_price}</p>
-                        <p class="mb-0">商品總金額：<span class="product-total-price">${item.unit_price}</span></p>
-                        <input type="text" class="d-none" id="productId${orderItemNum}" name="productIds[]" value="${item.id}">
-                        <input type="number" class="d-none" id="productUnitPrice${orderItemNum}" name="productUnitPrices[]" value="${item.unit_price}">
+                        <p class="mb-0">商品單價：${item.price}</p>
+                        <p class="mb-0">商品總金額：<span class="product-total-price">${item.price}</span></p>
+                        <input type="text" class="d-none" id="productId${orderItemNum}" name="productIds[]" value="${item.product_id}">
+                        <input type="number" class="d-none" id="productUnitPrice${orderItemNum}" name="productUnitPrices[]" value="${item.price}">
                       </div>          
                     `;
                     // 將商品卡片添加到 order-item-container 的最下方

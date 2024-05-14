@@ -2,7 +2,7 @@
 require __DIR__ . '/../../config/pdo-connect.php';
 header('Content-Type: application/json');
 
-$sql = "SELECT * FROM cities";
+$sql = "SELECT * FROM city";
 
 $cities = [];
 $cities = $pdo->query($sql)->fetchAll();
