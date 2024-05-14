@@ -11,3 +11,4 @@
 </head>
 
 <body>
+<?php include __DIR__ . '/login_modal.php' ?>
