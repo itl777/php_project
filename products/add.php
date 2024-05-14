@@ -1,11 +1,11 @@
-<?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include 'components/navbar.php' ?>
-
 <!-- 搜尋分類 -->
 <?php include 'db_select/select_category.php' ?>
 
 <!-- 狀態查詢 -->
 <?php include 'db_select/select_status.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include 'components/navbar.php' ?>
+
 
 
 <!-- 新增form -->
