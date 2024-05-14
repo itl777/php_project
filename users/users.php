@@ -19,13 +19,11 @@ $title = '會員管理系統';
 
       <script>
         const selectForm = document.querySelector('#selectForm');
-        selectForm.addEventListener('keydown', function (event) {
-          if (event.key === 'Enter'){
-          selectForm.submit();
+        selectForm.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+            selectForm.submit();
           }
         });
-
-
       </script>
 
       <input type="text" name="account" class="form-control" placeholder="帳號">
@@ -108,7 +106,7 @@ $title = '會員管理系統';
 
 
 <!-- modal -->
-<?php include __DIR__ . '/login_modal.php' ?>
+
 <?php include __DIR__ . '/include/edit_modal.php' ?>
 <?php include __DIR__ . '/include/address_modal.php' ?>
 <?php include __DIR__ . '/include/success_modal.php' ?>

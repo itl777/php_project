@@ -21,14 +21,15 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index_.php') {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script>
-    const loginData = function (e) {
+    const loginData = function(e) {
       e.preventDefault();
       let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
       fetch(`http://localhost/iSpanProject/parts/login_api.php`, {
         method: 'POST',
         body: sendData,
       }).then(r => r.json()).then(data => {
-        // console.log(data);
+        console.log(data);
+        // if(data)
         window.location.reload();
       });
     }
@@ -36,4 +37,30 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index_.php') {
 </head>
 
 <body>
-  <?php include __DIR__ . '/login_modal.php' ?>
+
+  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">登入</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form name="loginForm" id="loginForm" onsubmit="loginData(event)">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">帳號</label>
+              <input type="text" class="form-control" name="account">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">密碼</label>
+              <input type="password" class="form-control" name="password">
+            </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            <button type="submit" class="btn btn-primary">登入</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
