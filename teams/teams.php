@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = "團隊列表";
 $pageName = 'list';
 
@@ -53,8 +53,8 @@ if ($totalRows) {
 // $members = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-<?php include __DIR__ . '/parts/html-head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <div class="container">
     <!-- 分頁選擇欄 -->
@@ -143,7 +143,7 @@ if ($totalRows) {
     </div>
 </div>
 
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <script>
     const deleteOne = (team_id) => {
     if (confirm(`是否要刪除編號為 ${team_id} 的資料?`)) {
@@ -153,4 +153,4 @@ if ($totalRows) {
 </script>
 
 
-    <?php include __DIR__ . '/parts/html-foot.php' ?>
+    <?php include __DIR__ . '/../parts/html-foot.php' ?>
