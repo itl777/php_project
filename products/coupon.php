@@ -6,12 +6,12 @@
 
 
 <div class="container mt-5 py-2">
-    <div class="row mt-5">
-        <div class="col-10 col-lg-6 mx-auto">
-            <h2>優惠券列表</h2>
-        </div>
+    <div class="col-10 col-lg-6">
+        <h2>優惠券列表</h2>
+    </div>
+    <div class="row">
 
-        <!-- TODO 還沒做... -->
+     
         <div class="col-8 mx-auto">
 
             <nav class="navbar navbar-light bg-light">

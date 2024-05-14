@@ -21,7 +21,7 @@ include 'db_select/select_category.php';
 <div class="container mt-5">
     <div class="row">
         <div class="col-12 mt-4 mb-3">
-            <h2>商品管理</h2>
+            <h2>商品列表</h2>
         </div>
         <!-- 產品分類 -->
         <div class="col-2">

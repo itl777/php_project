@@ -27,7 +27,8 @@
            </li>
        </ul>
    </nav>
-   <div id="layoutSidenav">
+
+   <div id="layoutSidenav"  class="min-vh-100">
        <div id="layoutSidenav_nav">
            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                <div class="sb-sidenav-menu">
@@ -37,7 +38,6 @@
                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                            會員中心
                        </a>
-
                        <!-- ----行程管理------ -->
                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -73,18 +73,10 @@
                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                            揪團系統
                        </a>
-
-
-
-
-
                    </div>
                </div>
 
-
-               <div class="sb-sidenav-footer">
-                   <div class="small">Logged in as:</div>
-                   Start Bootstrap
-               </div>
+             
            </nav>
        </div>
+      
