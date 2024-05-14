@@ -4,28 +4,19 @@ $title = '會員管理系統';
 
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<link rel="stylesheet" href="../css/styles.css">
 
 <div class="container">
   <button type="button" class="btn btn-warning" onclick="addModalShow()">新增</button>
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
 
 
-  <form name="selectForm" id="selectForm" onsubmit="">
+  <form name="selectForm" id="selectForm" onsubmit="selectFormData(event)">
 
     <div class="row">
 
       <input type="text" name="user_id" class="form-control" placeholder="會員編號">
-
-      <script>
-        const selectForm = document.querySelector('#selectForm');
-        selectForm.addEventListener('keydown', function(event) {
-          if (event.key === 'Enter') {
-            selectForm.submit();
-          }
-        });
-      </script>
-
       <input type="text" name="account" class="form-control" placeholder="帳號">
       <input type="text" name="name" class="form-control" placeholder="姓名">
       <input type="text" name="nick_name" class="form-control" placeholder="暱稱">
@@ -33,15 +24,15 @@ $title = '會員管理系統';
 
       <label class="input-group form-control">
         <div class="form-check form-switch">
-          <input class="form-check-input" name="user_status" value="0" type="checkbox" role="switch">
-          停用會員
+          <input class="form-check-input" name="user_status" value="1" type="checkbox" role="switch">
+          隱藏停用會員
         </div>
       </label>
 
 
       <label class="input-group form-control">
         <div class="form-check form-switch">
-          <input class="form-check-input" name="blacklist" value="0" type="checkbox" role="switch">
+          <input class="form-check-input" name="blacklist" value="1" type="checkbox" role="switch">
           黑名單
         </div>
       </label>
@@ -49,7 +40,7 @@ $title = '會員管理系統';
 
       <label class="input-group form-control">
         <div class="form-check form-switch">
-          <input class="form-check-input" name="desc" value="0" type="checkbox" role="switch">
+          <input class="form-check-input" name="desc" value="1" type="checkbox" role="switch">
           降順
         </div>
       </label>
