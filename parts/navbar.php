@@ -1,5 +1,4 @@
-<?php
-include __DIR__ . '/../basic-url.php';
+<?php 
 
 
 if (!isset($pageName))
@@ -28,7 +27,7 @@ if (!isset($pageName))
 <div class="container">
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand px-2" href="/index_.php">資料表練習</a>
+      <a class="navbar-brand px-2" href="<?= BASE_URL ?>index_.php">資料表練習</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -49,11 +48,12 @@ if (!isset($pageName))
           </li>
           <li class="nav-item">
             <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>"
-              href="<?= BASE_URL ?>users/users.php">會員列表</a>
+              href="<?= BASE_URL ?>teams/teams.php">揪團列表</a>
           </li>
           <li class="nav-item">
             <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>"
-              href="<?= BASE_URL ?>users/users.php">會員列表</a>
+              href="<?= BASE_URL ?>themes/address_book/branch_list.php">行程列表</a>
+
           </li>
         </ul>
 
@@ -64,12 +64,12 @@ if (!isset($pageName))
               <a class="nav-link px-2"><?= $_SESSION['admin']['nickname'] ?></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link px-2" href="logout.php">登出</a>
+              <a class="nav-link px-2" href="<?= BASE_URL ?>parts/logout.php">登出</a>
             </li>
           <?php else: ?>
             <!--沒分是否登入的-->
             <li class="nav-item">
-              <a class="nav-link px-2 <?= $pageName == 'login' ? 'active' : '' ?>" href="./login.php">登入會員</a>
+              <a class="nav-link px-2" data-bs-toggle="modal" data-bs-target="#loginModal">登入會員</a>
             </li>
             <li class="nav-item">
               <a class="nav-link px-2 <?= $pageName == 'register' ? 'active' : '' ?>" href="./register.php">註冊</a>
