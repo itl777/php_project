@@ -1,8 +1,8 @@
 <?php
-require __DIR__ . '/config/PDO-config.php';  // 引入資料庫設定
+require __DIR__ . '/../config/pdo-connect.php';  // 引入資料庫設定
 
 // 搜尋取得入庫資料
-require __DIR__ .'/db_select/select_warehousing.php';
+require __DIR__ . '/db_select/select_warehousing.php';
 
 ?>
 
@@ -20,7 +20,7 @@ require __DIR__ .'/db_select/select_warehousing.php';
 
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid d-flex justify-content-between">
-               
+
                     <form onsubmit="selectData()" class="d-flex" name="searchForm">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="mySearch">
                         <button class="btn btn-outline-success" type="submit">Search</button>
