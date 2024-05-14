@@ -8,44 +8,7 @@ include 'db_select/select_category.php';
 
 
 
-// -----頁面切換
-// 用戶可決定看第幾頁，在網址+ ?page=10 true轉成整數 :false給1
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-if ($page < 1) {
-    // 判斷page<1跳轉到第一頁
-    header('Location: ?page=1');
-    exit;
-}
-
-$t_sql = "SELECT COUNT(1) FROM product_management";
-
-// 總筆數 rows
-$totalRows = $pdo->query($t_sql)->fetch(pdo::FETCH_NUM)[0];
-
-$totalPages = 0;
-$allRows = [];
-// ----- 
-
-if ($totalRows) {
-
-    # 總頁數
-    $totalPages = ceil($totalRows / $perPage);
-    if ($page > $totalPages) {
-        header("Location: ?page={$totalPages}");
-        exit; # 結束這支程式
-    }
-
-    # 取得分頁資料
-    $sql = sprintf(
-        "SELECT * FROM `product_management` ORDER BY sid DESC LIMIT %s, %s",
-        ($page - 1) * $perPage,
-        $perPage
-    );
-    // 取得全部資料
-    $allRows = $pdo->query($sql)->fetchAll();
-}
-// -----頁面切換
 
 ?>
 <!-- TODO 正在改資料庫名稱 -->
@@ -103,62 +66,7 @@ if ($totalRows) {
             </nav>
             <!-- 搜尋列結束 -->
 
-            <!-- 頁面切換開始 -->
 
-            <div class="container">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <!-- 雙箭頭 回到第一頁 -->
-                        <li class="page-item ">
-                            <a class="page-link" href="?page=1">
-                                <i class="fa-solid fa-angles-left"></i>
-                            </a>
-                        </li>
-
-                        <!-- --單鍵頭 10頁 -->
-                        <li class="page-item ">
-                            <?php  ?>
-                            <a class="page-link" href="?page=
-                <?php
-                // if ($page > 10) {
-                //     $page - 10;
-                // } else {
-                //     $page = 1;
-                // };
-                ?>
-                    ">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </a>
-
-                        </li>
-                        <!-- --所有頁碼-- -->
-                        <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                            if ($i >= 1 and $i <= $totalPages) : ?>
-                                <li class="page-item <?= $page == $i ? 'active' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                </li>
-                        <?php endif;
-                        endfor; ?>
-                        <!-- ----+10頁----- -->
-
-                        <li class="page-item ">
-                            <a class="page-link" href="#">
-                                <i class="fa-solid fa-angle-right"></i>
-                            </a>
-                        </li>
-
-                        <!-- 雙箭頭 到最後一頁 -->
-                        <li class="page-item ">
-                            <a class="page-link" href="?page=<?= $totalRows ?>">
-                                <i class="fa-solid fa-angles-right"></i>
-                            </a>
-                        </li>
-
-                    </ul>
-                </nav>
-            </div>
-
-            <!-- 頁面切換結束 -->
 
             <!-- 表單開始 -->
             <table id="ProductTable" class="table table-striped table-hover align-middle">
