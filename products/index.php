@@ -14,7 +14,7 @@ include 'db_select/select_category.php';
 <!-- TODO 正在改資料庫名稱 -->
 
 
-<?php include 'components/head.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include 'components/navbar.php' ?>
 
 <!-- 主內容 -->

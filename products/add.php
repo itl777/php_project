@@ -1,4 +1,4 @@
-<?php include 'components/head.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include 'components/navbar.php' ?>
 
 <!-- 搜尋分類 -->
