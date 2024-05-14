@@ -1,9 +1,15 @@
+<?php
+$title = '會員管理系統';
+?>
+
+<?php include __DIR__ . '/../parts/admin-required.php' ?>
+
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <div class="container">
   <button type="button" class="btn btn-warning" onclick="addModalShow()">新增</button>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登入視窗(暫定)</button>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
 
 
   <form name="selectForm" id="selectForm" onsubmit="">
