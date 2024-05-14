@@ -4,7 +4,7 @@ require __DIR__ . '/../config/pdo-connect.php';
 
 $team_id = isset($_GET['team_id']) ? intval($_GET['team_id']) : 0;
 if ($team_id < 1) {
-  header('Location: /../teams.php');
+  header('Location: ./teams.php');
   exit;
 }
 

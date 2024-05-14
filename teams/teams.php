@@ -30,27 +30,19 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, status_text
+        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, status_text, count(join_user_id) as member_n
         FROM `teams` 
         join `users` on leader_id = users.user_id
         join `themes` on tour = themes.theme_id
         join `teams_status` on team_status = teams_status.status_id
+        left join `teams_members` on team_id = join_team_id
+        GROUP BY team_id
         ORDER BY team_id ASC LIMIT %s, %s",
         ($page - 1) * $perPage,
         $perPage
     );
     $rows = $pdo->query($sql)->fetchAll();
 }
-
-// $api_url = './teams/'; // 替換為你的 API URL
-// $api_data = file_get_contents($members); // 從 API 中取得 JSON 資料
-// $api_data_array = json_decode($members, true); // 解析 JSON 資料為陣列
-
-
-// $sql1 = "SELECT * FROM teams_members";
-// $stmt1 = $pdo->prepare($sql1);
-// $stmt1->execute();
-// $members = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
@@ -124,14 +116,14 @@ if ($totalRows) {
                                 </a></td>
                             <td><?= $r['team_id'] ?></td>
                             <td>
-                            <a href="./teams/team_view.php?team_id=<?= $r['team_id'] ?>">
+                            <a href="./team_view.php?team_id=<?= $r['team_id'] ?>">
                                 <?= $r['team_title'] ?></a></td>
                             <td><?= $r['nick_name'] ?></td>
                             <td><?= $r['theme_name'] ?></td>
-                            <td> / <?= $r['team_limit'] ?></td>
+                            <td><?= $r['member_n'] ?> / <?= $r['team_limit'] ?></td>
                             <td><?= $r['status_text'] ?></td>
                             <td>
-                                <a href="./teams/team_edit.php?team_id=<?= $r['team_id'] ?>">
+                                <a href="./team_edit.php?team_id=<?= $r['team_id'] ?>">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </td>
