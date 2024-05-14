@@ -18,11 +18,11 @@ try {
   `member_id`, 
   `payment_method`, 
   `recipient_name`, 
-  `mobile_phone`, 
-  `district_id`, 
-  `address`,
-  `invoice_carrier`,
-  `tax_id`,
+  `recipient_mobile`, 
+  `order_district_id `, 
+  `order_address`,
+  `recipient_invoice_carrier`,
+  `recipient_tax_id`,
   `member_carrier`,
   `order_status`,
   `created_at`,
@@ -51,7 +51,7 @@ try {
   $response['newId'] = $orderId;
 
   // insert into oder_details
-  $orderDetailsSql = "INSERT INTO `order_details`(`order_id`, `product_id`, `quantity`, `order_unit_price`, `created_at`, `last_modified_at`) VALUES (?, ?, ?, ?, now(), now())";
+  $orderDetailsSql = "INSERT INTO `order_details`(`order_id`, `order_product_id`, `order_quantity`, `order_unit_price`, `created_at`, `last_modified_at`) VALUES (?, ?, ?, ?, now(), now())";
 
   $orderDetailsStmt = $pdo->prepare($orderDetailsSql);
 

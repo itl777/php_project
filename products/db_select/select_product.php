@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../config/PDO-config.php';  // 引入資料庫設定
+require __DIR__ . '/../../config/pdo-connect.php';  // 引入資料庫設定
 
 
 // 取得所有商品數量sql語法

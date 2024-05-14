@@ -12,24 +12,24 @@ if ($id < 1) {
 
 // get orders details data
 $orderDetailsSql = "SELECT
-  od.product_id,
+  od.order_product_id,
   p.product_name,
   od.order_unit_price,
-  od.quantity AS ordered_quantity,
+  od.order_quantity AS ordered_quantity,
   (COALESCE(ws.total_quantity, 0) - COALESCE(other_orders.total_ordered, 0)) AS stock_quantity
   FROM order_details AS od
-  LEFT JOIN products AS p ON p.id = od.product_id
+  LEFT JOIN product_management AS p ON p.product_id = od.order_product_id
   LEFT JOIN (
       SELECT product_id, SUM(quantity) AS total_quantity
       FROM product_warehousing
       GROUP BY product_id
-  ) ws ON ws.product_id = od.product_id
+  ) ws ON ws.product_id = od.order_product_id
   LEFT JOIN (
-      SELECT product_id, SUM(quantity) AS total_ordered
+      SELECT order_product_id, SUM(order_quantity) AS total_ordered
       FROM order_details
       WHERE order_id <> ?
-      GROUP BY product_id
-  ) other_orders ON other_orders.product_id = od.product_id
+      GROUP BY order_product_id
+  ) other_orders ON other_orders.order_product_id = od.order_product_id
   WHERE od.order_id = ?";
 
 $orderDetailsSqlStmt = $pdo->prepare($orderDetailsSql);

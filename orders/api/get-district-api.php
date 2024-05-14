@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 $cityId = isset($_GET['cityId']) ? $_GET['cityId'] : 0;
 
-$sql = "SELECT * FROM districts WHERE city_id = ?";
+$sql = "SELECT * FROM district WHERE city_id = ?";
 
 $districts = [];
 

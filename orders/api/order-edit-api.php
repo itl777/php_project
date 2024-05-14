@@ -18,12 +18,12 @@ try {
     $orderId = $_POST['orderId'];
 
     $orderUpdateSql = "UPDATE orders SET  
-    district_id = ?, 
-    address = ?, 
+    order_district_id = ?, 
+    order_address = ?, 
     recipient_name = ?, 
-    mobile_phone = ?, 
-    invoice_carrier = ?, 
-    tax_id = ?, 
+    recipient_mobile = ?, 
+    recipient_invoice_carrier = ?, 
+    recipient_tax_id = ?, 
     member_carrier = ?,
     order_status = ?,
     last_modified_at = now() 
@@ -65,10 +65,10 @@ try {
         $quantity = $_POST['productQuantities'][$index];
         $unitPrice = $_POST['productUnitPrices'][$index];
         $orderDetailsUpdateSql = "INSERT INTO order_details
-            (order_id, product_id, quantity, order_unit_price, created_at, last_modified_at)
+            (order_id, order_product_id, order_quantity, order_unit_price, created_at, last_modified_at)
             VALUES (?, ?, ?, ?, NOW(), NOW())
             ON DUPLICATE KEY UPDATE
-            quantity = VALUES(quantity),
+            order_quantity = VALUES(order_quantity),
             last_modified_at = NOW()";
 
         $orderDetailsUpdateStmt = $pdo->prepare($orderDetailsUpdateSql);
