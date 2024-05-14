@@ -6,8 +6,18 @@ $pageName = 'branch_add';
 
 <?php include __DIR__ . '/../../parts/html-head.php' ?>
 
+<?php
+require __DIR__ . '/../../config/pdo-connect.php';
+
+// 獲取主題資料
+$sql = "SELECT theme_id, theme_name FROM themes";
+$stmt = $pdo->query($sql);
+$themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+
 <style>
-  form .mb-3 .form-text {
+  form .mb-4 .form-text {
     color: tomato;
     font-weight: 800;
   }
@@ -20,64 +30,68 @@ $pageName = 'branch_add';
       <div class="card">
         <div class="card-body">
           <form name="form1" class="p-3" onsubmit="sendData(event)">
-            <div class="mb-3 col-5">
-              <label for="branch_name" class="form-label">分店名字</label>
+            <div class="mb-4 col-5">
+              <label for="branch_name" class="form-label fw-bold">分店名字</label>
               <input type="text" class="form-control" id="branch_name" name="branch_name">
               <div class="form-text"></div>
             </div>
 
-            <div class="mb-3 col-5 ">
-              <label for="theme_id" class="form-label">遊玩行程主題</label>
-              <select name="theme_id" id="theme_id">
-                <?php foreach ($branches as $branch): ?>
-                  <option value="<?php echo $branch['theme_id']; ?>"><?php echo $branch['theme_name']; ?></option>
-                <?php endforeach; ?>
-              </select><br>
+            <div class="mb-4 col-10">
+              <label class="form-label fw-bold">遊玩行程主題</label><br>
+              <?php foreach ($themes as $theme) : ?>
+                <div class="form-check form-check-inline me-3 mb-3">
+                  <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]" value="<?php echo $theme['theme_id']; ?>">
+                  <label class="form-check-label" for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
+                </div>
+              <?php endforeach; ?>
+              <div class="form-text"></div>
             </div>
 
-            <div class="mb-3 col-5">
-              <label for="branch_phone" class="form-label">電話</label>
+
+
+            <div class="mb-4 col-5">
+              <label for="branch_phone" class="form-label fw-bold">電話</label>
               <input type="text" class="form-control" id="branch_phone" name="branch_phone" placeholder="請輸入電話">
               <div class="form-text"></div>
             </div>
 
             <div class="row">
-              <div class="mb-3 col-5">
-                <label for="open_time" class="form-label">開門時間</label>
+              <div class="mb-4 col-5">
+                <label for="open_time" class="form-label fw-bold">開門時間</label>
                 <input type="text" class="form-control" id="open_time" name="open_time" placeholder="請輸入時間">
                 <div class="form-text"></div>
               </div>
-              <div class="mb-3 col-5">
-                <label for="close_time" class="form-label">閉門時間</label>
+              <div class="mb-4 col-5">
+                <label for="close_time" class="form-label fw-bold">閉門時間</label>
                 <input type="text" class="form-control" id="close_time" name="close_time" placeholder="請輸入時間">
                 <div class="form-text"></div>
               </div>
             </div>
 
             <div class="row">
-              <div class="mb-3 col-5">
-                <label for="branch_status" class="form-label">營業狀態</label>
+              <div class="mb-4 col-5">
+                <label for="branch_status" class="form-label fw-bold">營業狀態</label>
                 <select class="form-select" aria-label="Default select example" id="branch_status" name="branch_status">
-                  <option selected>狀態</option>
+                  <option value="" selected disabled>請選擇狀態</option>
                   <option value="新開幕">新開幕</option>
                   <option value="營業中">營業中</option>
                   <option value="裝潢">裝潢中</option>
                   <option value="停止營業">停止營業</option>
                 </select>
-              </div>
-
-              <div class="mb-3 col-8">
-                <label for="branch_address" class="form-label">地址</label>
-                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3"
-                  placeholder="請輸入地址"></textarea>
                 <div class="form-text"></div>
               </div>
 
-              <div class="d-flex justify-content-end me-3">
-                <button type="submit" class="btn btn-primary">新增</button>
+              <div class="mb-4 col-10">
+                <label for="branch_address" class="form-label fw-bold">地址</label>
+                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3" placeholder="請輸入地址"></textarea>
+                <div class="form-text"></div>
               </div>
-          </form>
+            </div>
 
+            <div class="d-flex justify-content-end me-3">
+              <button type="submit" class="btn btn-primary">新增</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -85,8 +99,7 @@ $pageName = 'branch_add';
 </div>
 
 <!-- Modal bt 彈跳視窗-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -98,7 +111,6 @@ $pageName = 'branch_add';
           資料新增成功 d(`･∀･)b
         </div>
         <div class="modal-footer">
-
           <button type="button" class="btn btn-primary" onclick="location.href='theme_list.php'">到主題頁</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
         </div>
@@ -109,197 +121,103 @@ $pageName = 'branch_add';
 
 <?php include __DIR__ . '/../../parts/scripts.php' ?>
 
-
-
 <script>
   const nameField = document.getElementById('branch_name');
-  // const imgField = document.getElementById('theme_img');
-  // const descField = document.getElementById('theme_desc');
-  // const priceField = document.getElementById('price');
-  // const diffField = document.getElementById('difficulty');
-  // const playersField = document.getElementById('suitable_players');
-  // const startTimeField = document.getElementById('start_time');
-  // const endTime = document.getElementById('end_time');
-  // const themeTime = document.getElementById('theme_time');
-  // const intervals = document.getElementById('intervals');
-  // const startDate = document.getElementById('start_date');
-  // const endDate = document.getElementById('end_date');
-
-  // console.log(document.form1.name);
+  const phoneField = document.getElementById('branch_phone');
+  const openTimeField = document.getElementById('open_time');
+  const closeTimeField = document.getElementById('close_time');
+  const statusField = document.getElementById('branch_status');
+  const addressField = document.getElementById('branch_address');
+  const form = document.form1;
 
   const sendData = e => {
-    e.preventDefault(); // 不要讓 form1 以傳統的方式送出
+    e.preventDefault();
 
-    // nameField.style.border = '1px solid #CCCCCC';
-    // nameField.nextElementSibling.innerText = '';
+    nameField.style.border = '1px solid #CCCCCC';
+    nameField.nextElementSibling.innerText = '';
 
-    // imgField.style.border = '1px solid #CCCCCC';
+    phoneField.style.border = '1px solid #CCCCCC';
+    phoneField.nextElementSibling.innerText = '';
 
-    // descField.style.border = '1px solid #CCCCCC';
-    // descField.nextElementSibling.innerText = '';
+    openTimeField.style.border = '1px solid #CCCCCC';
+    openTimeField.nextElementSibling.innerText = '';
 
-    // priceField.style.border = '1px solid #CCCCCC';
-    // priceField.nextElementSibling.innerText = '';
+    closeTimeField.style.border = '1px solid #CCCCCC';
+    closeTimeField.nextElementSibling.innerText = '';
 
-    // diffField.style.border = '1px solid #CCCCCC';
+    statusField.style.border = '1px solid #CCCCCC';
+    statusField.nextElementSibling.innerText = '';
 
-    // playersField.style.border = '1px solid #CCCCCC';
-    // playersField.nextElementSibling.innerText = '';
-
-    // startTimeField.style.border = '1px solid #CCCCCC';
-    // startTimeField.nextElementSibling.innerText = '';
-
-    // endTime.style.border = '1px solid #CCCCCC';
-    // endTime.nextElementSibling.innerText = '';
-
-    // themeTime.style.border = '1px solid #CCCCCC';
-    // intervals.style.border = '1px solid #CCCCCC';
-    // startDate.style.border = '1px solid #CCCCCC';
-    // endDate.style.border = '1px solid #CCCCCC';
+    addressField.style.border = '1px solid #CCCCCC';
+    addressField.nextElementSibling.innerText = '';
 
     // TODO: 欄位資料檢查
 
     let isPass = true; // 表單有沒有通過檢查
-    if (nameField.value.length < 1) {
+    // 清除主题选择的错误信息
+    // const themeError = document.querySelector('.theme-error');
+    // themeError.innerText = '';
+
+
+    if (nameField.value.trim() === '') {
       isPass = false;
       nameField.style.border = '1px solid tomato';
-      nameField.nextElementSibling.innerText = '請填寫主題名稱';
+      nameField.nextElementSibling.innerText = '請填寫分店名稱';
     }
-    // if (imgField.value.length === 0) {
-    //   isPass = false;
-    //   imgField.style.border = '1px solid tomato';
-    // }
-    // if (descField.value.length < 1) {
-    //   isPass = false;
-    //   descField.style.border = '1px solid tomato';
-    //   descField.nextElementSibling.innerText = '請填寫描述';
-    // } else if (descField.value.length > 250) {
-    //   isPass = false;
-    //   descField.style.border = '1px solid tomato';
-    //   descField.nextElementSibling.innerText = '超過字數限制';
-    // }
-    // if (priceField.value.length < 1) {
-    //   isPass = false;
-    //   priceField.style.border = '1px solid tomato';
-    //   priceField.nextElementSibling.innerText = '請填寫價錢';
-    // }
 
-    // 檢查是否已經存在警告訊息元素
-    // var existingWarningMessage = diffField.parentNode.querySelector('.warning-message');
+    // 检查勾选框是否有选中主题
+    const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
+    if (selectedThemes.length === 0) {
+      isPass = false;
+      const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
+      themeCheckboxes.forEach(checkbox => {
+        checkbox.nextElementSibling.style.color = 'tomato';
+      });
+      themeError.innerText = '请至少选择一个主题';
+    } else {
+      const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
+      themeCheckboxes.forEach(checkbox => {
+        checkbox.nextElementSibling.style.color = ''; // 重置颜色
+      });
+    }
 
-    // if (diffField.value === '難度') {
-    //   isPass = false;
-    //   diffField.style.border = '1px solid tomato';
+    if (phoneField.value.trim() === '') {
+      isPass = false;
+      phoneField.style.border = '1px solid tomato';
+      phoneField.nextElementSibling.innerText = '請填寫電話';
+    }
 
-    // 如果不存在警告訊息元素，則創建並插入
-    // if (!existingWarningMessage) {
-    //   var warningMessage = document.createElement('div');
-    //   warningMessage.textContent = '請選擇一個不同的難度等級!';
-    //   warningMessage.style.fontSize = '13px';
-    //   warningMessage.style.fontWeight = 'bold';
-    //   warningMessage.style.marginTop = '5px';
-    //   warningMessage.style.color = 'tomato';
-    //   warningMessage.className = 'warning-message'; // 添加一個唯一的類名
+    if (openTimeField.value.trim() === '') {
+      isPass = false;
+      openTimeField.style.border = '1px solid tomato';
+      openTimeField.nextElementSibling.innerText = '請填寫開門時間';
+    }
 
-    // 插入警告訊息元素到 diffField 下面
-    // diffField.parentNode.insertBefore(warningMessage, diffField.nextSibling);
-    //   }
-    // } else {
-    //   // 如果不再是 '難度'，且存在警告訊息元素，則移除
-    //   if (existingWarningMessage) {
-    //     existingWarningMessage.parentNode.removeChild(existingWarningMessage);
-    //   }
-    // }
+    if (closeTimeField.value.trim() === '') {
+      isPass = false;
+      closeTimeField.style.border = '1px solid tomato';
+      closeTimeField.nextElementSibling.innerText = '請填寫閉門時間';
+    }
 
-    // if (playersField.value.length < 1) {
-    //   isPass = false;
-    //   playersField.style.border = '1px solid tomato';
-    //   playersField.nextElementSibling.innerText = '請填寫遊玩人數 _ ~ _ 人';
-    // }
-    // if (startTimeField.value.length < 1) {
-    //   isPass = false;
-    //   startTimeField.style.border = '1px solid tomato';
-    //   startTimeField.nextElementSibling.innerText = '請填寫開始時間';
-    // }
-    // if (endTime.value.length < 1) {
-    //   isPass = false;
-    //   endTime.style.border = '1px solid tomato';
-    //   endTime.nextElementSibling.innerText = '請填寫結束時間';
-    // }
+    if (statusField.value === '') {
+      isPass = false;
+      statusField.style.border = '1px solid tomato';
+      statusField.nextElementSibling.innerText = '請選擇營業狀態';
+    }
 
-    // 檢查是否已經存在警告訊息元素
-    // var existingWarningMessage = themeTime.parentNode.querySelector('.warning-message');
+    if (addressField.value.trim() === '') {
+      isPass = false;
+      addressField.style.border = '1px solid tomato';
+      addressField.nextElementSibling.innerText = '請填寫地址';
+    }
 
-    // if (themeTime.value === '時長') {
-    //   isPass = false;
-    //   themeTime.style.border = '1px solid tomato';
+    // 重置其他欄位樣式和錯誤訊息
+    // const fields = [form.branch_phone, form.open_time, form.close_time, form.branch_status, form.branch_address];
+    // fields.forEach(field => {
+    //   field.style.border = '';
+    //   field.nextElementSibling.innerText = '';
+    // });
 
-    //   // 如果不存在警告訊息元素，則創建並插入
-    //   if (!existingWarningMessage) {
-    //     var warningMessage = document.createElement('div');
-    //     warningMessage.textContent = '請選擇時長';
-    //     warningMessage.style.fontSize = '13px';
-    //     warningMessage.style.fontWeight = 'bold';
-    //     warningMessage.style.marginTop = '5px';
-    //     warningMessage.style.color = 'tomato';
-    //     warningMessage.className = 'warning-message'; // 添加一個唯一的類名
-
-    //     // 插入警告訊息元素到 下面
-    //     themeTime.parentNode.insertBefore(warningMessage, themeTime.nextSibling);
-    //   }
-    // } else {
-    //   // 如果不再是 '時長'，且存在警告訊息元素，則移除
-    //   if (existingWarningMessage) {
-    //     existingWarningMessage.parentNode.removeChild(existingWarningMessage);
-    //   }
-    // }
-
-    // // 檢查是否已經存在警告訊息元素
-    // var existingWarningMessage = intervals.parentNode.querySelector('.warning-message');
-
-    // if (intervals.value === '間隔') {
-    //   isPass = false;
-    //   intervals.style.border = '1px solid tomato';
-
-    //   // 如果不存在警告訊息元素，則創建並插入
-    //   if (!existingWarningMessage) {
-    //     var warningMessage = document.createElement('div');
-    //     warningMessage.textContent = '請選擇間隔時間';
-    //     warningMessage.style.fontSize = '13px';
-    //     warningMessage.style.fontWeight = 'bold';
-    //     warningMessage.style.marginTop = '5px';
-    //     warningMessage.style.color = 'tomato';
-    //     warningMessage.className = 'warning-message'; // 添加一個唯一的類名
-
-    //     // 插入警告訊息元素到 diffField 下面
-    //     intervals.parentNode.insertBefore(warningMessage, intervals.nextSibling);
-    //   }
-    // } else {
-    //   // 如果不再是 '難度'，且存在警告訊息元素，則移除
-    //   if (existingWarningMessage) {
-    //     existingWarningMessage.parentNode.removeChild(existingWarningMessage);
-    //   }
-    // }
-
-    // // 檢查是否已經存在警告訊息元素
-    // var existingWarningMessage = startDate.parentNode.querySelector('.warning-message');
-
-    // if (startDate.value === '') {
-    //   // 日期是必填欄位，如果沒有輸入則顯示錯誤
-    //   isPass = false;
-    //   startDate.style.border = '1px solid tomato';
-    //   startDate.nextElementSibling.innerText = '請選擇開始日期';
-    // }
-
-    // // 檢查是否已經存在警告訊息元素
-    // var existingWarningMessage = startDate.parentNode.querySelector('.warning-message');
-
-    // if (endDate.value === '') {
-    //   // 日期是必填欄位，如果沒有輸入則顯示錯誤
-    //   isPass = false;
-    //   endDate.style.border = '1px solid tomato';
-    //   endDate.nextElementSibling.innerText = '請選擇結束日期';
-    // }
 
 
     // 有通過檢查, 才要送表單
@@ -307,14 +225,14 @@ $pageName = 'branch_add';
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
       fetch('branch_add_api.php', {
-        method: 'POST',
-        body: fd, // Content-Type: multipart/form-data
-      }).then(r => r.json())
+          method: 'POST',
+          body: fd, // Content-Type: multipart/form-data
+        }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
             myModal.show();
-          } else { }
+          } else {}
         })
         .catch(ex => console.log(ex))
     }

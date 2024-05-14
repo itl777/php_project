@@ -49,19 +49,15 @@ if ($totalRows) {
       <div class="accordion accordion-flush col-2" id="accordionFlushExample">
         <div class="accordion-item">
           <h2 class="accordion-header" id="flush-headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
               行程管理
             </button>
           </h2>
-          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-            data-bs-parent="#accordionFlushExample">
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body d-flex ">
               <div class="d-flex flex-column bd-highlight mb-3">
-                <div class="p-2 bd-highlight "><a class="link-secondary" href="branch_list.php"
-                    style="text-decoration: none;">分店管理</a></div>
-                <div class="p-2 bd-highlight"><a class="link-secondary" href="theme_list.php"
-                    style="text-decoration: none;">主題管理</a></div>
+                <div class="p-2 bd-highlight "><a class="link-secondary" href="branch_list.php" style="text-decoration: none;">分店管理</a></div>
+                <div class="p-2 bd-highlight"><a class="link-secondary" href="theme_list.php" style="text-decoration: none;">主題管理</a></div>
               </div>
             </div>
           </div>
@@ -72,24 +68,21 @@ if ($totalRows) {
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill" id="pills-home-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">主題列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">主題列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill" id="pills-profile-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-              aria-selected="false">新增主題</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增主題</button>
           </li>
           <li class="ms-auto">
+
             <!-- 查詢 -->
             <div class="container ms-5">
               <form id="searchForm" class="mb-3">
                 <div class="row">
                   <div class="col-8">
-                    <input type="text" class="form-control" placeholder="输入主题名稱" name="theme_name">
+                    <input type="text" class="form-control" placeholder="輸入主題名稱" name="theme_name">
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
                   </div>
                 </div>
@@ -119,7 +112,7 @@ if ($totalRows) {
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r): ?>
+                <?php foreach ($rows as $r) : ?>
                   <tr>
                     <td><?= $r['theme_id'] ?></td>
                     <td><?= $r['theme_name'] ?></td>
@@ -138,8 +131,7 @@ if ($totalRows) {
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="theme_delete.php?theme_id=<?= $r['theme_id'] ?>"
-                        onclick="return confirm('是否要刪除編號為<?= $r['theme_id'] ?>的資料')">
+                    <td><a href="theme_delete.php?theme_id=<?= $r['theme_id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['theme_id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
                   </tr>
@@ -160,12 +152,12 @@ if ($totalRows) {
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                    if ($i >= 1 and $i <= $totalPages): ?>
+                  <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                    if ($i >= 1 and $i <= $totalPages) : ?>
                       <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
                         <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                       </li>
-                    <?php endif;
+                  <?php endif;
                   endfor ?>
                   <li class="page-item">
                     <a class="page-link" href="#">
@@ -194,7 +186,7 @@ if ($totalRows) {
 <?php include __DIR__ . '/../../parts/scripts.php' ?>
 
 <script>
-  document.getElementById('searchForm').addEventListener('submit', function (event) {
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault(); // 阻止表單提交
 
     var formData = new FormData(this);
@@ -224,7 +216,6 @@ if ($totalRows) {
         document.getElementById('themeListTable').appendChild(tableBody)
       });
   });
-
 </script>
 
 <?php include __DIR__ . '/../../parts/html-foot.php' ?>
