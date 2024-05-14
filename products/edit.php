@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/config/PDO-config.php';  // 引入資料庫設定
+require __DIR__ . '/../config/pdo-connect.php';  // 引入資料庫設定
 require __DIR__ . '/db_select/select_status.php'; //搜尋商品狀態
 
 
@@ -260,7 +260,7 @@ $product_img_row = $stmt->fetchAll();
                     data
                 });
                 $('#original_inp').remove();
-                
+
                 if (data.success && data.files.length) {
                     let str = "";
                     for (let i of data.files) {

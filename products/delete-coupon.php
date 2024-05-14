@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/config/PDO-config.php';  // 引入資料庫設定
+require __DIR__ . '/../config/pdo-connect.php';  // 引入資料庫設定
 
 // 確認sid有沒有值，如果有轉成數字
 $coupon_id = isset($_GET['coupon_id']) ? intval($_GET['coupon_id']) : 0;
