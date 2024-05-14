@@ -3,7 +3,7 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
-require __DIR__ . '/../../config/pdo-content.php';
+require __DIR__ . '/../../config/pdo-connect.php';
 header('Content-Type: application/json');
 
 $output = [

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../config/pdo-content.php';
+require __DIR__ . '/../../config/pdo-connect.php';
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1) {
     header('Location: branch_list.php');
