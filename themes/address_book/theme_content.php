@@ -4,10 +4,7 @@ $title = '主題內容頁';
 $pageName = 'theme_content';
 ?>
 <?php
-
 require __DIR__ . '/../../config/pdo-connect.php';
-
-
 ?>
 
 <?php include __DIR__ . '/../../parts/html-head.php' ?>
