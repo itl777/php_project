@@ -30,7 +30,7 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT team_id, team_title, leader_id, nickname, tour, theme_name, team_limit, status_text
+        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, status_text
         FROM `teams` 
         join `users` on leader_id = users.user_id
         join `themes` on tour = themes.theme_id
@@ -126,7 +126,7 @@ if ($totalRows) {
                             <td>
                             <a href="./teams/team_view.php?team_id=<?= $r['team_id'] ?>">
                                 <?= $r['team_title'] ?></a></td>
-                            <td><?= $r['nickname'] ?></td>
+                            <td><?= $r['nick_name'] ?></td>
                             <td><?= $r['theme_name'] ?></td>
                             <td> / <?= $r['team_limit'] ?></td>
                             <td><?= $r['status_text'] ?></td>
