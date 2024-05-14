@@ -20,7 +20,7 @@ district_name,
 address,
 type 
 FROM address 
-JOIN district ON address.postal_codes = district.id 
+JOIN district ON address.district_id = district.id 
 JOIN city ON district.city_id = city.id 
 WHERE user_id = $user_id";
 

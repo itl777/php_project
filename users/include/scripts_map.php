@@ -8,8 +8,9 @@
 <!-- <script src="js/clear_form.js"></script> -->
 
 <!-- 動作函式 -->
+<script src="js/user_list_data.js"></script>
 <script src="js/edit_modal_data.js"></script>
-<script src="js/address_modal_data.js"></script>
 <script src="js/user_modal_send_data.js"></script>
 <script src="js/avatar_upload.js"></script>
+<script src="js/address_modal_data.js"></script>
 <script src="js/address_send_data.js"></script>

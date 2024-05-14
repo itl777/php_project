@@ -24,7 +24,7 @@ const addressLineData = async (addressData = {}) => {
   let cityOptionsHtml = await cityOptions(addressData.city_id);
   let postalCodesOptionsHtml = await postalCodesOptions(
     addressData.city_id,
-    addressData.postal_codes_id
+    addressData.district_id
   );
 
   let addressLineData = '';
@@ -39,7 +39,7 @@ const addressLineData = async (addressData = {}) => {
     `<select name="city" class="form-select d-inline-block" onChange="cityChanged(event)">${cityOptionsHtml}</select>`;
 
   addressLineData +=
-    `<select name="postal_codes" class="form-select d-inline-block">${postalCodesOptionsHtml}</select>`;
+    `<select name="district_id" class="form-select d-inline-block">${postalCodesOptionsHtml}</select>`;
 
   addressLineData +=
     `<input type="text" name="addressLine" class="form-control d-inline-block" value="${addressData.address || ""}">`;
@@ -92,7 +92,7 @@ const cityOptions = async (city_id) => {
   return options;
 };
 
-const postalCodesOptions = async (city_id, postal_codes_id = {}) => {
+const postalCodesOptions = async (city_id, district_id = {}) => {
   let options = "";
   if (!city_id) {
     return `<option value="">請選擇</option>`;
@@ -100,7 +100,7 @@ const postalCodesOptions = async (city_id, postal_codes_id = {}) => {
     let url = "api/address_postal_codes_data_api.php";
     const postal_codes = cachedCityData || (await fetchJsonData(url, { city_id: city_id }));
     postal_codes.forEach((item) => {
-      let selected = item.id === postal_codes_id ? "selected" : "";
+      let selected = item.id === district_id ? "selected" : "";
       options += `<option value="${item.id}" ${selected}>${item.district_name}</option>`;
     });
     return options;
@@ -109,7 +109,7 @@ const postalCodesOptions = async (city_id, postal_codes_id = {}) => {
 
 const cityChanged = async (event) => {
   const cityId = event.target.value;
-  const postalCodesSelect = event.target.parentElement.querySelector('[name="postal_codes"]');
+  const postalCodesSelect = event.target.parentElement.querySelector('[name="district_id"]');
   const postalCodesOptionsHtml = await postalCodesOptions(cityId);
   postalCodesSelect.innerHTML = postalCodesOptionsHtml;
 };

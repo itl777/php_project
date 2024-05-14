@@ -7,7 +7,7 @@ const addressSendData = function (e) {
   let $errorText = $addressForm.find(".form-text");
   let $address_id = $addressForm.find('[name="address_id"]');
   let $city = $addressForm.find('[name="city"]');
-  let $postal_codes = $addressForm.find('[name="postal_codes"]');
+  let $district_id = $addressForm.find('[name="district_id"]');
   let $addressLine = $addressForm.find('[name="addressLine"]');
   let $recipient_name = $addressForm.find('[name="recipient_name"]');
   let $mobile_phone = $addressForm.find('[name="mobile_phone"]');
@@ -38,7 +38,7 @@ const addressSendData = function (e) {
     };
     let fields = [
       $city[i],
-      $postal_codes[i],
+      $district_id[i],
       $addressLine[i],
       $recipient_name[i],
       $mobile_phone[i],
@@ -49,7 +49,7 @@ const addressSendData = function (e) {
       data = {
         address_id: $address_id[i].value,
         city: $city[i].value,
-        postal_codes: $postal_codes[i].value,
+        district_id: $district_id[i].value,
         addressLine: $addressLine[i].value,
         recipient_name: $recipient_name[i].value,
         mobile_phone: $mobile_phone[i].value,
@@ -69,7 +69,6 @@ const addressSendData = function (e) {
         updateOrInsert.push(data);
       if ($dataTag === "delete") DELETE.push(data);
     } else {
-      console.log(`isPass no ${$address_id.eq(i).data("tag")} ${i}`);
       $errorText[i].innerHTML = "請填寫完整地址";
     }
   }

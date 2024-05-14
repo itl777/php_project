@@ -95,14 +95,22 @@ if (!empty($_POST)) {
   $user_status = null;
   if (isset($_POST['user_status'])) {
     if ($_POST['user_status'] != 0 && $_POST['user_status'] != 1) {
-      $output['user_status'] = '請選擇帳號啟用狀態';
-      $output['code'] = 108;
-      echo json_encode($output, JSON_UNESCAPED_UNICODE);
-      exit;
+      $user_status = '0';
     } else {
       $user_status = $_POST['user_status'];
     }
   }
+
+  $blacklist = null;
+  if (isset($_POST['blacklist'])) {
+    if ($_POST['blacklist'] != 0 && $_POST['blacklist'] != 1) {
+      $blacklist = '0';
+    } else {
+      $blacklist = $_POST['blacklist'];
+    }
+  }
+
+
   $avatar = $_POST['avatar'];
   if (empty($_POST['avatar'])) {
     $avatar = 'default.gif';
@@ -123,8 +131,10 @@ if (!empty($_POST)) {
   `mobile_phone`,
   `invoice_carrier_id`,
   `tax_id`,
-  `note`,
   `avatar`,
+  `note`,
+  `user_status`,
+  `blacklist`,
   `created_at`,
   `last_modified_at`
   ) VALUES (
@@ -139,6 +149,8 @@ if (!empty($_POST)) {
     ?,
     ?,
     ?,
+    '1',
+    '0',
     now(),
     now()
     )";
@@ -153,8 +165,8 @@ if (!empty($_POST)) {
       $mobile_phone,
       $_POST['invoice_carrier_id'],
       $_POST['tax_id'],
+      $avatar,
       $_POST['note'],
-      $avatar
     ]);
   }
 
@@ -172,9 +184,10 @@ if (!empty($_POST)) {
   `mobile_phone`=?,
   `invoice_carrier_id`=?,
   `tax_id`=?,
-  `note`=?,
   `avatar`=?,
+  `note`=?,
   `user_status`=?,
+  `blacklist`=?,
   `last_modified_at`= NOW()
   WHERE `user_id`= ?";
 
@@ -188,9 +201,10 @@ if (!empty($_POST)) {
       $mobile_phone,
       $_POST['invoice_carrier_id'],
       $_POST['tax_id'],
-      $_POST['note'],
       $avatar,
+      $_POST['note'],
       $user_status,
+      $blacklist,
       $_POST['user_id']
     ];
     $stmt = $pdo->prepare($sql);

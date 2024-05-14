@@ -9,7 +9,7 @@ $sql_address = "SELECT
 user_id AS user_id,
 address.id AS address_id,
 city_id AS city_id,
-district.id AS postal_codes_id,
+district.id AS district_id,
 address,
 recipient_name,
 mobile_phone,
@@ -18,7 +18,7 @@ type
 FROM address 
 
 JOIN district 
-ON address.postal_codes = district.id 
+ON address.district_id = district.id 
 
 WHERE user_id = $user_id";
 

@@ -121,6 +121,7 @@ const userModalSendData = function (e) {
         } else {
           editModal.hide();
         }
+        pageChange(pageNow);
       }, 1000);
 
     })

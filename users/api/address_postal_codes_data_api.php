@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 $city_id = json_decode(file_get_contents("php://input"))->city_id;
 
 
-$sql_postal_codes = "SELECT * FROM district WHERE city_id = $city_id";
-$postal_codes_data = $pdo->query($sql_postal_codes)->fetchAll();
+$sql_district = "SELECT * FROM district WHERE city_id = $city_id";
+$district_data = $pdo->query($sql_district)->fetchAll();
 
-echo json_encode($postal_codes_data);
+echo json_encode($district_data);

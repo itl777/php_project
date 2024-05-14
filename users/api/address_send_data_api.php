@@ -55,7 +55,7 @@ try {
     "INSERT INTO `address` (
       `id`,
       `user_id`, 
-      `postal_codes`, 
+      `district_id`, 
       `address`, 
       `recipient_name`, 
       `mobile_phone`
@@ -72,8 +72,8 @@ try {
           echo json_encode($output, JSON_UNESCAPED_UNICODE);
           exit;
         }
-        $postal_codes = $item['postal_codes'];
-        if (strlen($postal_codes) <= 0) {
+        $district_id = $item['district_id'];
+        if (strlen($district_id) <= 0) {
           $output['code'] = 105;
           echo json_encode($output, JSON_UNESCAPED_UNICODE);
           exit;
@@ -98,7 +98,7 @@ try {
         }
 
 
-        $insert_row = '(' . implode(',', [$address_id, $user_id, $postal_codes, $addressLine, $recipient_name, $mobile_phone]) . ')';
+        $insert_row = '(' . implode(',', [$address_id, $user_id, $district_id, $addressLine, $recipient_name, $mobile_phone]) . ')';
 
         $sql2[] = $insert_row;
       };
@@ -107,7 +107,7 @@ try {
     $sql3 =
     "ON DUPLICATE KEY UPDATE 
       `user_id` = VALUES(user_id),
-      `postal_codes` = VALUES(postal_codes), 
+      `district_id` = VALUES(district_id), 
       `address` = VALUES(address), 
       `recipient_name` = VALUES(recipient_name), 
       `mobile_phone` = VALUES(mobile_phone);";

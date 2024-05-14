@@ -10,7 +10,6 @@ const addModalShow = function () {
   addModalData();
 };
 
-
 const fetchEditModalData = function (user_id) {
   fetch("api/edit_modal_data_api.php", {
     method: "POST",
@@ -31,15 +30,18 @@ const ModalData = function (user_data, address_data) {
   let isSet = Object.keys(user_data).length;
   let ModalData = "";
 
-  ModalData += `<input type="hidden" name="user_id" value="${user_data.user_id || ""
-    }">`;
+  ModalData += `<input type="hidden" name="user_id" value="${
+    user_data.user_id || ""
+  }">`;
 
   ModalData += `<div class="row align-items-center">
         <div class="col-12 d-flex flex-column align-items-center">
-          <input type="hidden" name="avatar" id="avatar" value="${user_data.avatar || ""
-    }">
-            <img src="images/${user_data.avatar || ""
-    }" id="avatar_img" alt="頭像" class="rounded-circle opacity-100" style="width: 200px;height: 200px;transition: all 500ms ease-out;object-fit: cover;">  
+          <input type="hidden" name="avatar" id="avatar" value="${
+            user_data.avatar || ""
+          }">
+            <img src="images/${
+              user_data.avatar || "default.gif"
+            }" id="avatar_img" alt="頭像" class="rounded-circle opacity-100" style="width: 200px;height: 200px;transition: all 500ms ease-out;object-fit: cover;">  
           <button type="button" class="btn btn-primary" onclick="avatar_upload.click()">上傳頭像</button>
         </div>
       </div>`;
@@ -90,8 +92,9 @@ const ModalData = function (user_data, address_data) {
         <label for="nick_name" class="col-form-label">暱稱</label>
       </div>
       <div class="col-8">
-        <input type="text" name="nick_name" class="form-control" value="${user_data.nick_name || ""
-    }">
+        <input type="text" name="nick_name" class="form-control" value="${
+          user_data.nick_name || ""
+        }">
         <div class="form-text"></div>
       </div>
     </div>
@@ -107,13 +110,15 @@ const ModalData = function (user_data, address_data) {
       <div class="col-8">
         <div class="form-control">
         <label class="form-check-label me-3">
-          <input class="form-check-input" type="radio" name="gender" value="0" ${user_data.gender == 0 ? "checked" : ""
-    }>
+          <input class="form-check-input" type="radio" name="gender" value="0" ${
+            user_data.gender == 0 ? "checked" : ""
+          }>
             男
           </label>
         <label class="form-check-label me-3">
-          <input class="form-check-input" type="radio" name="gender" value="1" ${user_data.gender == 1 ? "checked" : ""
-    }>
+          <input class="form-check-input" type="radio" name="gender" value="1" ${
+            user_data.gender == 1 ? "checked" : ""
+          }>
             女
           </label>
         </div>
@@ -130,8 +135,9 @@ const ModalData = function (user_data, address_data) {
         <label for="birthday" class="col-form-label">生日</label>
       </div>
       <div class="col-8">
-        <input type="date" name="birthday" class="form-control" value="${user_data.birthday || ""
-    }">
+        <input type="date" name="birthday" class="form-control" value="${
+          user_data.birthday || ""
+        }">
         <div class="form-text"></div>
       </div>
     </div>
@@ -142,8 +148,9 @@ const ModalData = function (user_data, address_data) {
         <label for="mobile_phone" class="col-form-label">手機號碼</label>
       </div>
       <div class="col-8">
-        <input type="text" name="mobile_phone" class="form-control" value="${user_data.mobile_phone || ""
-    }">
+        <input type="text" name="mobile_phone" class="form-control" value="${
+          user_data.mobile_phone || ""
+        }">
         <div class="form-text"></div>
       </div>
     </div>
@@ -205,8 +212,9 @@ const ModalData = function (user_data, address_data) {
           <label for="note" class="form-label">備註</label>
         </div>
         <div class="col-10">
-          <textarea class="form-control" name="note" rows="3">${user_data.note || ""
-    }</textarea>
+          <textarea class="form-control" name="note" rows="3">${
+            user_data.note || ""
+          }</textarea>
           <div class="form-text"></div>
         </div>
       </div>
@@ -221,23 +229,59 @@ const ModalData = function (user_data, address_data) {
             <span class="col-form-label">帳號狀態</span>
           </div>
           <div class="col-8">
-            <div class="form-check form-check-inline">
-            <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="user_status" value="1" ${user_data.user_status == 1 ? "checked" : ""
-      }>
+          <div class="form-control">
+          <label class="form-check-label me-3">
+              <input class="form-check-input" type="radio" name="user_status" value="1" ${
+                user_data.user_status == 1 ? "checked" : ""
+              }>
                 啟用
               </label>
-            </div>
-            <div class="form-check form-check-inline">
-            <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="user_status" value="0" ${user_data.user_status == 0 ? "checked" : ""
-      }>
+              <label class="form-check-label me-3">
+              <input class="form-check-input" type="radio" name="user_status" value="0" ${
+                user_data.user_status == 0 ? "checked" : ""
+              }>
                 停用
               </label>
             </div>
           </div>
         </div>
       </div>
+      <div class="col-6">
+      <div class="row">
+        <div class="col-4">
+          <span class="col-form-label">黑名單</span>
+        </div>
+        <div class="col-8">
+          <div class="form-control">
+            <label class="form-check-label me-3">
+                <input class="form-check-input" type="radio" name="blacklist" value="1" ${
+                  user_data.blacklist == 1 ? "checked" : ""
+                }>
+                  是
+            </label>
+            <label class="form-check-label me-3">
+            <input class="form-check-input" type="radio" name="blacklist" value="0" ${
+              user_data.blacklist == 0 ? "checked" : ""
+            }>
+              否
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+    </div >
+
+
+    <div class="row align-items-center">
       <div class="col-6">
         <div class="row">
           <div class="col-4">
@@ -248,7 +292,8 @@ const ModalData = function (user_data, address_data) {
           </div>
         </div>
       </div>
-    </div >
+    </div>
+
     <div class="row align-items-center">
       <div class="col-6">
         <div class="row">
@@ -256,7 +301,9 @@ const ModalData = function (user_data, address_data) {
             <span class="col-form-label">修改時間</span>
           </div>
           <div class="col-8">
-            <span class="col-form-label">${user_data.last_modified_at || ""}</span>
+            <span class="col-form-label">${
+              user_data.last_modified_at || ""
+            }</span>
           </div>
         </div>
       </div>
@@ -266,8 +313,9 @@ const ModalData = function (user_data, address_data) {
             <span class="col-form-label">修改人員</span>
           </div>
           <div class="col-8">
-            <span class="col-form-label">${user_data.last_modified_by || ""
-      }</span>
+            <span class="col-form-label">${
+              user_data.last_modified_by || ""
+            }</span>
           </div>
         </div>
       </div>

@@ -34,8 +34,8 @@ try {
     return $result2;
   }
 
-  $sql_postal_codes = "SELECT * FROM district";
-  $postal_codes_data = $pdo->query($sql_postal_codes)->fetchAll();
+  $sql_district = "SELECT * FROM district";
+  $district_data = $pdo->query($sql_district)->fetchAll();
 
   $sql_users = "SELECT count(user_id) count FROM users";
   $users_rows = $pdo->query($sql_users)->fetch();
@@ -43,7 +43,7 @@ try {
 
   $sql2 = "INSERT INTO `address`(
 `user_id`,
-`postal_codes`,
+`district_id`,
 `address`,
 `recipient_name`,
 `mobile_phone`,
@@ -61,9 +61,9 @@ try {
   for ($i = 0; $i < 10; $i++) {
     $FK_user_id = rand(1, $users_rows['count']);
 
-    $result = $postal_codes_data[rand(0, count($postal_codes_data) - 1)];
+    $result = $district_data[rand(0, count($district_data) - 1)];
 
-    $FK_postal_codes_id = $result['id'];
+    $district_id = $result['id'];
     $address_line = '完整地址' . getRandomText(rand(0, 80), $number);
     $receiver = getRandomArray($lasts) . getRandomArray($firsts);
     $mobile_phone = '09' . getRandomText(8, $number);
@@ -73,7 +73,7 @@ try {
 
     $stmt2->execute([
       $FK_user_id,
-      $FK_postal_codes_id,
+      $district_id,
       $address_line,
       $receiver,
       $mobile_phone,

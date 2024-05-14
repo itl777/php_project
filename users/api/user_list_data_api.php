@@ -7,8 +7,13 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 
 //TODO 前端要給的資料
-$page = 1;
+if (isset($data['page'])) {
+  $page = $data['page'];
+} else {
+  $page = 1;
+}
 $perPage = 20; # 每頁有幾筆
+
 // $user_id = 1; //會員編號查詢
 // $account = ''; //帳號查詢
 // $name = ''; //姓名查詢
@@ -51,7 +56,8 @@ if ($totalRows) {
     avatar
     FROM `users` 
     ORDER BY user_id";
-  if (isset($DESC)) $sql1 . "DESC";
+  if (isset($DESC))
+    $sql1 . "DESC";
 
   $sql2 = '';
 
