@@ -279,11 +279,11 @@ function validateForm() {
   const fieldsToCheck = [
     { id: 'orderDate', message: '請選擇訂單日期' },
     { id: 'memberId', message: '請輸入會員' },
-    { id: 'recipientName', message: '請輸入收件人姓名' },
-    { id: 'recipientMobile', message: '請輸入收件人手機' },
-    { id: 'city', message: '請選擇縣市' },
-    { id: 'district', message: '請選擇鄉鎮市區' },
-    { id: 'address', message: '請輸入地址' },
+    // { id: 'recipientName', message: '請輸入收件人姓名' },
+    // { id: 'recipientMobile', message: '請輸入收件人手機' },
+    // { id: 'city', message: '請選擇縣市' },
+    // { id: 'district', message: '請選擇鄉鎮市區' },
+    // { id: 'address', message: '請輸入地址' },
   ];
 
   fieldsToCheck.forEach(field => {
@@ -295,6 +295,23 @@ function validateForm() {
       clearErrorFor(inputElement);
     }
   });
+
+  const recipientName = document.getElementById('recipientName');
+  const recipientMobile = document.getElementById('recipientMobile');
+  const city = document.getElementById('city');
+  const district = document.getElementById('district');
+  const address = document.getElementById('address');
+
+  if (!emptyChecked(recipientName.value) || !emptyChecked(recipientMobile.value) || !emptyChecked(city.value) || !emptyChecked(district.value)  || !emptyChecked(address.value)   || district.value == '請選擇') {
+    document.querySelector('.address-helper-text').textContent = '請輸入完整收件人資訊';
+    isValid = false;
+  } else {
+    document.querySelector('.address-helper-text').textContent = '';
+  }
+
+  function recipientValidation () {
+    
+  }
 
   // 手機載具與統一編號
   const mobileInvoiceInput = document.getElementById('mobileInvoice');
