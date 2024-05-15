@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
               document.getElementById('city').value = address.cityId;
               document.getElementById('district').value = address.districtId;
               document.getElementById('address').value = address.address;
+              document.querySelector('.address-helper-text').textContent = ''; //清空 helper text
 
               updateDistrictOptions(address.cityId, address.districtId);
 

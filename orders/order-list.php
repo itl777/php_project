@@ -6,7 +6,7 @@
   <a href="order-add.php" class="btn btn-primary mb-3">新增訂單</a>
   <div class="row">
     <div class="">
-      <table class="table">
+      <table class="table align-middle">
         <thead>
           <tr>
             <th scope="col">#</th>

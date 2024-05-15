@@ -133,6 +133,7 @@
               <label for="address" class="form-label">地址</label>
               <input type="text" class="form-control" id="address" name="address">
               <span class="helper-text"></span>
+              <span class="helper-text address-helper-text"></span>
             </div>
           </div>
 
