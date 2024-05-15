@@ -14,14 +14,14 @@ include 'db_select/select_category.php';
 <!-- TODO 正在改資料庫名稱 -->
 
 
-<?php include 'components/head.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include 'components/navbar.php' ?>
 
 <!-- 主內容 -->
 <div class="container mt-5">
     <div class="row">
         <div class="col-12 mt-4 mb-3">
-            <h2>商品管理</h2>
+            <h2>商品列表</h2>
         </div>
         <!-- 產品分類 -->
         <div class="col-2">
@@ -144,7 +144,7 @@ include 'db_select/select_category.php';
     </div>
 </div>
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
     const deleteOne = (product_id) => {

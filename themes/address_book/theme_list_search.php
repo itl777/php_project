@@ -1,6 +1,6 @@
 <?php
 // 包含 PDO 连接文件
-require __DIR__ . '/../../config/pdo-content.php';
+require __DIR__ . '/../../config/pdo-connect.php';
 
 // 处理查询条件
 $where = '';

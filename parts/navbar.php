@@ -29,36 +29,30 @@ if (!isset($pageName))
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand px-2" href="/index_.php">資料表練習</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>"
-              href="<?= BASE_URL ?>orders/order-list.php">訂單列表</a>
+            <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>" href="<?= BASE_URL ?>orders/order-list.php">訂單列表</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'users' ? 'active' : '' ?>"
-              href="<?= BASE_URL ?>users/users.php">會員列表</a>
+            <a class="nav-link px-2 <?= $pageName == 'users' ? 'active' : '' ?>" href="<?= BASE_URL ?>users/users.php">會員列表</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'products' ? 'active' : '' ?>"
-              href="<?= BASE_URL ?>products/index.php">商品列表</a>
+            <a class="nav-link px-2 <?= $pageName == 'products' ? 'active' : '' ?>" href="<?= BASE_URL ?>products/index.php">商品列表</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>"
-              href="<?= BASE_URL ?>users/users.php">會員列表</a>
+            <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>" href="<?= BASE_URL ?>themes/address_book/theme_list.php">行程列表</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>"
-              href="<?= BASE_URL ?>users/users.php">會員列表</a>
+            <a class="nav-link px-2 <?= $pageName == 'orders' ? 'active' : '' ?>" href="<?= BASE_URL ?>teams/teams.php">揪團列表</a>
           </li>
         </ul>
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <?php if (isset($_SESSION['admin'])): ?>
+          <?php if (isset($_SESSION['admin'])) : ?>
             <!--有登入才顯示的-->
             <li class="nav-item">
               <a class="nav-link px-2"><?= $_SESSION['admin']['nickname'] ?></a>
@@ -66,7 +60,7 @@ if (!isset($pageName))
             <li class="nav-item">
               <a class="nav-link px-2" href="logout.php">登出</a>
             </li>
-          <?php else: ?>
+          <?php else : ?>
             <!--沒分是否登入的-->
             <li class="nav-item">
               <a class="nav-link px-2 <?= $pageName == 'login' ? 'active' : '' ?>" href="./login.php">登入會員</a>

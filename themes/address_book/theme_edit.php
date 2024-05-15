@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../config/pdo-content.php';
+require __DIR__ . '/../../config/pdo-connect.php';
 $title = '修改主題資料';
 
 $theme_id = isset($_GET['theme_id']) ? intval($_GET['theme_id']) : 0;
