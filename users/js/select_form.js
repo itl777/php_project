@@ -11,15 +11,11 @@ selectForm.addEventListener('change', function (event) {
 });
 
 
-const selectData = function () {
+const selectData = function (page) {
 
   // event.preventDefault();
   let formData = {}
-  // if (page !== undefined && page !== null && page !== ''){
-  //   formData['page'] = page;
-  // } else {
-  //   formData['page'] = pageNow;
-  // }
+
 
   Array.from(selectForm.elements).forEach(item => {
     formData[item.name] = item.value;
@@ -34,11 +30,17 @@ const selectData = function () {
     delete formData.desc;
   };
 
+  if (page !== undefined && page !== null && page !== ''){
+    formData['page'] = page;
+  } else {
+    formData['page'] = pageNow;
+  };
+
   let url = `api/user_list_data_api.php`;
 
   fetchJsonData(url, formData)
     .then(data => {
-      console.log(data);
+      // console.log(data);
       userTable(data['user_data']);
       userTablePagination(data['page'], data['totalPages']);
       pageNow = data['page'];

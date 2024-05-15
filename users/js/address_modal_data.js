@@ -14,7 +14,6 @@ const addressModalData = function () {
   addressModal.show();
   fetchJsonData(url, { user_id: user_id }).then((data) => {
     data.forEach((item) => {
-
       addAddressLine(item);
     });
   });
