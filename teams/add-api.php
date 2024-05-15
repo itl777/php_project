@@ -17,9 +17,9 @@ if (!isset($_POST['team_title'])) {
 }
 
 $sql = "INSERT INTO teams(
-  `team_title`, `leader_id`, `team_limit`, `tour`, `create_at`,`team_status`,`last_modified_at`)
+  `team_title`, `leader_id`, `team_limit`, `tour`, `create_at`,`last_modified_at`)
   VALUES
-  (?, ?, ?, ?, NOW(), 0, NOW())";
+  (?, ?, ?, ?, NOW(), NOW())";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([

@@ -4,6 +4,8 @@ $pageName = 'index';
 ?>
 <?php include __DIR__. '/parts/html-head.php'?>
 <?php include __DIR__. '/parts/navbar.php'?>
+<?php include __DIR__. '/parts/bt-navbar.php'?>
+
 <div class="container">
 
 <h3>Hello World</h3>
