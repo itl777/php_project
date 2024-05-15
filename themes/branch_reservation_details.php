@@ -1,28 +1,37 @@
 <?php
-
 $title = '預約清單頁';
 $pageName = 'branch_reservation_details';
 
 require __DIR__ . '/../config/pdo-connect.php';
 
+// 檢查 URL 中是否存在分店 ID，如果不存在，則導向到分店列表頁面
+if (!isset($_GET['id'])) {
+  header("Location: branch_list.php");
+  exit;
+}
+
+$branchId = intval($_GET['id']);
+
 $perPage = 20; // 每一頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
-  header("Location:?page=1");
+  header("Location:?id={$branchId}&page=1");
   exit;
 }
 
 // 獲取總筆數
-$t_sql = "SELECT COUNT(id) FROM `reservations` WHERE branch_id = 1"; // 只查詢分店 ID 為 1 的預約訂單
-$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+$t_sql = "SELECT COUNT(id) FROM `reservations` WHERE branch_id = ?";
+$totalRows = $pdo->prepare($t_sql);
+$totalRows->execute([$branchId]);
+$totalRows = $totalRows->fetch(PDO::FETCH_NUM)[0];
 
 // 計算總頁數
 $totalPages = ceil($totalRows / $perPage);
 
 // 如果請求的頁數大於總頁數，將用戶重新導向到最後一頁
 if ($page > $totalPages) {
-  header("Location:?page={$totalPages}");
-  exit; // 結束程式
+  header("Location:?id={$branchId}&page={$totalPages}");
+  exit;
 }
 
 // 取得分頁資料
@@ -32,13 +41,16 @@ $sql = sprintf(
    LEFT JOIN `users` AS u ON r.user_id = u.user_id 
    LEFT JOIN `themes` AS t ON r.theme_id = t.theme_id
    LEFT JOIN `branches` AS b ON r.branch_id = b.id
-   WHERE r.branch_id = 1  -- 只查詢分店 ID 為 1 的預約訂單
+   WHERE r.branch_id = ? 
    ORDER BY r.id 
    LIMIT %s, %s",
   ($page - 1) * $perPage,
   $perPage
 );
-$rows = $pdo->query($sql)->fetchAll();
+
+$rows = $pdo->prepare($sql);
+$rows->execute([$branchId]);
+$rows = $rows->fetchAll();
 ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
@@ -52,13 +64,10 @@ $rows = $pdo->query($sql)->fetchAll();
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-4" role="presentation">
-            <a href="branch_list.php"><button type="button" class="btn btn-outline-primary rounded-pill"><i
-                  class="fa-solid fa-arrow-left"></i> 回分店</button></a>
+            <a href="branch_list.php"><button type="button" class="btn btn-outline-primary rounded-pill"><i class="fa-solid fa-arrow-left"></i> 回分店</button></a>
           </li>
           <li class="nav-item me-5" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">預約列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">預約列表</button>
           </li>
           <li class="ms-auto">
 
@@ -67,7 +76,7 @@ $rows = $pdo->query($sql)->fetchAll();
               <form id="searchForm" class="mb-3">
                 <div class="row">
                   <div class="col-8">
-                    <input type="text" class="form-control" placeholder="输入分店名稱" name="branch_name">
+                    <input type="text" class="form-control" placeholder="输入顧客名字" name="user_name">
                   </div>
                   <div class="col-4">
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -100,7 +109,7 @@ $rows = $pdo->query($sql)->fetchAll();
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r): ?>
+                <?php foreach ($rows as $r) : ?>
                   <tr>
                     <td><?= $r['id'] ?></td>
                     <td><?= $r['user_name'] ?></td>
@@ -114,13 +123,11 @@ $rows = $pdo->query($sql)->fetchAll();
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="reservation-delete.php?id=<?= $r['id'] ?>"
-                        onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                    <td><a href="reservation-delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
                   </tr>
                 <?php endforeach; ?>
-
               </tbody>
             </table>
 
@@ -139,12 +146,12 @@ $rows = $pdo->query($sql)->fetchAll();
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                    if ($i >= 1 and $i <= $totalPages): ?>
+                  <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                    if ($i >= 1 and $i <= $totalPages) : ?>
                       <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
                         <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                       </li>
-                    <?php endif;
+                  <?php endif;
                   endfor ?>
                   <li class="page-item">
                     <a class="page-link" href="#">
@@ -173,36 +180,44 @@ $rows = $pdo->query($sql)->fetchAll();
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
-  // document.getElementById('searchForm').addEventListener('submit', function (event) {
-  //   event.preventDefault(); // 阻止表單提交
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // 阻止表單提交
 
-  //   var formData = new FormData(this);
-  //   var queryString = new URLSearchParams(formData).toString(); // 將表單數據轉換為 URL 查詢字符串
+    var formData = new FormData(this);
+    var queryString = new URLSearchParams(formData).toString(); // 將表單數據轉換為 URL 查詢字符串
 
-  //   fetch('theme_list_search.php?' + queryString) // 將查詢字符串附加到 URL 中
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       var tableBody = document.createElement('tbody');
-  //       data.forEach(theme => {
-  //         var row = document.createElement('tr');
-  //         row.innerHTML = `
-  //       <td>${theme.theme_id}</td>
-  //       <td>${theme.theme_name}</td>
-  //       <td>${theme.difficulty}</td>
-  //       <td>${theme.suitable_players}</td>
-  //       <td>${theme.theme_time}</td>
-  //       <td>${theme.start_date}</td>
-  //       <td>${theme.end_date}</td>
-  //       <td><a href="theme_content.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
-  //       <td><a href="theme_edit.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-  //       <td><a href="theme_delete.php?theme_id=${theme.theme_id}" onclick="return confirm('是否要刪除編號為${theme.theme_id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
-  //     `;
-  //         tableBody.appendChild(row);
-  //       });
-  //       document.getElementById('themeListTable').innerHTML = '';
-  //       document.getElementById('themeListTable').appendChild(tableBody)
-  //     });
-  // });
+    fetch('reservation_search.php?' + queryString) // 將查詢字符串附加到 URL 中
+      .then(response => response.json())
+      .then(data => {
+        var tableBody = document.createElement('tbody');
+        data.forEach(reservation => {
+          var row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${reservation.id}</td>
+            <td>${reservation.user_name}</td>
+            <td>${reservation.mobile_phone}</td>
+            <td>${reservation.account}</td>
+            <td>${reservation.theme_name}</td>
+            <td>${reservation.participants}</td>
+            <td>${reservation.re_datetime}</td>
+            <td>
+              <a href="reservation_edit.php?id=${reservation.id}">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>
+            </td>
+            <td>
+              <a href="reservation-delete.php?id=${reservation.id}" onclick="return confirm('是否要刪除編號為${reservation.id}的資料')">
+                <i class="fa-solid fa-trash text-danger"></i>
+              </a>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+        var table = document.getElementById('themeListTable');
+        table.querySelector('tbody').remove(); // 移除先前的 tbody 元素
+        table.appendChild(tableBody); // 添加新的 tbody 元素
+      });
+  });
 </script>
 
 <?php include __DIR__ . '/../parts/html-foot.php' ?>

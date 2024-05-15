@@ -188,14 +188,15 @@ if ($totalRows) {
         <td>${theme.theme_time}</td>
         <td>${theme.start_date}</td>
         <td>${theme.end_date}</td>
-        <td><a href="theme_content.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
-        <td><a href="theme_edit.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-        <td><a href="theme_delete.php?theme_id=${theme.theme_id}" onclick="return confirm('是否要刪除編號為${theme.theme_id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
+        <td><a class="btn btn-dark" href="theme_content.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-file-lines"> 檢視</i></a></td>
+        <td><a class="btn btn-primary" href="theme_edit.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-pen-to-square"> 編輯</i></a></td>
+        <td><a <a class="btn btn-danger" href="theme_delete.php?theme_id=${theme.theme_id}" onclick="return confirm('是否要刪除編號為${theme.theme_id}的資料')"><i class="fa-solid fa-trash text-white"> 刪除</i></a></td>
       `;
           tableBody.appendChild(row);
         });
-        document.getElementById('themeListTable').innerHTML = '';
-        document.getElementById('themeListTable').appendChild(tableBody)
+        var table = document.getElementById('themeListTable');
+        table.querySelector('tbody').remove(); // 移除先前的 tbody 元素
+        table.appendChild(tableBody); // 添加新的 tbody 元素
       });
   });
 </script>
