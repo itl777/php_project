@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
               <div class="form-text"></div>
             </div>
             <div class="mb-3">
-              <div class="alert alert-danger opacity-0" role="alert" styles="transition: all 1s ease-out;">
+              <div class="alert alert-danger opacity-0 m-0 " role="alert" style="transition: all 500ms ease-out;">
 
               </div>
             </div>
@@ -102,25 +102,28 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
 
       if (isPass) {
         let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
-        let failureInfo = document.querySelector('#loginForm .alert');
+
 
 
         fetch(`../parts/login_api.php`, {
           method: 'POST',
           body: sendData,
         }).then(r => r.json()).then(data => {
+          let failureInfo = document.querySelector('#loginForm .alert');
+          failureInfo.innerHTML = '';
+
           if (data.success) {
-            console.log(data);
             window.location.reload();
           } else {
             failureInfo.innerHTML = data.error;
-            setTimeout(function () {
-              failureInfo.classList.replace('opacity-0', 'opacity-100');
-              setTimeout(function () {
-                failureInfo.classList.replace('opacity-100', 'opacity-0');
-              }, 3000);
-            }, 1000);
           }
+
+          setTimeout(function () {
+            failureInfo.classList.replace('opacity-0', 'opacity-100');
+            setTimeout(function () {
+              failureInfo.classList.replace('opacity-100', 'opacity-0');
+            }, 3000);
+          }, 1000);
         });
       };
     }
