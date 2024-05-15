@@ -5,8 +5,8 @@ require __DIR__ . '/../config/pdo-connect.php';  // 引入資料庫設定
 include 'db_select/select_product.php';
 // 取得分類
 include 'db_select/select_category.php';
-
-
+// 取得分頁
+include 'db_select/select_page.php';
 
 
 
@@ -67,6 +67,34 @@ include 'db_select/select_category.php';
             <!-- 搜尋列結束 -->
 
 
+            <!-- 分頁開始 -->
+            <nav aria-label="Page navigation example" class="my-3 d-flex justify-content-center">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= max(1, $page - 1) ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                        if ($i >= 1 and $i <= $totalPages) : ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                    <?php endif;
+                    endfor; ?>
+
+
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- 分頁結束 -->
+
+
 
             <!-- 表單開始 -->
             <table id="ProductTable" class="table table-striped table-hover align-middle">
@@ -91,6 +119,8 @@ include 'db_select/select_category.php';
                                 <!-- 做字元跳脫避免JS注入 -->
                                 <td><?= htmlentities($r['product_name']) ?></td>
                                 <td><?= $r['price'] ?></td>
+
+                                <!-- TODO 庫存連結 -->
                                 <td>111</td>
 
                                 <!-- 按鈕 -->
@@ -107,7 +137,7 @@ include 'db_select/select_category.php';
 
                     <?php else : ?>
                         <!-- 沒有選類別 -->
-                        <?php foreach ($allRows as $r) : ?>
+                        <?php foreach ($all_page as $r) : ?>
                             <tr>
                                 <td><?= $r['product_id'] ?></td>
                                 <!-- 做字元跳脫避免JS注入 -->
