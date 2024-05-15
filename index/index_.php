@@ -6,9 +6,9 @@ $pageName = 'index';
 
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
-<div class="container">
-
-    <h3>Hello World</h3>
+<div class="container-fluid home-container">
+ <img src="../imgs/ghost.png" alt="">
+    
 </div>
 
 
