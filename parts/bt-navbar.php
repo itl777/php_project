@@ -32,19 +32,18 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Core</div>
                     <a class="nav-link" href="../users/users.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-ghost"></i></i></div>
                         會員中心
                     </a>
                     <a class="nav-link" href="../orders/order-list.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-ghost"></i></i></div>
                         訂單列表
                     </a>
 
                     <!-- ----行程管理------ -->
                     <a class="nav-link collapsed" href="../themes/theme_list.php" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-ghost"></i></i></div>
                         行程管理
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -60,7 +59,7 @@
 
                     <!-- ----商品管理----- -->
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-ghost"></i></i></div>
                         商品管理
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -75,7 +74,7 @@
                     <!-- --------- -->
 
                     <a class="nav-link" href="../teams/teams.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-ghost"></i></i></div>
                         揪團系統
                     </a>
 
