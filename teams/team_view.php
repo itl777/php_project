@@ -60,7 +60,7 @@ $chats = $stmt3->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="col-12">
-      <div class="card">
+      <div class="card px-5 py-3">
         <h3><?= $row['team_title'] ?></h3>
         <p>團長: <?= $row['nick_name'] ?></p>
         <p>人數: n / <?= $row['team_limit'] ?></p>
@@ -71,9 +71,9 @@ $chats = $stmt3->fetchAll(PDO::FETCH_ASSOC);
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addChat">新增留言</button>
     </div>
     <div class="col-12">
-      <div class="card">
+      <div class="card px-3 pt-2">
       <?php foreach ($chats as $chat_i): ?>
-        <?php if ($chat_i['team_id'] == $row['team_id']): ?>
+        <?php if ($chat_i['chat_at'] == $row['team_id']): ?>
         <h4><?php echo $chat_i['nick_name']; ?></h4>
         <p><?php echo $chat_i['chat_text']; ?></p>
         <p><?php echo $chat_i['create_at']; ?></p>

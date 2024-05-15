@@ -63,14 +63,14 @@ $pageName = 'team_add';
       </div>
       <div class="modal-footer">
         
-        <button type="button" class="btn btn-primary" onclick="location.href='../team_list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='./teams.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
       </div>
     </div>
   </div>
 </div>
 
-<?php include __DIR__ . '/../parts/js/scripts.php' ?>
+<?php include __DIR__ . '/js/scripts.php' ?>
 
 <script>
   /* get themes */

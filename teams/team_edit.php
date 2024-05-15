@@ -91,7 +91,7 @@ $status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="location.href='/../teams.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='./teams.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
       </div>
     </div>
@@ -109,7 +109,7 @@ $status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="location.href='/../list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='./teams.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
       </div>
     </div>
