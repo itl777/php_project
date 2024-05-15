@@ -57,8 +57,12 @@ if ($totalRows) {
             <div class="container-fluid px-4">
                 <div class="row">
                     <div class="col-8"><h1 class="mt-4">揪團首頁</h1></div>
-                    <div class="col-4 justify-content-end">
-                        <h2 class="pt-3"><a class="btn btn-primary" href="./team_add.php">新增團隊</a></h2>
+                    <div class="col-4">
+                    <ul class="nav nav-pills justify-content-end pt-4">
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./team_add.php">新增團隊</a>
+                        </li>
+                    </ul>
                     </div>
                 </div>
                 
@@ -136,11 +140,6 @@ if ($totalRows) {
                     </nav>
                 </div>
                 <div class="col-6">
-                    <ul class="nav nav-pills justify-content-end">
-                        <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="./team_add.php">新增團隊</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
                     </div>

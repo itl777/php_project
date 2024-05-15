@@ -86,7 +86,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
     </div>
-    <div class="col-6">
+    <!-- <div class="col-6">
       <div class="card">
         <div class="card-body">
         <h5 class="card-title">編輯留言</h5>
@@ -98,7 +98,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 <!-- Modal -->
@@ -166,7 +166,22 @@ fetch('./api-get-themes.php')
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
-    let isPass = true; // 表單有沒有通過檢查
+    nameField.style.border = '1px solid #CCCCCC';
+    nameField.nextElementSibling.innerText = '';
+    team_limit.style.border = '1px solid #CCCCCC';
+    team_limit.nextElementSibling.innerText = '';
+    // TODO: 欄位資料檢查
+    let isPass = true;  // 表單有沒有通過檢查
+    if (nameField.value.length < 2) {
+      isPass = false;
+      nameField.style.border = '1px solid red';
+      nameField.nextElementSibling.innerText = '團隊名稱至少2個字';
+    }
+    if (parseInt(team_limit.value) > 8) {
+      isPass = false;
+      team_limit.style.border = '1px solid red';
+      team_limit.nextElementSibling.innerText = '團員上限為8人';
+    }
 
     // 有通過檢查, 才要送表單
     if (isPass) {

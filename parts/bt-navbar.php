@@ -23,10 +23,10 @@
                 <?php else : ?>
                     <!--沒分是否登入的-->
                     <li><a class="dropdown-item" href="#!" data-bs-toggle="modal" data-bs-target="#loginModal">登入</a></li>
-                    <li><a class="dropdown-item" href="../parts/quick_login.php">快速登入</a></li>
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
+                    <li><a class="dropdown-item" href="../parts/quick_login.php">快速登入</a></li>
                 <?php endif ?>
             </ul>
         </li>
