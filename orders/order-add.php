@@ -68,7 +68,7 @@
           </div>
 
           <!-- 常用地址視窗 -->
-          <div class="modal fade" id="addressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          <div class="modal fade modal-lg" id="addressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="addressModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
