@@ -10,7 +10,7 @@ require __DIR__ . '/db_select/select_warehousing.php';
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include '../parts/bt-navbar.php' ?>
 
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row">
         <div class="col-12 mt-4 mb-3">
             <h2>商品庫存列表</h2>
