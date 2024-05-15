@@ -14,7 +14,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(branch_id) FROM `branches`";
+$t_sql = "SELECT COUNT(id) FROM `branches`";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -30,7 +30,7 @@ if ($totalRows) {
   }
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM `branches` ORDER BY branch_id  LIMIT %s, %s",
+    "SELECT * FROM `branches` ORDER BY id LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -99,7 +99,7 @@ if ($totalRows) {
               <tbody>
                 <?php foreach ($rows as $r): ?>
                   <tr>
-                    <td><?= $r['branch_id'] ?></td>
+                    <td><?= $r['id'] ?></td>
                     <td><?= $r['branch_name'] ?></td>
                     <td><?= htmlentities($r['branch_address']) ?></td>
                     <td><?= $r['branch_phone'] ?></td>
@@ -107,17 +107,17 @@ if ($totalRows) {
                     <td><?= $r['close_time'] ?></td>
                     <td><?= $r['branch_status'] ?></td>
                     <td>
-                      <a href="branch_content.php?id=<?= $r['branch_id'] ?>">
+                      <a href="branch_content.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-file-lines text-secondary"></i>
                       </a>
                     </td>
                     <td>
-                      <a href="branch_edit.php?id=<?= $r['branch_id'] ?>">
+                      <a href="branch_edit.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="branch_delete.php?id=<?= $r['branch_id'] ?>"
-                        onclick="return confirm('是否要刪除編號為<?= $r['branch_id'] ?>的資料')">
+                    <td><a href="branch_delete.php?id=<?= $r['id'] ?>"
+                        onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
                   </tr>
