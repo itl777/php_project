@@ -2,13 +2,13 @@
 require __DIR__ . '/../config/pdo-connect.php';
 $title = '修改分店資料';
 
-$branchId = isset($_GET['branch_id']) ? intval($_GET['branch_id']) : 0;
+$branchId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($branchId < 1) {
     header('Location: branch_list.php');
     exit;
 }
 
-$sql = "SELECT * FROM `branches` WHERE branch_id={$branchId}";
+$sql = "SELECT * FROM `branches` WHERE id={$branchId}";
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
@@ -27,13 +27,30 @@ if (!empty($row['theme_id'])) {
 $pageName = 'branch_add';
 
 // 獲取主題資料
-$sql = "SELECT theme_id, theme_name FROM themes";
-$stmt = $pdo->query($sql);
-$themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$branchThemesSql = "SELECT t.theme_id AS t_theme_id, bt.*, t.* 
+FROM branch_themes AS bt
+INNER JOIN themes AS t
+ON t.theme_id = bt.theme_id
+WHERE branch_id = ?
+";
+
+$branchThemes = [];
+$branchThemesStmt = $pdo->prepare($branchThemesSql);
+$branchThemesStmt->execute([$branchId]);
+$branchThemes = $branchThemesStmt->fetchAll();
+
+
+
+$themesSql = "SELECT theme_id, theme_name FROM themes";
+$themesStmt = $pdo->query($themesSql);
+$themes = $themesStmt->fetchAll();
+$selectedThemeIds = [];
+$selectedThemeIds = array_column($branchThemes, 't_theme_id');
+
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
 <style>
     form .mb-4 .form-text {
@@ -48,11 +65,12 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="col-10">
             <div class="card">
                 <div class="card-body">
-                    <form name="form1" class="p-3" onsubmit="sendData(event)">
+                    <form name="form1" class="p-3" onsubmit="sendData(event)"
+                        action="branch_edit.php?id=<?php echo $branchId; ?>" method="post">
 
                         <div class="mb-4 col-2">
-                            <label for="branch_id" class="form-label">編號</label>
-                            <input type="text" class="form-control" disabled value="<?= $row['branch_id'] ?>">
+                            <label for="id" class="form-label">編號</label>
+                            <input type="text" class="form-control" disabled value="<?= $row['id'] ?>">
                         </div>
 
                         <div class="mb-4 col-5">
@@ -65,17 +83,16 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="mb-4 col-10">
                             <label class="form-label fw-bold">遊玩行程主題</label><br>
                             <?php foreach ($themes as $theme): ?>
-                                <?php
-                                $isChecked = in_array($theme['theme_id'], $selectedThemes);
-                                ?>
                                 <div class="form-check form-check-inline me-3 mb-3">
                                     <input class="form-check-input" type="checkbox"
                                         id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]"
-                                        value="<?php echo $theme['theme_id']; ?>" <?php echo ($isChecked) ? 'checked' : ''; ?>>
+                                        value="<?php echo $theme['theme_id']; ?>" <?php if (in_array($theme['theme_id'], $selectedThemeIds))
+                                               echo 'checked'; ?>>
                                     <label class="form-check-label"
                                         for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
                                 </div>
                             <?php endforeach; ?>
+                            <div class="form-text"></div>
                         </div>
 
 
@@ -177,18 +194,19 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="location.href='theme_list.php'">到主題頁</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='branch_list.php'">到分店頁</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
             </div>
         </div>
     </div>
 </div>
 
-<?php include __DIR__ . '/../../parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
+
 
 
 <script>
-    const branchId = <?= $row['branch_id'] ?>; // 修改此行
+    const branchId = <?= $branchId ?>;
     const nameField = document.getElementById('branch_name');
     const phoneField = document.getElementById('branch_phone');
     const openTimeField = document.getElementById('open_time');
@@ -234,8 +252,6 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             themeCheckboxes.forEach(checkbox => {
                 checkbox.nextElementSibling.style.color = 'tomato';
             });
-            const themeError = document.querySelector('.mb-4 .form-text');
-            themeError.innerText = '請至少選擇一個主題';
         } else {
             const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
             themeCheckboxes.forEach(checkbox => {
@@ -275,7 +291,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (isPass) {
             const fd = new FormData(document.form1);
-            fd.append('branch_id', branchId); // 確保分店的 ID 被添加到 FormData 對象中
+            fd.append('id', branchId); // 確保分店的 ID 被添加到 FormData 對象中
 
             fetch('branch_edit_api.php', {
                 method: 'POST',
