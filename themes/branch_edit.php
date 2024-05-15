@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = '修改分店資料';
 
 $branchId = isset($_GET['branch_id']) ? intval($_GET['branch_id']) : 0;
@@ -32,8 +32,8 @@ $stmt = $pdo->query($sql);
 $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<?php include __DIR__ . '/../../parts/html-head.php' ?>
-<?php include __DIR__ . '/../../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <style>
     form .mb-4 .form-text {
@@ -296,3 +296,4 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     const myModal = new bootstrap.Modal('#staticBackdrop');
     const myModal2 = new bootstrap.Modal('#staticBackdrop2');
 </script>
+<?php include __DIR__ . '/../parts/html-foot.php' ?>

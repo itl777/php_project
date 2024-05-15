@@ -1,11 +1,11 @@
 <?php
 
-$title = '主題清單頁';
-$pageName = 'theme_list';
+$title = '分店總覽';
+$pageName = 'branch_list';
 ?>
 <?php
 
-require __DIR__ . '/../../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 
 $perPage = 20; # 每一頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -14,7 +14,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(theme_id) FROM `themes`";
+$t_sql = "SELECT COUNT(branch_id) FROM `branches`";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -30,7 +30,7 @@ if ($totalRows) {
   }
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM `themes` ORDER BY theme_id  LIMIT %s, %s",
+    "SELECT * FROM `branches` ORDER BY branch_id  LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -38,11 +38,11 @@ if ($totalRows) {
 }
 ?>
 
-<?php include __DIR__ . '/../../parts/html-head.php' ?>
-<?php include __DIR__ . '/../../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/navbar.php' ?>
+
 
 <div class="container-fluid pt-5">
-  <!-- 分頁膠囊   -->
   <div class="container">
     <div class="row">
       <!-- 右邊表格 -->
@@ -50,21 +50,20 @@ if ($totalRows) {
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">主題列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">分店列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增主題</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增分店</button>
           </li>
           <li class="ms-auto">
-
             <!-- 查詢 -->
             <div class="container ms-5">
               <form id="searchForm" class="mb-3">
                 <div class="row">
                   <div class="col-8">
-                    <input type="text" class="form-control" placeholder="輸入主題名稱" name="theme_name">
+                    <input type="text" class="form-control" placeholder="输入分店名稱" name="theme_name">
                   </div>
-                  <div class="col-3">
+                  <div class="col-4">
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
                   </div>
                 </div>
@@ -78,17 +77,17 @@ if ($totalRows) {
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table id="themeListTable" class="table table-striped">
+            <table class="table table-striped">
               <thead>
-                <tr id="themeListTableHead">
+                <tr>
                   <th scope="col">#</th>
-                  <th scope="col">主題</th>
-                  <th scope="col">難度</th>
-                  <th scope="col">遊玩人數</th>
-                  <th scope="col">時長</th>
-                  <th scope="col">開始日期</th>
-                  <th scope="col">結束日期</th>
-                  <th scope="col"><i class="fa-solid fa-file-lines"></i></th>
+                  <th scope="col">分店名</th>
+                  <th scope="col">地址</th>
+                  <th scope="col">電話</th>
+                  <th scope="col">營業時間</th>
+                  <th scope="col">結束時間</th>
+                  <th scope="col">分店狀態</th>
+                  <th scope="col"><i class="fa-solid fa-file-lines"></i>
                   <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
                   <th scope="col"><i class="fa-solid fa-trash"></i></th>
                 </tr>
@@ -96,24 +95,24 @@ if ($totalRows) {
               <tbody>
                 <?php foreach ($rows as $r) : ?>
                   <tr>
-                    <td><?= $r['theme_id'] ?></td>
-                    <td><?= $r['theme_name'] ?></td>
-                    <td><?= $r['difficulty'] ?></td>
-                    <td><?= $r['suitable_players'] ?></td>
-                    <td><?= $r['theme_time'] ?></td>
-                    <td><?= $r['start_date'] ?></td>
-                    <td><?= $r['end_date'] ?></td>
+                    <td><?= $r['branch_id'] ?></td>
+                    <td><?= $r['branch_name'] ?></td>
+                    <td><?= htmlentities($r['branch_address']) ?></td>
+                    <td><?= $r['branch_phone'] ?></td>
+                    <td><?= $r['open_time'] ?></td>
+                    <td><?= $r['close_time'] ?></td>
+                    <td><?= $r['branch_status'] ?></td>
                     <td>
-                      <a href="theme_content.php?theme_id=<?= $r['theme_id'] ?>">
+                      <a href="branch_content.php?id=<?= $r['branch_id'] ?>">
                         <i class="fa-solid fa-file-lines text-secondary"></i>
                       </a>
                     </td>
                     <td>
-                      <a href="theme_edit.php?theme_id=<?= $r['theme_id'] ?>">
+                      <a href="branch_edit.php?id=<?= $r['branch_id'] ?>">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="theme_delete.php?theme_id=<?= $r['theme_id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['theme_id'] ?>的資料')">
+                    <td><a href="branch_delete.php?id=<?= $r['branch_id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['branch_id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
                   </tr>
@@ -157,7 +156,7 @@ if ($totalRows) {
           </div>
           <!-- 新增主題 -->
           <div class="tab-pane fade mb-5" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <?php include __DIR__ . '/theme_add.php' ?>
+            <?php include __DIR__ . '/branch_add.php' ?>
           </div>
         </div>
       </div>
@@ -165,39 +164,7 @@ if ($totalRows) {
   </div>
 </div>
 
-<?php include __DIR__ . '/../../parts/scripts.php' ?>
 
-<script>
-  document.getElementById('searchForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 阻止表單提交
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
-    var formData = new FormData(this);
-    var queryString = new URLSearchParams(formData).toString(); // 將表單數據轉換為 URL 查詢字符串
-
-    fetch('theme_list_search.php?' + queryString) // 將查詢字符串附加到 URL 中
-      .then(response => response.json())
-      .then(data => {
-        var tableBody = document.createElement('tbody');
-        data.forEach(theme => {
-          var row = document.createElement('tr');
-          row.innerHTML = `
-        <td>${theme.theme_id}</td>
-        <td>${theme.theme_name}</td>
-        <td>${theme.difficulty}</td>
-        <td>${theme.suitable_players}</td>
-        <td>${theme.theme_time}</td>
-        <td>${theme.start_date}</td>
-        <td>${theme.end_date}</td>
-        <td><a href="theme_content.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
-        <td><a href="theme_edit.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-        <td><a href="theme_delete.php?theme_id=${theme.theme_id}" onclick="return confirm('是否要刪除編號為${theme.theme_id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
-      `;
-          tableBody.appendChild(row);
-        });
-        document.getElementById('themeListTable').innerHTML = '';
-        document.getElementById('themeListTable').appendChild(tableBody)
-      });
-  });
-</script>
-
-<?php include __DIR__ . '/../../parts/html-foot.php' ?>
+<?php include __DIR__ . '/../parts/html-foot.php' ?>

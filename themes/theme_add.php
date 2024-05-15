@@ -4,7 +4,7 @@ $title = '新增主題';
 $pageName = 'theme_add';
 ?>
 
-<?php include __DIR__ . '/../../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
 
 <style>
     form .mb-4 .form-text {
@@ -28,12 +28,14 @@ $pageName = 'theme_add';
 
                         <div class="mb-4 col-5 ">
                             <label for="theme_img" class="form-label fw-bold">主題圖片</label>
-                            <input type="file" class="form-control" name="uploadFile[]" multiple="multiple" id="theme_img">
+                            <input type="file" class="form-control" name="uploadFile[]" multiple="multiple"
+                                id="theme_img">
                         </div>
 
                         <div class="mb-4 col-8">
                             <label for="theme_desc" class="form-label fw-bold">主題描述</label>
-                            <textarea class="form-control" id="theme_desc" name="theme_desc" cols="30" rows="3" placeholder="請輸入250字以內"></textarea>
+                            <textarea class="form-control" id="theme_desc" name="theme_desc" cols="30" rows="3"
+                                placeholder="請輸入250字以內"></textarea>
                             <div class="form-text"></div>
                         </div>
 
@@ -46,7 +48,8 @@ $pageName = 'theme_add';
                         <div class="row">
                             <div class="mb-4 col-5">
                                 <label for="difficulty" class="form-label fw-bold">難度</label>
-                                <select class="form-select" aria-label="Default select example" id="difficulty" name="difficulty">
+                                <select class="form-select" aria-label="Default select example" id="difficulty"
+                                    name="difficulty">
                                     <option selected>難度</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -57,7 +60,8 @@ $pageName = 'theme_add';
                             </div>
                             <div class="mb-4 col-5">
                                 <label for="suitable_players" class="form-label fw-bold">適合遊玩人數</label>
-                                <input type="text" class="form-control" id="suitable_players" name="suitable_players" placeholder="請輸入 _ ~ _ 人">
+                                <input type="text" class="form-control" id="suitable_players" name="suitable_players"
+                                    placeholder="請輸入 _ ~ _ 人">
                                 <div class="form-text"></div>
                             </div>
                         </div>
@@ -65,13 +69,15 @@ $pageName = 'theme_add';
                         <div class="row">
                             <div class="mb-4 col-5">
                                 <label for="start_time" class="form-label fw-bold">開始時間</label>
-                                <input type="text" class="form-control" id="start_time" name="start_time" placeholder="ex. 早上 9:00">
+                                <input type="text" class="form-control" id="start_time" name="start_time"
+                                    placeholder="ex. 早上 9:00">
                                 <div class="form-text"></div>
                             </div>
 
                             <div class="mb-4 col-5">
                                 <label for="end_time" class="form-label fw-bold">結束時間</label>
-                                <input type="text" class="form-control" id="end_time" name="end_time" placeholder="ex. 晚上 21:00">
+                                <input type="text" class="form-control" id="end_time" name="end_time"
+                                    placeholder="ex. 晚上 21:00">
                                 <div class="form-text"></div>
                             </div>
                         </div>
@@ -79,7 +85,8 @@ $pageName = 'theme_add';
                         <div class="row">
                             <div class="mb-4 col-5">
                                 <label for="theme_time" class="form-label fw-bold">主題時長</label>
-                                <select class="form-select" aria-label="Default select example" id="theme_time" name="theme_time">
+                                <select class="form-select" aria-label="Default select example" id="theme_time"
+                                    name="theme_time">
                                     <option selected>時長</option>
                                     <option value="60">60</option>
                                     <option value="90">90</option>
@@ -89,7 +96,8 @@ $pageName = 'theme_add';
 
                             <div class="mb-4 col-5">
                                 <label for="intervals" class="form-label fw-bold">間隔時間</label>
-                                <select class="form-select" aria-label="Default select example" id="intervals" name="intervals">
+                                <select class="form-select" aria-label="Default select example" id="intervals"
+                                    name="intervals">
                                     <option selected>間隔</option>
                                     <option value="30">30</option>
                                     <option value="60">60</option>
@@ -122,7 +130,8 @@ $pageName = 'theme_add';
 </div>
 
 <!-- Modal bt 彈跳視窗-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -143,7 +152,7 @@ $pageName = 'theme_add';
     </div>
 </div>
 
-<?php include __DIR__ . '/../../parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 
 
@@ -343,18 +352,18 @@ $pageName = 'theme_add';
             const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
             fetch('theme_add_api.php', {
-                    method: 'POST',
-                    body: fd, // Content-Type: multipart/form-data
-                }).then(r => r.json())
+                method: 'POST',
+                body: fd, // Content-Type: multipart/form-data
+            }).then(r => r.json())
                 .then(data => {
                     console.log(data);
                     if (data.success) {
                         myModal.show();
-                    } else {}
+                    } else { }
                 })
                 .catch(ex => console.log(ex))
         }
     };
     const myModal = new bootstrap.Modal('#staticBackdrop')
 </script>
-<?php include __DIR__ . '/../../parts/html-foot.php' ?>
+<?php include __DIR__ . '/../parts/html-foot.php' ?>

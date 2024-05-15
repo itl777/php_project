@@ -4,10 +4,10 @@ $title = '新增分店';
 $pageName = 'branch_add';
 ?>
 
-<?php include __DIR__ . '/../../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
 
 <?php
-require __DIR__ . '/../../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 
 // 獲取主題資料
 $sql = "SELECT theme_id, theme_name FROM themes";
@@ -236,4 +236,4 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
   };
   const myModal = new bootstrap.Modal('#staticBackdrop')
 </script>
-<?php include __DIR__ . '/../../parts/html-foot.php' ?>
+<?php include __DIR__ . '/../parts/html-foot.php' ?>
