@@ -33,17 +33,17 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="/iSpanProject/users/users.php">
+                    <a class="nav-link" href="../users/users.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         會員中心
                     </a>
-                    <a class="nav-link" href="/iSpanProject/orders/order-list.php">
+                    <a class="nav-link" href="../orders/order-list.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         訂單列表
                     </a>
 
                     <!-- ----行程管理------ -->
-                    <a class="nav-link collapsed" href="/iSpanProject/themes/address_book/theme_list.php" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                    <a class="nav-link collapsed" href="../themes/address_book/theme_list.php" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         行程管理
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -51,8 +51,8 @@
                     <!-- --------- -->
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/iSpanProject/themes/address_book/branch_list.php">分店管理</a>
-                            <a class="nav-link" href="/iSpanProject/themes/address_book/theme_list.php">主題管理</a>
+                            <a class="nav-link" href="../themes/address_book/branch_list.php">分店管理</a>
+                            <a class="nav-link" href="../themes/address_book/theme_list.php">主題管理</a>
                         </nav>
                     </div>
                     <!-- --------- -->
@@ -66,14 +66,14 @@
                     <!-- --------- -->
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/iSpanProject/products/index.php">商品列表</a>
-                            <a class="nav-link" href="/iSpanProject/products/Warehousing.php">庫存管理</a>
-                            <a class="nav-link" href="/iSpanProject/products/coupon.php">優惠券管理</a>
+                            <a class="nav-link" href="../products/index.php">商品列表</a>
+                            <a class="nav-link" href="../products/Warehousing.php">庫存管理</a>
+                            <a class="nav-link" href="../products/coupon.php">優惠券管理</a>
                         </nav>
                     </div>
                     <!-- --------- -->
 
-                    <a class="nav-link" href="/iSpanProject/teams/teams.php">
+                    <a class="nav-link" href="../teams/teams.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         揪團系統
                     </a>
