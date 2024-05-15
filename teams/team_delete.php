@@ -8,7 +8,10 @@ if ($team_id < 1) {
   exit;
 }
 
-$sql = "DELETE FROM teams WHERE team_id=$team_id";
+$sql = "UPDATE `teams` SET 
+    `team_display` = 0,
+    `last_modified_at` = NOW()
+WHERE team_id=$team_id";
 $pdo->query($sql);
 
 # $_SERVER['HTTP_REFERER']: 從哪個頁面連過來的

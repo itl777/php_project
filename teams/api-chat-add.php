@@ -28,10 +28,5 @@ $stmt->execute([
   $_POST['chat_text']
 ]);
 
-
-$output['success'] = !!$stmt->rowCount(); # 新增了幾筆
-$output['chat_id'] = $pdo->lastInsertId(); # 取得最近的新增資料的primary key
-
-// echo json_encode($output);
-
+$output['success'] = !!$stmt->rowCount();
 echo json_encode($output);

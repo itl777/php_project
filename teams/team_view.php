@@ -4,7 +4,7 @@ $title = "觀看團隊資料";
 
 $team_id = isset($_GET['team_id']) ? intval($_GET['team_id']) : 0;
 if ($team_id < 1) {
-  header('Location: /../team_list.php');
+  header('Location: teams.php');
   exit;
 }
 
@@ -17,14 +17,14 @@ $sql = "SELECT team_id, team_title, leader_id, nick_name, theme_desc, avatar, to
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
-  header('Location: ./teams.php');
+  header('Location: teams.php');
   exit;
 };
 /* fetch 留言 串用戶暱稱*/
-$sql_c = "SELECT nick_name, chat_text, create_at
+$sql_c = "SELECT chat_id, nick_name, chat_text, create_at
         FROM teams_chats
         join `users` on chat_by = users.user_id
-        WHERE chat_at={$team_id}";
+        WHERE chat_at={$team_id} and chat_display = 1";
 $stmt_c = $pdo->prepare($sql_c);
 $stmt_c->execute();
 $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
@@ -68,6 +68,9 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
           <h4><?php echo $chat_i['nick_name']; ?></h4>
           <p><?php echo $chat_i['chat_text']; ?></p>
           <p><?php echo $chat_i['create_at']; ?></p>
+          <p><a href="javascript: deleteOne(<?= $chat_i['chat_id'] ?>)">
+            <button type="button" class="btn btn-danger">刪除這則留言</button>
+            </a></p>
       </div>
       <?php endforeach; ?>
     </div>
@@ -107,6 +110,26 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__ . '/js/scripts.php' ?>
 <script>
 
+  
+const deleteOne = (chat_id) => {
+    if (confirm(`是否要刪除這則留言?`)) {
+      const fd = new FormData(); // 沒有外觀的表單物件
+      fd.append('chat_id', chat_id); // 將 chat_id 加入 FormData 中
+      fetch('api-chat-delete.php', {
+        method: 'POST',
+        body: fd, // Content-Type: multipart/form-data
+      }).then(r => r.json())
+        .then(data => {
+          console.log(data);
+          if (data.success) {
+            location.reload();
+          } else {
+          }
+        })
+        .catch(ex => console.log(ex))
+    }
+  }
+
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
@@ -115,12 +138,12 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 
     let isPass = true; // 表單有沒有通過檢查
 
-    nameField.style.border = '1px solid #CCCCCC';
-    nameField.nextElementSibling.innerText = '';
+    // nameField.style.border = '1px solid #CCCCCC';
+    // nameField.nextElementSibling.innerText = '';
     chat_text.style.border = '1px solid #CCCCCC';
     chat_text.nextElementSibling.innerText = '';
 
-    if (chat_text.value.length < 1) {
+    if (chat_text.value.length <= 1) {
       isPass = false;
       chat_text.style.border = '1px solid red';
       chat_text.nextElementSibling.innerText = '留言字數不足';
@@ -131,20 +154,16 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
       chat_text.nextElementSibling.innerText = '留言超出限制';
     }
 
-    
-
-
-    // 有通過檢查, 才要送表單
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
-      fetch('api-chat.php', {
+      fetch('api-chat-add.php', {
           method: 'POST',
           body: fd, // Content-Type: multipart/form-data
         }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
-            myModal.show();
+            location.reload();
           }
         })
         .catch(ex => console.log(ex))
