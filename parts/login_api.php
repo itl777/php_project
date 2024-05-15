@@ -7,6 +7,8 @@ $output = [
   'success' => false, # 有沒有登入成功
   'bodyData' => $_POST,
   'code' => 0, # 除錯追踨用的
+  'error' => '',
+
 ];
 
 
@@ -28,11 +30,12 @@ $sql = "SELECT * FROM b2b_user WHERE account=?";
 $stmt = $pdo->prepare($sql);
 
 $stmt->execute([$_POST['account']]);
-
 $row = $stmt->fetch();
+
 if (empty($row)) {
   # 帳號是錯的
   $output['code'] = 420;
+  $output['error'] = '帳號或密碼錯誤';
   echo json_encode($output);
   exit; # 結束 php 程式
 }
@@ -48,6 +51,7 @@ if (password_verify($_POST['password'], $row['password'])) {
 } else {
   # 密碼是錯的
   $output['code'] = 440;
+  $output['error'] = '密碼錯誤';
 }
 
 

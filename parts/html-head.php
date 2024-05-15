@@ -24,30 +24,21 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- 套版的navbar要加的 -->
   <link href="../css/styles.css" rel="stylesheet" />
-  <script>
-    const loginData = function(e) {
-      e.preventDefault();
-      let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
-      fetch(`../parts/login_api.php`, {
-        method: 'POST',
-        body: sendData,
-      }).then(r => r.json()).then(data => {
-        console.log(data);
-        // if(data)
-        window.location.reload();
-      });
-    }
-  </script>
   <link rel="stylesheet" href="../css/order-list.css">
+  <style>
+    .alert.alert-danger.opacity-0 {
+      transition: all 1s ease-out;
+    }
+  </style>
+
 </head>
 
 <body>
 
 
 
-
-
-  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -60,10 +51,17 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">帳號</label>
               <input type="text" class="form-control" name="account">
+              <div class="form-text"></div>
             </div>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">密碼</label>
               <input type="password" class="form-control" name="password">
+              <div class="form-text"></div>
+            </div>
+            <div class="mb-3">
+              <div class="alert alert-danger opacity-0" role="alert" styles="transition: all 1s ease-out;">
+
+              </div>
             </div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
             <button type="submit" class="btn btn-primary">登入</button>
@@ -73,3 +71,57 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
       </div>
     </div>
   </div>
+
+
+  <script>
+    const loginData = function (e) {
+      e.preventDefault();
+      let loginForm = document.querySelector('#loginForm')
+      let {
+        account: accountEl,
+        password: passwordEl,
+      } = loginForm;
+      const fields = [accountEl, passwordEl];
+
+      for (let el of fields) {
+        el.style.border = '1px solid #CCC';
+        el.nextElementSibling.innerHTML = '';
+      }
+
+      let isPass = true;
+      if (accountEl.value.length == 0) {
+        isPass = false;
+        accountEl.style.border = '1px solid red';
+        accountEl.nextElementSibling.innerHTML = '請填寫帳號';
+      }
+      if (passwordEl.value.length == 0) {
+        isPass = false;
+        passwordEl.style.border = '1px solid red';
+        passwordEl.nextElementSibling.innerHTML = '請填寫密碼';
+      }
+
+      if (isPass) {
+        let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
+        let failureInfo = document.querySelector('#loginForm .alert');
+
+
+        fetch(`../parts/login_api.php`, {
+          method: 'POST',
+          body: sendData,
+        }).then(r => r.json()).then(data => {
+          if (data.success) {
+            console.log(data);
+            window.location.reload();
+          } else {
+            failureInfo.innerHTML = data.error;
+            setTimeout(function () {
+              failureInfo.classList.replace('opacity-0', 'opacity-100');
+              setTimeout(function () {
+                failureInfo.classList.replace('opacity-100', 'opacity-0');
+              }, 3000);
+            }, 1000);
+          }
+        });
+      };
+    }
+  </script>
