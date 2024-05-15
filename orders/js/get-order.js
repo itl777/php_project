@@ -39,37 +39,39 @@ function displayOrders(data) {
   document.getElementById('orderId').value = data.order_id;
   document.getElementById('orderDate').value = data.order_date;
   document.getElementById('orderDate').disabled = true;
-  document.getElementById('memberId').value = data.member_id;
+  document.getElementById('memberId').value = data.user_id;
   document.getElementById('memberId').disabled = true;
-  document.getElementById('memberName').value = data.member_name;
+  document.getElementById('memberName').value = data.name;
   document.getElementById('memberName').disabled = true;
   document.querySelectorAll('[name="paymentMethod"]').forEach(radio=> {
     radio.disabled = true;
     radio.value === data.payment_method ? radio.checked = true : radio.checked = false;
   });
+  document.getElementById('orderStatus').value = data.order_status_id.toString();
+  console.log(data.order_status_id);
   document.getElementById('recipientName').value = data.recipient_name;
-  document.getElementById('recipientMobile').value = data.order_mobile_phone;
+  document.getElementById('recipientMobile').value = data.recipient_mobile;
   
   document.getElementById('city').value = data.order_city_id;
   document.getElementById('district').value = data.order_district_id;
   updateCitySelect(data.order_city_id, data.order_district_id);
-  document.getElementById('address').value = data.address;
+  document.getElementById('address').value = data.order_address;
 
-  if (data.member_carrier) {
+  if (data.member_carrier == 1) {
     document.getElementById('useMemberInvoice').checked = true;
     document.querySelector('.mobile-invoice-div').classList.add('d-none');
     document.querySelector('.tax-id-div').classList.add('d-none');
   }
 
-  if (data.order_invoice_carrier) {
+  if (data.recipient_invoice_carrier !== null) {
     document.getElementById('useMobileInvoice').checked = true;
-    document.getElementById('mobileInvoice').value = data.order_invoice_carrier;
+    document.getElementById('mobileInvoice').value = data.recipient_invoice_carrier;
     document.querySelector('.tax-id-div').classList.add('d-none');
   }
 
-  if (data.order_tax_id) {
+  if (data.recipient_tax_id !== null) {
     document.getElementById('useTaxId').checked = true;
-    document.getElementById('taxId').value = data.order_tax_id;
+    document.getElementById('taxId').value = data.recipient_tax_id;
     document.querySelector('.mobile-invoice-div').classList.add('d-none');
   }
   
@@ -111,27 +113,28 @@ function loadOrderDetails(orderId) {
       }
       if (data.length > 0) {
         originalProductsCount = data.length;
-        originalProductIdsArray = data.map(item => item.product_id);
+        originalProductIdsArray = data.map(item => item.order_product_id);
         console.log('originalProductsCount'+originalProductsCount);
         console.log('originalProductIdsArray'+originalProductIdsArray);
 
         data.forEach((item, index) => {
           const productCardHtml = `
             <div class="col-12 position-relative order-item mb-4">
-              <h6 class="mb-3">(${item.product_id}) ${item.product_name} ${index + 1}</h6>
+              <h6 class="mb-3">(${item.order_product_id}) ${item.product_name}</h6>
               <button type="button" class="delete-item delete-product"><i class="fa-solid fa-xmark"></i></button>
               <div class="col-4 mb-3">
-                <input type="number" class="form-control" id="productQuantity${index + 1}" name="productQuantities[]" value="${item.ordered_quantity}" placeholder="商品數量">
+                <input type="number" class="form-control" id="productQuantity${index + 1}" name="productQuantities[]" value="${item.order_quantity}" placeholder="商品數量">
+                <span class="helper-text"></span>
               </div>
-              <span>剩餘庫存：${item.stock_quantity-item.ordered_quantity}</span>
+              <span>剩餘庫存：${item.stock_quantity-item.order_quantity}</span>
               <p class="mb-0">商品單價：${item.order_unit_price}</p>
-              <p class="mb-0">商品總金額：<span class="product-total-price">${item.ordered_quantity * item.order_unit_price}</span></p>
-              <input type="text" class="d-none" id="productId${index + 1}" name="productIds[]" value="${item.product_id}">
+              <p class="mb-0">商品總金額：<span class="product-total-price">${item.order_quantity * item.order_unit_price}</span></p>
+              <input type="text" class="d-none" id="productId${index + 1}" name="productIds[]" value="${item.order_product_id}">
               <input type="number" class="d-none" id="productUnitPrice${index + 1}" name="productUnitPrices[]" value="${item.order_unit_price}">
             </div>`;
           orderItemContainer.insertAdjacentHTML('beforeend', productCardHtml);
           updateOrderTotal();
-          addedProductIds.add(item.product_id);
+          addedProductIds.add(item.order_product_id);
           orderItemNum = originalProductsCount + 1;
         });
       } else {

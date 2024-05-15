@@ -1,5 +1,5 @@
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
 <div class="container">
   <h2 class="my-5">新增訂單</h2>
@@ -41,6 +41,14 @@
               <label class="form-check-label" for="linePay">LINE PAY</label>
             </div>
           </div>
+        </div>           
+
+        <div class="col-6 mb-3 pe-3">
+          <label for="orderStatus" class="form-label">訂單狀態</label>
+          <select class="form-select" id="orderStatus" name="orderStatus">
+            <option disabled>請選擇</option>
+          </select>
+          <span class="helper-text"></span>
         </div>
 
 
@@ -172,8 +180,8 @@
               </div>
 
               <div class="col-6 form-check save-tax-id">
-                <input class="form-check-input" type="checkbox" id="savedTaxId" value="option1">
-                <label class="col-12 form-check-label" for="savedTaxId">儲存至會員資料</label>
+                <input class="form-check-input" type="checkbox" id="saveTaxId" value="option1">
+                <label class="col-12 form-check-label" for="saveTaxId">儲存至會員資料</label>
               </div>
             </div>
 
@@ -216,6 +224,7 @@
 
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 <script src="js/order-general.js"></script>
+<script src="js/order-status-list.js"></script>
 <script src="js/order-add-submit.js"></script>
 <script src="js/search-member.js"></script>
 <script src="js/address.js"></script>

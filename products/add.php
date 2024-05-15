@@ -4,7 +4,7 @@
 <!-- 狀態查詢 -->
 <?php include 'db_select/select_status.php' ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include 'components/navbar.php' ?>
+<?php include '../parts/bt-navbar.php' ?>
 
 
 

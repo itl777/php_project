@@ -52,10 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // 清空原本的內容
         modalBody.innerHTML = '';
         let defaultAddressTimeOut = false;
-        console.log('抓到地址拉');
 
         if (data.success && data.addresses && data.addresses.length > 0) {
-          console.log('抓到地址拉');
           data.addresses.forEach(address => {
             const radioHtml = `
               <div class="form-check position-relative mb-3 saved-address-row">

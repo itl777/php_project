@@ -25,17 +25,3 @@
     </div>
   </div>
 </div>
-
-
-<script>
-  const loginData = function(e){
-    e.preventDefault();
-    let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
-    fetch(`login_api.php`, {
-      method: 'POST',
-      body: sendData,
-    }).then(r => r.json()).then(data => {
-      console.log(data);
-    });
-  }
-</script>

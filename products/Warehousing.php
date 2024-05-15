@@ -8,7 +8,7 @@ require __DIR__ . '/db_select/select_warehousing.php';
 
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include 'components/navbar.php' ?>
+<?php include '../parts/bt-navbar.php' ?>
 
 <div class="container mt-5">
     <div class="row">

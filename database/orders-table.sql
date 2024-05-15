@@ -1,4 +1,3 @@
--- hih
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `customer_order_id` varchar(255),
@@ -13,7 +12,7 @@ CREATE TABLE `orders` (
   `member_carrier` int DEFAULT NULL,
   `recipient_invoice_carrier` varchar(50),
   `recipient_tax_id` varchar(50),
-  `order_status` enum('unpaid','paid','expired','canceled','tallying','shipping','arrived','completed') DEFAULT 'unpaid',
+  `order_status_id` int NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT NULL,
   `last_modified_by` varchar(255) DEFAULT NULL,
   `last_modified_at` datetime DEFAULT NULL
@@ -23,6 +22,17 @@ ADD FOREIGN KEY (member_id) REFERENCES users(user_id);
 
 ALTER TABLE orders
 ADD FOREIGN KEY (order_district_id) REFERENCES district(id);
+
+ALTER TABLE orders
+ADD FOREIGN KEY (order_status_id) REFERENCES order_status(id);
+
+
+
+CREATE TABLE `order_status` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `order_status_name` varchar(50) NOT NULL,
+  `out_of_warehouse` int NOT NULL DEFAULT '1'
+);
 
 
 
@@ -46,6 +56,9 @@ ADD FOREIGN KEY (order_product_id) REFERENCES product_management(product_id);
 
 ALTER TABLE product_management
 ADD FOREIGN KEY (category_id) REFERENCES product_category(category_id);
+
+ALTER TABLE order_details
+ADD UNIQUE INDEX idx_order_product_unique (order_id, order_product_id);
 
 
 
@@ -79,4 +92,13 @@ INSERT INTO `product_warehousing`(`product_id`, `quantity`, `created_at`, `last_
 (20, 40, NOW(), NOW()), (20, 85, NOW(), NOW());
 
 
-
+INSERT INTO `order_status`(`order_status_name`) VALUES
+('待付款', 1),
+('付款失敗', 0),
+('已付款', 1),
+('已取消', 0),
+('理貨中', 1),
+('已出貨', 1),
+('配送中', 1),
+('已收貨', 1),
+('已完成', 1)

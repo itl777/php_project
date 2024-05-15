@@ -1,4 +1,4 @@
-  let pageNow = '';
+  // let pageNow = '';
   const fetchUserListData = function (option) {
     let url = `api/user_list_data_api.php`;
     fetchJsonData(url, option)

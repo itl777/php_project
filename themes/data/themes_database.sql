@@ -92,3 +92,11 @@ VALUES
 (3, 9, '2024-05-28 12:30:00', 8),
 (1, 10, '2024-05-29 13:00:00', 3),
 (3, 1, '2024-05-30 13:30:00', 6);
+
+CREATE TABLE branch_themes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    branch_id INT,
+    theme_id INT,
+    FOREIGN KEY (branch_id) REFERENCES branches(id),
+    FOREIGN KEY (theme_id) REFERENCES themes(theme_id)
+);
