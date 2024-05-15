@@ -7,7 +7,7 @@ $pageName = 'theme_add';
 <?php include __DIR__ . '/../../parts/html-head.php' ?>
 
 <style>
-    form .mb-3 .form-text {
+    form .mb-4 .form-text {
         color: tomato;
         font-weight: 800;
     }
@@ -20,36 +20,33 @@ $pageName = 'theme_add';
             <div class="card">
                 <div class="card-body">
                     <form name="form1" class="p-3" onsubmit="sendData(event)">
-                        <div class="mb-3 col-5">
-                            <label for="theme_name" class="form-label">主題名稱</label>
+                        <div class="mb-4 col-5">
+                            <label for="theme_name" class="form-label fw-bold">主題名稱</label>
                             <input type="text" class="form-control" id="theme_name" name="theme_name">
                             <div class="form-text"></div>
                         </div>
 
-                        <div class="mb-3 col-5 ">
-                            <label for="theme_img" class="form-label">主題圖片</label>
-                            <input type="file" class="form-control" name="uploadFile[]" multiple="multiple"
-                                id="theme_img">
+                        <div class="mb-4 col-5 ">
+                            <label for="theme_img" class="form-label fw-bold">主題圖片</label>
+                            <input type="file" class="form-control" name="uploadFile[]" multiple="multiple" id="theme_img">
                         </div>
 
-                        <div class="mb-3 col-8">
-                            <label for="theme_desc" class="form-label">主題描述</label>
-                            <textarea class="form-control" id="theme_desc" name="theme_desc" cols="30" rows="3"
-                                placeholder="請輸入250字以內"></textarea>
+                        <div class="mb-4 col-8">
+                            <label for="theme_desc" class="form-label fw-bold">主題描述</label>
+                            <textarea class="form-control" id="theme_desc" name="theme_desc" cols="30" rows="3" placeholder="請輸入250字以內"></textarea>
                             <div class="form-text"></div>
                         </div>
 
-                        <div class="mb-3 col-5">
-                            <label for="price" class="form-label">價錢</label>
+                        <div class="mb-4 col-5">
+                            <label for="price" class="form-label fw-bold">價錢</label>
                             <input type="text" class="form-control" id="price" name="price" placeholder="請輸入價錢">
                             <div class="form-text"></div>
                         </div>
 
                         <div class="row">
-                            <div class="mb-3 col-5">
-                                <label for="difficulty" class="form-label">難度</label>
-                                <select class="form-select" aria-label="Default select example" id="difficulty"
-                                    name="difficulty">
+                            <div class="mb-4 col-5">
+                                <label for="difficulty" class="form-label fw-bold">難度</label>
+                                <select class="form-select" aria-label="Default select example" id="difficulty" name="difficulty">
                                     <option selected>難度</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -58,35 +55,31 @@ $pageName = 'theme_add';
                                     <option value="5">5</option>
                                 </select>
                             </div>
-                            <div class="mb-3 col-5">
-                                <label for="suitable_players" class="form-label">適合遊玩人數</label>
-                                <input type="text" class="form-control" id="suitable_players" name="suitable_players"
-                                    placeholder="請輸入 _ ~ _ 人">
+                            <div class="mb-4 col-5">
+                                <label for="suitable_players" class="form-label fw-bold">適合遊玩人數</label>
+                                <input type="text" class="form-control" id="suitable_players" name="suitable_players" placeholder="請輸入 _ ~ _ 人">
                                 <div class="form-text"></div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="mb-3 col-5">
-                                <label for="start_time" class="form-label">開始時間</label>
-                                <input type="text" class="form-control" id="start_time" name="start_time"
-                                    placeholder="ex. 早上 9:00">
+                            <div class="mb-4 col-5">
+                                <label for="start_time" class="form-label fw-bold">開始時間</label>
+                                <input type="text" class="form-control" id="start_time" name="start_time" placeholder="ex. 早上 9:00">
                                 <div class="form-text"></div>
                             </div>
 
-                            <div class="mb-3 col-5">
-                                <label for="end_time" class="form-label">結束時間</label>
-                                <input type="text" class="form-control" id="end_time" name="end_time"
-                                    placeholder="ex. 晚上 21:00">
+                            <div class="mb-4 col-5">
+                                <label for="end_time" class="form-label fw-bold">結束時間</label>
+                                <input type="text" class="form-control" id="end_time" name="end_time" placeholder="ex. 晚上 21:00">
                                 <div class="form-text"></div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="mb-3 col-5">
-                                <label for="theme_time" class="form-label">主題時長</label>
-                                <select class="form-select" aria-label="Default select example" id="theme_time"
-                                    name="theme_time">
+                            <div class="mb-4 col-5">
+                                <label for="theme_time" class="form-label fw-bold">主題時長</label>
+                                <select class="form-select" aria-label="Default select example" id="theme_time" name="theme_time">
                                     <option selected>時長</option>
                                     <option value="60">60</option>
                                     <option value="90">90</option>
@@ -94,10 +87,9 @@ $pageName = 'theme_add';
                                 </select>
                             </div>
 
-                            <div class="mb-3 col-5">
-                                <label for="intervals" class="form-label">間隔時間</label>
-                                <select class="form-select" aria-label="Default select example" id="intervals"
-                                    name="intervals">
+                            <div class="mb-4 col-5">
+                                <label for="intervals" class="form-label fw-bold">間隔時間</label>
+                                <select class="form-select" aria-label="Default select example" id="intervals" name="intervals">
                                     <option selected>間隔</option>
                                     <option value="30">30</option>
                                     <option value="60">60</option>
@@ -106,13 +98,13 @@ $pageName = 'theme_add';
                         </div>
 
                         <div class="row">
-                            <div class="mb-3 col-5">
-                                <label for="start_date" class="form-label">開始日</label>
+                            <div class="mb-4 col-5">
+                                <label for="start_date" class="form-label fw-bold">開始日</label>
                                 <input type="date" class="form-control" id="start_date" name="start_date">
                                 <div class="form-text"></div>
                             </div>
-                            <div class="mb-3 col-5">
-                                <label for="end_date" class="form-label">結束日</label>
+                            <div class="mb-4 col-5">
+                                <label for="end_date" class="form-label fw-bold">結束日</label>
                                 <input type="date" class="form-control" id="end_date" name="end_date">
                                 <div class="form-text"></div>
                             </div>
@@ -130,8 +122,7 @@ $pageName = 'theme_add';
 </div>
 
 <!-- Modal bt 彈跳視窗-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -352,14 +343,14 @@ $pageName = 'theme_add';
             const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
             fetch('theme_add_api.php', {
-                method: 'POST',
-                body: fd, // Content-Type: multipart/form-data
-            }).then(r => r.json())
+                    method: 'POST',
+                    body: fd, // Content-Type: multipart/form-data
+                }).then(r => r.json())
                 .then(data => {
                     console.log(data);
                     if (data.success) {
                         myModal.show();
-                    } else { }
+                    } else {}
                 })
                 .catch(ex => console.log(ex))
         }
