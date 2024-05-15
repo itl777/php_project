@@ -43,7 +43,7 @@
                     </a>
 
                     <!-- ----行程管理------ -->
-                    <a class="nav-link collapsed" href="../themes/address_book/theme_list.php" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                    <a class="nav-link collapsed" href="../themes/theme_list.php" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         行程管理
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -51,8 +51,9 @@
                     <!-- --------- -->
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="../themes/address_book/branch_list.php">分店管理</a>
-                            <a class="nav-link" href="../themes/address_book/theme_list.php">主題管理</a>
+                            <a class="nav-link" href="../themes/theme_list.php">行程列表</a>
+                            <a class="nav-link" href="../themes/branch_list.php">分店管理</a>
+                            <a class="nav-link" href="../themes/theme_list.php">主題管理</a>
                         </nav>
                     </div>
                     <!-- --------- -->
