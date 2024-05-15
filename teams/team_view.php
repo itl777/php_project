@@ -14,7 +14,6 @@ $sql = "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team
         join `themes` on `tour` = themes.theme_id
         left join `teams_members` on team_id = join_team_id
         WHERE team_id={$team_id}";
-
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
@@ -26,16 +25,12 @@ $sql_c = "SELECT nick_name, chat_text, create_at
         FROM teams_chats
         join `users` on chat_by = users.user_id
         WHERE chat_at={$team_id}";
-
 $stmt_c = $pdo->prepare($sql_c);
 $stmt_c->execute();
 $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 <style>
   form .mb-3 .form-text {
     color: red;
