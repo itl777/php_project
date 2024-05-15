@@ -46,7 +46,7 @@ if ($totalRows) {
 
 ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
 <div class="container">
     <!-- 分頁選擇欄 -->
@@ -120,7 +120,7 @@ if ($totalRows) {
                             <td><?= $r['status_text'] ?></td>
                             <td>
                                 <a href="./team_edit.php?team_id=<?= $r['team_id'] ?>">
-                                    <i class="fa-solid fa-pen-to-square"></i>
+                                <button type="button" class="btn btn-primary">修改</button>
                                 </a>
                             </td>
                         </tr>
