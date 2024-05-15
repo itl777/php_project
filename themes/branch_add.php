@@ -217,9 +217,10 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
+
     // 有通過檢查, 才要送表單
     if (isPass) {
-      const fd = new FormData(document.form1); // 沒有外觀的表單物件
+      const fd = new FormData(document.form1);
 
       fetch('branch_add_api.php', {
         method: 'POST',
@@ -228,12 +229,16 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .then(data => {
           console.log(data);
           if (data.success) {
-            myModal.show();
-          } else { }
+            myModal.show(); // 顯示成功的模態框
+          } else {
+            // 顯示失敗的模態框
+          }
         })
         .catch(ex => console.log(ex))
+
     }
   };
-  const myModal = new bootstrap.Modal('#staticBackdrop')
+  const myModal = new bootstrap.Modal('#staticBackdrop');
+
 </script>
 <?php include __DIR__ . '/../parts/html-foot.php' ?>
