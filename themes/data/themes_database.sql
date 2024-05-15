@@ -38,24 +38,21 @@ VALUES
 CREATE TABLE branches (
     id INT AUTO_INCREMENT PRIMARY KEY,
     branch_name VARCHAR(20),
-    theme_id INT,
     branch_address VARCHAR(50),
     branch_phone VARCHAR(20),
-    branch_img VARCHAR(255),
     open_time VARCHAR(20),
     close_time VARCHAR(20),
     branch_status VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_modified_by VARCHAR(255),
-    last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (theme_id) REFERENCES themes(theme_id)
+    last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO branches (branch_name, branch_address, branch_phone, branch_img, open_time, close_time, branch_status, last_modified_by)
+INSERT INTO branches (branch_name, branch_address, branch_phone,open_time, close_time, branch_status, last_modified_by)
 VALUES 
-('探秘-北分店', '台北市大安區永恆街4號3樓', '02-12345678', 'branch_north.jpg', '09:00:00', '21:00:00', 'open', 'Admin'),
-('探秘-中分店', '台中市三民區一中街27號5樓', '04-23456789', 'branch_central.jpg', '09:00:00', '21:00:00', 'open', 'Admin'),
-('探秘-南分店', '高雄市鳳山區四維路50號2樓', '06-34567890', 'branch_south.jpg', '09:00:00', '21:00:00', 'open', 'Admin');
+('探秘-北分店', '台北市大安區永恆街4號3樓', '02-12345678', '09:00:00', '21:00:00', 'open', 'Admin'),
+('探秘-中分店', '台中市三民區一中街27號5樓', '04-23456789', '09:00:00', '21:00:00', 'open', 'Admin'),
+('探秘-南分店', '高雄市鳳山區四維路50號2樓', '06-34567890', '09:00:00', '21:00:00', 'open', 'Admin');
 
 CREATE TABLE reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,9 +61,7 @@ CREATE TABLE reservations (
     theme_id INT,
     re_datetime DATETIME,
     participants INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (branch_id) REFERENCES branches(id),
-    FOREIGN KEY (theme_id) REFERENCES themes(theme_id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 -- FOREIGN KEY (user_id) REFERENCES users(user_id),
 
@@ -96,7 +91,6 @@ VALUES
 CREATE TABLE branch_themes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     branch_id INT,
-    theme_id INT,
-    FOREIGN KEY (branch_id) REFERENCES branches(id),
-    FOREIGN KEY (theme_id) REFERENCES themes(theme_id)
+    theme_id INT
 );
+

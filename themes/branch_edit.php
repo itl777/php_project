@@ -27,9 +27,26 @@ if (!empty($row['theme_id'])) {
 $pageName = 'branch_add';
 
 // 獲取主題資料
-$sql = "SELECT theme_id, theme_name FROM themes";
-$stmt = $pdo->query($sql);
-$themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$branchThemesSql = "SELECT t.theme_id AS t_theme_id, bt.*, t.* 
+FROM branch_themes AS bt
+INNER JOIN themes AS t
+ON t.theme_id = bt.theme_id
+WHERE branch_id = ?
+";
+
+$branchThemes = [];
+$branchThemesStmt = $pdo->prepare($branchThemesSql);
+$branchThemesStmt->execute([$branchId]);
+$branchThemes = $branchThemesStmt->fetchAll();
+
+
+
+$themesSql = "SELECT theme_id, theme_name FROM themes";
+$themesStmt = $pdo->query($themesSql);
+$themes = $themesStmt->fetchAll();
+$selectedThemeIds = [];
+$selectedThemeIds = array_column($branchThemes, 't_theme_id');
+
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
@@ -64,19 +81,18 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
 
                         <div class="mb-4 col-10">
-                            <label for="" class="form-label fw-bold">遊玩行程主題</label><br>
+                            <label class="form-label fw-bold">遊玩行程主題</label><br>
                             <?php foreach ($themes as $theme): ?>
-                                <?php
-                                $isChecked = in_array($theme['theme_id'], $selectedThemes);
-                                ?>
                                 <div class="form-check form-check-inline me-3 mb-3">
                                     <input class="form-check-input" type="checkbox"
                                         id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]"
-                                        value="<?php echo $theme['theme_id']; ?>" <?php echo ($isChecked) ? 'checked' : ''; ?>>
+                                        value="<?php echo $theme['theme_id']; ?>" <?php if (in_array($theme['theme_id'], $selectedThemeIds))
+                                               echo 'checked'; ?>>
                                     <label class="form-check-label"
                                         for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
                                 </div>
                             <?php endforeach; ?>
+                            <div class="form-text"></div>
                         </div>
 
 
