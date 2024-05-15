@@ -16,6 +16,7 @@
         <div class="col-6 mb-3 pe-3">
           <label for="orderDate" class="form-label">訂單日期</label>
           <input type="date" class="form-control" id="orderDate" name="orderDate">
+          <span class="helper-text"></span>
         </div>
 
         <div class="col-6 mb-3 ps-3">
@@ -106,11 +107,13 @@
             <div class="col-6 mb-3 pe-3">
               <label for="recipientName" class="form-label">收件人</label>
               <input type="text" class="form-control" id="recipientName" name="recipientName">
+              <span class="helper-text"></span>
             </div>
 
             <div class="col-6 mb-3 ps-3">
               <label for="recipientMobile" class="form-label">收件人手機</label>
               <input type="text" class="form-control" id="recipientMobile" name="recipientMobile">
+              <span class="helper-text"></span>
             </div>
 
 
@@ -119,6 +122,7 @@
               <select class="form-select" id="city" name="city">
                 <option selected>請選擇</option>
               </select>
+              <span class="helper-text"></span>
             </div>
 
             <div class="col-6 mb-3 ps-3">
@@ -126,11 +130,13 @@
               <select class="form-select" id="district" name="district">
                 <option selected>請選擇</option>
               </select>
+              <span class="helper-text"></span>
             </div>
 
             <div class="col-12">
               <label for="address" class="form-label">地址</label>
               <input type="text" class="form-control" id="address" name="address">
+              <span class="helper-text"></span>
             </div>
           </div>
 
@@ -153,6 +159,7 @@
             <div class="col-12 d-flex mobile-invoice-div">
               <div class="col-6 mb-3 pe-3">
                 <input type="text" class="form-control" id="mobileInvoice" name="mobileInvoice" placeholder="請輸入手機載具">
+                <span class="helper-text"></span>
               </div>
 
 
@@ -172,6 +179,7 @@
             <div class="col-12 d-flex tax-id-div">
               <div class="col-6 mb-3 pe-3">
                 <input type="text" class="form-control" id="taxId" name="taxId" placeholder="請輸入公司統編">
+                <span class="helper-text"></span>
               </div>
 
               <div class="col-6 form-check d-none">
@@ -191,7 +199,7 @@
         <div class="col-12 mb-4">
           <input type="text" class="form-control search-product"  placeholder="請輸入商品編號或名稱完成新增">
           <div class="dropdown-menu product-id-dropdown"></div>
-          <span class="helper-text"></span>
+          <span class="helper-text product-helper-text"></span>
         </div>
 
         <div class="order-item-container">
