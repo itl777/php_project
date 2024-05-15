@@ -25,6 +25,7 @@
             <div class="row align-items-center">
               <div class="col-6 d-flex justify-content-start">
                 <button type="button" class="btn btn-warning" onclick="addAddressLine()">新增</button>
+                <button type="button" class="btn btn-primary" onclick="quickAddAddress()">快速新增</button>
               </div>
               <div class="col-6 d-flex justify-content-end">
                 <button type="button" class="btn btn-secondary" data-bs-target="#editModal" data-bs-toggle="modal">關閉</button>

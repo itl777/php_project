@@ -48,7 +48,7 @@ $title = '會員管理系統';
       <label class="input-group form-control">
         <div class="form-check form-switch">
           <input class="form-check-input" name="desc" value="1" type="checkbox" role="switch">
-          降順
+          更改排序
         </div>
       </label>
       <div class="form-control">

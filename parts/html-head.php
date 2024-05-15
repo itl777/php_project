@@ -3,12 +3,12 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-// if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index_.php') {
-//   if (!isset($_SESSION['admin'])) {
-//     header('Location: index_.php');
-//     exit;
-//   }
-// }
+if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
+  if (!isset($_SESSION['admin'])) {
+    header('Location: ../index/index_.php');
+    exit;
+  }
+}
 
 ?>
 <html>
@@ -28,7 +28,7 @@ if (!isset($_SESSION)) {
     const loginData = function(e) {
       e.preventDefault();
       let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
-      fetch(`http://localhost/iSpanProject/parts/login_api.php`, {
+      fetch(`../parts/login_api.php`, {
         method: 'POST',
         body: sendData,
       }).then(r => r.json()).then(data => {
