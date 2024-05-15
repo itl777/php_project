@@ -27,7 +27,7 @@ const addressLineData = async (addressData = {}) => {
   );
 
   let addressLineData = '';
-  addressLineData += `<div class="col-12">`;
+  addressLineData += `<div class="col-12 px-3">`;
 
   addressLineData +=
     `<input name="address_id" type="hidden" value="${addressData.address_id || ""}" data-tag="${addressData.address_id ? 'update' : 'insert'}">`;
@@ -35,19 +35,19 @@ const addressLineData = async (addressData = {}) => {
   addressLineData += `<div class="d-flex">`;
 
   addressLineData +=
-    `<select name="city" class="form-select d-inline-block" onChange="cityChanged(event)">${cityOptionsHtml}</select>`;
+    `<select name="city" class="form-select d-inline-block w-25 me-2" onChange="cityChanged(event)">${cityOptionsHtml}</select>`;
 
   addressLineData +=
-    `<select name="district_id" class="form-select d-inline-block">${postalCodesOptionsHtml}</select>`;
+    `<select name="district_id" class="form-select d-inline-block w-25 me-2">${postalCodesOptionsHtml}</select>`;
 
   addressLineData +=
-    `<input type="text" name="addressLine" class="form-control d-inline-block" value="${addressData.address || ""}">`;
+    `<input type="text" name="addressLine" class="form-control d-inline-block me-2" value="${addressData.address || ""}">`;
 
   addressLineData +=
-    `<input type="text" name="recipient_name" class="form-control d-inline-block" value="${addressData.recipient_name || ""}">`
+    `<input type="text" name="recipient_name" class="form-control d-inline-block w-25 me-2" value="${addressData.recipient_name || ""}">`
 
   addressLineData +=
-    `<input type="text" name="mobile_phone" class="form-control d-inline-block" value="${addressData.mobile_phone || ""}">`
+    `<input type="text" name="mobile_phone" class="form-control d-inline-block w-50 me-2" value="${addressData.mobile_phone || ""}">`
 
   addressLineData +=
     `<button type="button" class="btn btn-danger" onclick="removeAddressLine(event)"><i class="bi bi-trash"></i></button>`;

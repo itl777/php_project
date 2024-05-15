@@ -51,7 +51,7 @@ if (password_verify($_POST['password'], $row['password'])) {
 } else {
   # 密碼是錯的
   $output['code'] = 440;
-  $output['error'] = '密碼錯誤';
+  $output['error'] = '密碼錯誤請重新輸入';
 }
 
 

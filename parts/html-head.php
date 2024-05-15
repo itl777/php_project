@@ -38,34 +38,35 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
 
 
 
-  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-hidden="true">
+  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">登入</h5>
+          <h5 class="modal-title px-4">登入</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body my-3">
 
-          <form name="loginForm" id="loginForm" onsubmit="loginData(event)">
+          <form name="loginForm" id="loginForm" onsubmit="loginData(event)" class="px-4">
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">帳號</label>
               <input type="text" class="form-control" name="account">
               <div class="form-text"></div>
             </div>
-            <div class="mb-3">
+            <div class="mb-">
               <label for="exampleInputPassword1" class="form-label">密碼</label>
               <input type="password" class="form-control" name="password">
               <div class="form-text"></div>
             </div>
-            <div class="mb-3">
-              <div class="alert alert-danger opacity-0 m-0 " role="alert" style="transition: all 500ms ease-out;">
-
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="alert alert-danger opacity-0 m-0 w-50 text-center" role="alert" style="transition: all 500ms ease-out;">
+                　
+              </div>
+              <div>
+                <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">關閉</button>
+                <button type="submit" class="btn btn-primary">登入</button>
               </div>
             </div>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-            <button type="submit" class="btn btn-primary">登入</button>
           </form>
 
         </div>
@@ -75,7 +76,7 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
 
 
   <script>
-    const loginData = function (e) {
+    const loginData = function(e) {
       e.preventDefault();
       let loginForm = document.querySelector('#loginForm')
       let {
@@ -111,20 +112,17 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
           body: sendData,
         }).then(r => r.json()).then(data => {
           let failureInfo = document.querySelector('#loginForm .alert');
-          failureInfo.innerHTML = '';
+          failureInfo.innerHTML = '       ';
 
           if (data.success) {
             window.location.reload();
           } else {
             failureInfo.innerHTML = data.error;
           }
-
-          setTimeout(function () {
-            failureInfo.classList.replace('opacity-0', 'opacity-100');
-            setTimeout(function () {
-              failureInfo.classList.replace('opacity-100', 'opacity-0');
-            }, 3000);
-          }, 1000);
+          failureInfo.classList.replace('opacity-0', 'opacity-100');
+          setTimeout(function() {
+            failureInfo.classList.replace('opacity-100', 'opacity-0');
+          }, 3000);
         });
       };
     }

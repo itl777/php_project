@@ -1,6 +1,10 @@
 <?php
 $title = '會員中心';
+
+
+header("Access-Control-Allow-Origin: *");
 ?>
+
 
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
@@ -12,26 +16,32 @@ $title = '會員中心';
 
   <div class="container-fluid">
     <form name="selectForm" id="selectForm" onsubmit="selectFormData(event)" class="g-5">
-      <div class="row g-3 border bg-light pb-3 mb-3 rounded-3">
+      <div class="row g-3 border bg-light pb-3 px-3 mb-3 rounded-3">
 
         <div class="col-12 d-flex">
-          <input type="text" name="account" class="form-control mx-3" placeholder="帳號">
-          <input type="text" name="name" class="form-control mx-3" placeholder="姓名">
-          <input type="text" name="nick_name" class="form-control mx-3" placeholder="暱稱">
-          <input type="text" name="user_id" class="form-control mx-3" placeholder="會員編號">
-          <input type="text" name="mobile_phone" class="form-control mx-3" placeholder="電話號碼">
+
+          <div class="input-group">
+
+
+            <input type="text" name="account" class="form-control mx-1" placeholder="帳號">
+            <input type="text" name="name" class="form-control mx-1" placeholder="姓名">
+            <input type="text" name="nick_name" class="form-control mx-1" placeholder="暱稱">
+            <input type="text" name="user_id" class="form-control mx-1" placeholder="會員編號">
+            <input type="text" name="mobile_phone" class="form-control mx-1" placeholder="電話號碼">
+            <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+          </div>
         </div>
 
         <div class="col-12 d-flex justify-content-between">
 
 
-        <div class="col-4 g-3 d-flex gap-3 ms-3">
+          <div class="col-4 g-3 d-flex gap-3 ms-1">
             <button type="button" class="btn btn-warning" onclick="addModalShow()">新增</button>
             <button type="button" class="btn btn-primary" onclick="quickAdd(pageNow)">快速新增</button>
           </div>
 
 
-          <div class="col-4 g-3 bg-white py-2 px-4 border border-1 rounded-3 d-flex gap-3 me-3">
+          <div class="col-4 g-3 bg-white py-2 px-4 border border-1 rounded-3 d-flex gap-3 me-1">
             <label class="">
               <div class="form-check form-switch">
                 <input class="form-check-input" name="user_status" value="1" type="checkbox" role="switch">
@@ -68,14 +78,13 @@ $title = '會員中心';
         <table class="table table-bordered table-hover" id="userList">
           <thead>
             <!-- column start -->
-            <tr>
-              <th></th>
-              <th>會員編號</th>
-              <th>姓名</th>
-              <th>性別</th>
-              <th>帳號</th>
-              <th>帳號狀態</th>
-              <th>黑名單</th>
+            <tr class="table-dark">
+              <th class="text-center"><i class="bi bi-image"></i></th>
+              <th class="text-center">會員編號</th>
+              <th class="text-center">姓名</th>
+              <th class="text-center">性別</th>
+              <th class="ps-3">帳號</th>
+              <th class="text-center">黑名單</th>
             </tr>
             <!-- column end -->
           </thead>
@@ -84,7 +93,7 @@ $title = '會員中心';
 
             <!-- row end -->
           </tbody>
-          <tfoot>
+          <tfoot class="table-dark">
 
           </tfoot>
         </table>

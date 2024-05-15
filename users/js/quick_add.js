@@ -48,7 +48,7 @@ const quickAddAddress = function () {
     //   addressModalData(data['user_id']);
     // }, 1000);
   })
-  .catch((error) => console.error("Error:", error));
+    .catch((error) => console.error("Error:", error));
 
 
-  }
+}
