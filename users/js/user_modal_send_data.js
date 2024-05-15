@@ -116,7 +116,7 @@ const userModalSendData = function (e) {
       successModal.show();
       setTimeout(function () {
         successModal.hide();
-        if (data.user_id.length !== 0){
+        if (data.user_id.length !== 0) {
           fetchEditModalData(data.user_id);
         } else {
           editModal.hide();
@@ -125,8 +125,8 @@ const userModalSendData = function (e) {
       }, 1000);
 
     })
-    .catch((error) => console.error("Error:", error));
+      .catch((error) => console.error("Error:", error));
   }
-  
+
 }
 

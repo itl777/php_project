@@ -49,7 +49,7 @@ $status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="mb-3">
               <label for="leader_id" class="form-label">團長</label>
-              <input type="int" class="form-control" id="leader_id" name="leader_id" readonly value="<?= $row['leader_id'], ' - ', $row['nickname'] ?>">
+              <input type="int" class="form-control" id="leader_id" name="leader_id" readonly value="<?= $row['leader_id'], ' - ', $row['nick_name'] ?>">
               <div class="form-text"></div>
             </div>
             <div class="mb-3">
@@ -91,7 +91,7 @@ $status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="location.href='/../teams.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='./teams.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
       </div>
     </div>
@@ -109,14 +109,14 @@ $status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="location.href='/../list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='./teams.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
       </div>
     </div>
   </div>
 </div>
 
-<?php include __DIR__ . '/../parts/js/scripts.php' ?>
+<?php include __DIR__ . './js/scripts.php' ?>
 <script>
 
     /* get themes */

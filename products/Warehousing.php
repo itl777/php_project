@@ -7,8 +7,8 @@ require __DIR__ . '/db_select/select_warehousing.php';
 ?>
 
 
-<?php include 'components/head.php' ?>
-<?php include 'components/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include '../parts/bt-navbar.php' ?>
 
 <div class="container mt-5">
     <div class="row">
@@ -78,7 +78,7 @@ require __DIR__ . '/db_select/select_warehousing.php';
     </div>
 </div>
 
-<?php include 'components/script.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <script>
     const deleteOne = (warehousing_id) => {
         if (confirm(`是否要刪除編號為 ${warehousing_id} 的資料?`)) {

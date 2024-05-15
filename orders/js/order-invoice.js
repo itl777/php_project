@@ -10,12 +10,12 @@ function toggleInvoiceType () {
     document.querySelector('.mobile-invoice-div').classList.add('d-none');
     document.querySelector('.tax-id-div').classList.add('d-none');
     document.getElementById('saveMobileInvoice').checked = false;
-    document.getElementById('savedTaxId').checked = false;
+    document.getElementById('saveTaxId').checked = false;
   }
   if (useMobileInvoiceRadio.checked) {
     document.querySelector('.mobile-invoice-div').classList.remove('d-none');
     document.querySelector('.tax-id-div').classList.add('d-none');
-    document.getElementById('savedTaxId').checked = false;
+    document.getElementById('saveTaxId').checked = false;
   }
   if (useTaxIdRadio.checked) {
     document.querySelector('.mobile-invoice-div').classList.add('d-none');
@@ -29,7 +29,7 @@ function saveInvoice () {
   const mobileInvoiceInput = document.getElementById('mobileInvoice');
   const saveMobileInvoiceCheckbox = document.getElementById('saveMobileInvoice');
   const taxIdInput = document.getElementById('taxId');
-  const saveTaxIdCheckbox = document.getElementById('savedTaxId');
+  const saveTaxIdCheckbox = document.getElementById('saveTaxId');
 
   if (mobileInvoiceInput.value === fetchMemberMobileInvoice && fetchMemberMobileInvoice !== null && fetchMemberMobileInvoice !== '') {
     saveMobileInvoiceCheckbox.parentElement.classList.add('d-none');
@@ -67,18 +67,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 發票送出驗證
 function invoicePrepareToSubmit () {
+  // const useMemberInvoice = document.getElementById('useMemberInvoice');
+  // const useMobileInvoice = document.getElementById('useMobileInvoice');
+  // const useTaxId = document.getElementById('useTaxId');
+
   const useMemberInvoice = document.getElementById('useMemberInvoice');
   const useMobileInvoice = document.getElementById('useMobileInvoice');
+  const mobileInvoice = document.getElementById('mobileInvoice');
   const useTaxId = document.getElementById('useTaxId');
-
+  const taxId = document.getElementById('taxId');
+  
   if (useMemberInvoice.checked) {
-    document.getElementById('mobileInvoice').disabled = true;
-    document.getElementById('taxId').disabled = true;
+    mobileInvoice.disabled = true;
+    taxId.disabled = true;
   } else if (useMobileInvoice.checked) {
-    document.getElementById('taxId').disabled = true;
-  } else if(useTaxId.checked) {
-    document.getElementById('mobileInvoice').disabled = true;
+    taxId.disabled = true;
+  } else if (useTaxId.checked) {
+    mobileInvoice.disabled = true;
   }
+
+  // if (useMemberInvoice.checked) {
+  //   document.getElementById('mobileInvoice').disabled = true;
+  //   document.getElementById('taxId').disabled = true;
+  // } else if (useMobileInvoice.checked) {
+  //   document.getElementById('taxId').disabled = true;
+  // } else if(useTaxId.checked) {
+  //   document.getElementById('mobileInvoice').disabled = true;
+  // }
     
 
 

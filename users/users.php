@@ -2,71 +2,66 @@
 $title = '會員管理系統';
 ?>
 
-<?php include __DIR__ . '/../parts/admin-required.php' ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<link rel="stylesheet" href="../css/styles.css">
 
 <div class="container">
-  <button type="button" class="btn btn-warning" onclick="addModalShow()">新增</button>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
 
 
-  <form name="selectForm" id="selectForm" onsubmit="">
 
-    <div class="row">
-
-      <input type="text" name="user_id" class="form-control" placeholder="會員編號">
-
-      <script>
-        const selectForm = document.querySelector('#selectForm');
-        selectForm.addEventListener('keydown', function (event) {
-          if (event.key === 'Enter'){
-          selectForm.submit();
-          }
-        });
+  <form name="selectForm" id="selectForm" onsubmit="selectFormData(event)">
 
 
-      </script>
+    <div class="col-12 d-flex">
 
       <input type="text" name="account" class="form-control" placeholder="帳號">
       <input type="text" name="name" class="form-control" placeholder="姓名">
       <input type="text" name="nick_name" class="form-control" placeholder="暱稱">
+
+
+    </div>
+
+
+
+
+    <div class="col-12 d-flex">
+
+      <input type="text" name="user_id" class="form-control" placeholder="會員編號">
       <input type="text" name="mobile_phone" class="form-control" placeholder="電話號碼">
 
       <label class="input-group form-control">
         <div class="form-check form-switch">
-          <input class="form-check-input" name="user_status" value="0" type="checkbox" role="switch">
-          停用會員
+          <input class="form-check-input" name="user_status" value="1" type="checkbox" role="switch">
+          隱藏停用會員
         </div>
       </label>
 
-
       <label class="input-group form-control">
         <div class="form-check form-switch">
-          <input class="form-check-input" name="blacklist" value="0" type="checkbox" role="switch">
+          <input class="form-check-input" name="blacklist" value="1" type="checkbox" role="switch">
           黑名單
         </div>
       </label>
 
-
       <label class="input-group form-control">
         <div class="form-check form-switch">
-          <input class="form-check-input" name="desc" value="0" type="checkbox" role="switch">
+          <input class="form-check-input" name="desc" value="1" type="checkbox" role="switch">
           降順
         </div>
       </label>
+      <div class="form-control">
+        <button type="button" class="btn btn-warning" onclick="addModalShow()">新增</button>
+        <button type="button" class="btn btn-primary" onclick="quickAdd(pageNow)">快速新增</button>
+      </div>
 
 
-      <!-- //user_id 會員編號查詢
-        //account 帳號查詢
-        //name 姓名查詢
-        //nick_name 暱稱查詢
-        //gender 性別查詢
-        //mobile_phone 電話號碼查詢
-        //user_status 啟用狀態篩選
-        //blacklist 黑名單篩選 -->
+
     </div>
+
+
+
   </form>
 
   <!-- table start -->
@@ -109,15 +104,14 @@ $title = '會員管理系統';
 
 
 <!-- modal -->
-<?php include __DIR__ . '/login_modal.php' ?>
 <?php include __DIR__ . '/include/edit_modal.php' ?>
 <?php include __DIR__ . '/include/address_modal.php' ?>
 <?php include __DIR__ . '/include/success_modal.php' ?>
 
 
 <!-- scripts_map -->
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <?php include __DIR__ . '/include/scripts_map.php' ?>
-
 
 
 <?php include __DIR__ . '/../parts/html-foot.php' ?>

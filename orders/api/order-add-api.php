@@ -19,12 +19,12 @@ try {
   `payment_method`, 
   `recipient_name`, 
   `recipient_mobile`, 
-  `order_district_id `, 
+  `order_district_id`, 
   `order_address`,
   `recipient_invoice_carrier`,
   `recipient_tax_id`,
   `member_carrier`,
-  `order_status`,
+  `order_status_id`,
   `created_at`,
   `last_modified_at`) VALUES
   (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())";
@@ -42,8 +42,8 @@ try {
     $_POST['address'], 
     $_POST['mobileInvoice'] ?? null, 
     $_POST['taxId'] ?? null, 
-    $_POST['memberInvoice'] ?? null, 
-    $_POST['orderStatus'] ?? 'unpaid',
+    $_POST['memberInvoice'] ?? 0, 
+    $_POST['orderStatus'] ?? 1,
   ]);
 
 
