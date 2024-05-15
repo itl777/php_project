@@ -191,89 +191,87 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <script>
     const branchId = <?= $branchId ?>;
-    // const nameField = document.getElementById('branch_name');
-    // const phoneField = document.getElementById('branch_phone');
-    // const openTimeField = document.getElementById('open_time');
-    // const closeTimeField = document.getElementById('close_time');
-    // const statusField = document.getElementById('branch_status');
-    // const addressField = document.getElementById('branch_address');
-    // const form = document.form1;
+    const nameField = document.getElementById('branch_name');
+    const phoneField = document.getElementById('branch_phone');
+    const openTimeField = document.getElementById('open_time');
+    const closeTimeField = document.getElementById('close_time');
+    const statusField = document.getElementById('branch_status');
+    const addressField = document.getElementById('branch_address');
+    const form = document.form1;
 
 
     const sendData = e => {
         e.preventDefault();
 
-        // nameField.style.border = '1px solid #CCCCCC';
-        // nameField.nextElementSibling.innerText = '';
+        nameField.style.border = '1px solid #CCCCCC';
+        nameField.nextElementSibling.innerText = '';
 
-        // phoneField.style.border = '1px solid #CCCCCC';
-        // phoneField.nextElementSibling.innerText = '';
+        phoneField.style.border = '1px solid #CCCCCC';
+        phoneField.nextElementSibling.innerText = '';
 
-        // openTimeField.style.border = '1px solid #CCCCCC';
-        // openTimeField.nextElementSibling.innerText = '';
+        openTimeField.style.border = '1px solid #CCCCCC';
+        openTimeField.nextElementSibling.innerText = '';
 
-        // closeTimeField.style.border = '1px solid #CCCCCC';
-        // closeTimeField.nextElementSibling.innerText = '';
+        closeTimeField.style.border = '1px solid #CCCCCC';
+        closeTimeField.nextElementSibling.innerText = '';
 
-        // statusField.style.border = '1px solid #CCCCCC';
-        // statusField.nextElementSibling.innerText = '';
+        statusField.style.border = '1px solid #CCCCCC';
+        statusField.nextElementSibling.innerText = '';
 
-        // addressField.style.border = '1px solid #CCCCCC';
-        // addressField.nextElementSibling.innerText = '';
+        addressField.style.border = '1px solid #CCCCCC';
+        addressField.nextElementSibling.innerText = '';
 
         let isPass = true; // 表單有沒有通過檢查
 
-        // if (nameField.value.trim() === '') {
-        //     isPass = false;
-        //     nameField.style.border = '1px solid tomato';
-        //     nameField.nextElementSibling.innerText = '請填寫分店名稱';
-        // }
+        if (nameField.value.trim() === '') {
+            isPass = false;
+            nameField.style.border = '1px solid tomato';
+            nameField.nextElementSibling.innerText = '請填寫分店名稱';
+        }
 
-        // const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
-        // if (selectedThemes.length === 0) {
-        //     isPass = false;
-        //     const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
-        //     themeCheckboxes.forEach(checkbox => {
-        //         checkbox.nextElementSibling.style.color = 'tomato';
-        //     });
-        //     const themeError = document.querySelector('.mb-4 .form-text');
-        //     themeError.innerText = '請至少選擇一個主題';
-        // } else {
-        //     const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
-        //     themeCheckboxes.forEach(checkbox => {
-        //         checkbox.nextElementSibling.style.color = ''; // 重置颜色
-        //     });
-        // }
+        const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
+        if (selectedThemes.length === 0) {
+            isPass = false;
+            const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
+            themeCheckboxes.forEach(checkbox => {
+                checkbox.nextElementSibling.style.color = 'tomato';
+            });
+        } else {
+            const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
+            themeCheckboxes.forEach(checkbox => {
+                checkbox.nextElementSibling.style.color = ''; // 重置颜色
+            });
+        }
 
-        // if (phoneField.value.trim() === '') {
-        //     isPass = false;
-        //     phoneField.style.border = '1px solid tomato';
-        //     phoneField.nextElementSibling.innerText = '請填寫電話';
-        // }
+        if (phoneField.value.trim() === '') {
+            isPass = false;
+            phoneField.style.border = '1px solid tomato';
+            phoneField.nextElementSibling.innerText = '請填寫電話';
+        }
 
-        // if (openTimeField.value.trim() === '') {
-        //     isPass = false;
-        //     openTimeField.style.border = '1px solid tomato';
-        //     openTimeField.nextElementSibling.innerText = '請填寫開門時間';
-        // }
+        if (openTimeField.value.trim() === '') {
+            isPass = false;
+            openTimeField.style.border = '1px solid tomato';
+            openTimeField.nextElementSibling.innerText = '請填寫開門時間';
+        }
 
-        // if (closeTimeField.value.trim() === '') {
-        //     isPass = false;
-        //     closeTimeField.style.border = '1px solid tomato';
-        //     closeTimeField.nextElementSibling.innerText = '請填寫閉門時間';
-        // }
+        if (closeTimeField.value.trim() === '') {
+            isPass = false;
+            closeTimeField.style.border = '1px solid tomato';
+            closeTimeField.nextElementSibling.innerText = '請填寫閉門時間';
+        }
 
-        // if (statusField.value === '') {
-        //     isPass = false;
-        //     statusField.style.border = '1px solid tomato';
-        //     statusField.nextElementSibling.innerText = '請選擇營業狀態';
-        // }
+        if (statusField.value === '') {
+            isPass = false;
+            statusField.style.border = '1px solid tomato';
+            statusField.nextElementSibling.innerText = '請選擇營業狀態';
+        }
 
-        // if (addressField.value.trim() === '') {
-        //     isPass = false;
-        //     addressField.style.border = '1px solid tomato';
-        //     addressField.nextElementSibling.innerText = '請填寫地址';
-        // }
+        if (addressField.value.trim() === '') {
+            isPass = false;
+            addressField.style.border = '1px solid tomato';
+            addressField.nextElementSibling.innerText = '請填寫地址';
+        }
 
         if (isPass) {
             const fd = new FormData(document.form1);

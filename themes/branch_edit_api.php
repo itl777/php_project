@@ -6,14 +6,13 @@ $output = [
     'success' => false,
 ];
 
-// 檢查是否傳入分店 ID
 if (!isset($_POST['id'])) {
     $output['error'] = '缺少分店 ID';
     echo json_encode($output);
     exit;
 }
 
-// 準備更新資料的 SQL 查詢語句
+// 更新操作的 SQL 查詢
 $sql = "UPDATE `branches` SET
         `branch_name` = ?,
         `branch_address` = ?,
@@ -26,7 +25,7 @@ $sql = "UPDATE `branches` SET
 $stmt = $pdo->prepare($sql);
 
 // 執行更新操作
-$stmt->execute([
+$result = $stmt->execute([
     $_POST['branch_name'],
     $_POST['branch_address'],
     $_POST['branch_phone'],
@@ -36,7 +35,10 @@ $stmt->execute([
     $_POST['id']
 ]);
 
-$stmt->errorInfo();
-$output['success'] = !!$stmt->rowCount(); // 更新了幾筆數據
+if ($result) {
+    $output['success'] = true;
+} else {
+    $output['error'] = '更新失敗';
+}
 
 echo json_encode($output);
