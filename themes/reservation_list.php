@@ -2,90 +2,103 @@
 
 $title = '預約清單頁';
 $pageName = 'reservation_list';
-?>
-<?php
 
 require __DIR__ . '/../config/pdo-connect.php';
 
-$perPage = 20; # 每一頁最多有幾筆
+$perPage = 20; // 每一頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
   header("Location:?page=1");
   exit;
 }
 
+// 獲取總筆數
 $t_sql = "SELECT COUNT(id) FROM `reservations`";
-
-# 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
-$totalPages = '';
-$rows = [];
-if ($totalRows) {
-  # 總頁數
-  $totalPages = ceil($totalRows / $perPage);
-  if ($page > $totalPages) {
-    header("Location:?page={$totalPages}");
-    exit; // 結束這支程式
-  }
-  # 取得分頁資料
-  $sql = sprintf(
-    "SELECT * FROM `reservations` ORDER BY id LIMIT %s, %s",
-    ($page - 1) * $perPage,
-    $perPage
-  );
-  $rows = $pdo->query($sql)->fetchAll();
+// 計算總頁數
+$totalPages = ceil($totalRows / $perPage);
+
+// 如果請求的頁數大於總頁數，將用戶重新導向到最後一頁
+if ($page > $totalPages) {
+  header("Location:?page={$totalPages}");
+  exit; // 結束程式
 }
 
+// 取得分頁資料
+$sql = sprintf(
+  "SELECT r.*, u.name AS user_name, u.mobile_phone, u.account, t.theme_name,b.branch_name
+   FROM `reservations` AS r 
+   LEFT JOIN `users` AS u ON r.user_id = u.user_id 
+   LEFT JOIN `themes` AS t ON r.theme_id = t.theme_id
+   LEFT JOIN `branches` AS b ON r.branch_id = b.id
+   ORDER BY r.id 
+   LIMIT %s, %s",
+  ($page - 1) * $perPage,
+  $perPage
+);
+$rows = $pdo->query($sql)->fetchAll();
 
-// 獲取預約會員資料
-$reservationSql = "SELECT 
-r.id,
-r.re_datetime,
-r.participants,
-u.name,
-u.mobile_phone,
-u.account
-FROM 
-reservations r
-LEFT JOIN 
-users u ON r.user_id = u.user_id";
+// 確保你的 reservations 表中有 theme_id 欄位，並且它與 themes 表中的 theme_id 欄位相關聯。
 
+$rows = $pdo->query($sql)->fetchAll();
+
+// 取得主題資料
+$themesSql = "SELECT theme_id, theme_name FROM themes";
+$themesStmt = $pdo->query($themesSql);
+$themes = $themesStmt->fetchAll();
+
+// 取得會員資料
+$userSql = "SELECT user_id, name, mobile_phone, account FROM users";
+$usersStmt = $pdo->query($userSql);
+$users = $usersStmt->fetchAll();
+
+// 取得分店資料
+$branchSql = "SELECT id, branch_name FROM branches";
+$branchStmt = $pdo->query($branchSql);
+$branches = $branchStmt->fetchAll();
 
 ?>
+
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
-<div class="container-fluid pt-5">
+<div class="container-fluid p-5">
   <!-- 分頁膠囊   -->
-  <div class="container">
+  <div class="container-fluid px-3">
     <div class="row">
       <!-- 右邊表格 -->
-      <div class="col-12">
+      <div class="col">
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
-          <li class="nav-item me-3" role="presentation">
+          <li class="nav-item me-4" role="presentation">
+            <a href="branch_list.php"><button type="button" class="btn btn-outline-primary rounded-pill"><i
+                  class="fa-solid fa-arrow-left"></i> 回分店</button></a>
+          </li>
+          <li class="nav-item me-5" role="presentation">
             <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
               data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">主題列表</button>
+              aria-selected="true">預約列表</button>
+          </li>
+          <li class="ms-auto">
+
+            <!-- 查詢 -->
+            <div class="container ms-5">
+              <form id="searchForm" class="mb-3">
+                <div class="row">
+                  <div class="col-8">
+                    <input type="text" class="form-control" placeholder="输入分店名稱" name="branch_name">
+                  </div>
+                  <div class="col-4">
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </li>
         </ul>
 
-        <!-- 查詢
-          <div class="container ms-5">
-            <form id="searchForm" class="mb-3">
-              <div class="row">
-                <div class="col-8">
-                  <input type="text" class="form-control" placeholder="輸入主題名稱" name="theme_name">
-                </div>
-                <div class="col-3">
-                  <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-              </div>
-            </form>
-          </div>
-          </li>
-        </ul> -->
+
 
         <!-- 清單 -->
         <div class="tab-content" id="pills-tabContent">
@@ -99,6 +112,7 @@ users u ON r.user_id = u.user_id";
                   <th scope="col">姓名</th>
                   <th scope="col">電話</th>
                   <th scope="col">信箱</th>
+                  <th scope="col">分店</th>
                   <th scope="col">主題名稱</th>
                   <th scope="col">人數</th>
                   <th scope="col">預約時間</th>
@@ -110,18 +124,19 @@ users u ON r.user_id = u.user_id";
                 <?php foreach ($rows as $r): ?>
                   <tr>
                     <td><?= $r['id'] ?></td>
-                    <td><?= $r['name'] ?></td>
+                    <td><?= $r['user_name'] ?></td>
                     <td><?= $r['mobile_phone'] ?></td>
                     <td><?= $r['account'] ?></td> <!-- 這裡是 users 表中的信箱資料嗎？如果是，應該改成對應的欄位 -->
+                    <td><?= $r['branch_name'] ?></td>
                     <td><?= $r['theme_name'] ?></td>
                     <td><?= $r['participants'] ?></td>
                     <td><?= $r['re_datetime'] ?></td>
                     <td>
-                      <a href="reservation_edit.php?theme_id=<?= $r['id'] ?>">
+                      <a href="reservation_edit.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="reservation_delete.php?theme_id=<?= $r['id'] ?>"
+                    <td><a href="reservation-delete.php?id=<?= $r['id'] ?>"
                         onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
@@ -130,6 +145,8 @@ users u ON r.user_id = u.user_id";
 
               </tbody>
             </table>
+
+
             <!-- 分頁按鈕 -->
             <div class="col-12 d-flex justify-content-end mt-5">
               <nav aria-label="Page navigation example m-auto">

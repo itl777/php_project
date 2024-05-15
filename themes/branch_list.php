@@ -42,8 +42,8 @@ if ($totalRows) {
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
 
-<div class="container-fluid pt-5">
-  <div class="container">
+<div class="container-fluid p-5">
+  <div class="container-fluid ">
     <div class="row">
       <!-- 右邊表格 -->
       <div class="col-12">
