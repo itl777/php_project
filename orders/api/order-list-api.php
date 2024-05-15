@@ -16,37 +16,37 @@ $offset = ($page - 1) * $perPages;
 
 $perPageData = sprintf("SELECT 
     o.id AS order_id,
-    d.id AS district_id,
-    c.id AS city_id,
-    o.*, u.*, d.*, c.*
+    o.order_date,
+    o.member_id,
+    u.name AS member_name,
+    d.city_id,
+    c.city_name,
+    o.delivery_method,
+    o.payment_method,
+    o.order_district_id,
+    d.district_name,
+    o.order_address,
+    o.recipient_name,
+    o.order_status_id,
+    os.order_status_name
     FROM orders AS o
     LEFT JOIN users AS u ON u.user_id = o.member_id
     LEFT JOIN district AS d ON d.id = o.order_district_id
     LEFT JOIN city AS c ON c.id = d.city_id
-    ORDER BY o.id DESC LIMIT %s, %s",
+    LEFT JOIN order_status AS os ON os.id = o.order_status_id
+    ORDER BY order_id DESC LIMIT %s, %s",
     $offset, $perPages
 );
 
-$orderStatusMap = [
-    null => '',
-    'unpaid' => '待付款',
-    'paid' => '已付款',
-    'expired' => '已逾期',
-    'canceled' => '已取消',
-    'tallying' => '理貨中',
-    'shipping' => '已出貨',
-    'arrived' => '已配送',
-    'completed' => '已完成',
-];
 
 $deliveryMethodMap = [
-    null => '',
+    null => '未填寫宅配方式',
     'home' => '宅配',
     '7-11' => '7-11超商取貨',
 ];
 
 $paymentMethodMap = [
-    null => '',
+    null => '未填寫付款方式',
     'credit-card' => '線上刷卡',
     'line-pay' => 'LINE PAY',
 ];
@@ -64,7 +64,6 @@ $orderDetailsSql = "SELECT
 
 foreach ($orderRows as &$order) {
     // 轉換顯示的文字
-    $order['order_status'] = $orderStatusMap[$order['order_status']] ?? $order['order_status'];
     $order['delivery_method'] = $deliveryMethodMap[$order['delivery_method']] ?? $order['delivery_method'];
     $order['payment_method'] = $paymentMethodMap[$order['payment_method']] ?? $order['payment_method'];
     // 取得訂單商品明細
