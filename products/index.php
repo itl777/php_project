@@ -119,6 +119,8 @@ include 'db_select/select_page.php';
                                 <!-- 做字元跳脫避免JS注入 -->
                                 <td><?= htmlentities($r['product_name']) ?></td>
                                 <td><?= $r['price'] ?></td>
+
+                                <!-- TODO 庫存連結 -->
                                 <td>111</td>
 
                                 <!-- 按鈕 -->
