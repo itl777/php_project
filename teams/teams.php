@@ -30,11 +30,11 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, status_text, count(join_user_id) as member_n
+        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, team_status/**status_text**/, count(join_user_id) as member_n
         FROM `teams` 
         join `users` on leader_id = users.user_id
         join `themes` on tour = themes.theme_id
-        join `teams_status` on team_status = teams_status.status_id
+        -- join `teams_status` on team_status = teams_status.status_id
         left join `teams_members` on team_id = join_team_id
         GROUP BY team_id
         ORDER BY team_id ASC LIMIT %s, %s",
@@ -86,7 +86,7 @@ if ($totalRows) {
         <div class="col-6">
             <ul class="nav nav-pills justify-content-end">
                 <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./teams/team_add.php">新增團隊</a>
+                <a class="nav-link active" aria-current="page" href="./team_add.php">新增團隊</a>
                 </li>
             </ul>
         </div>
@@ -121,7 +121,7 @@ if ($totalRows) {
                             <td><?= $r['nick_name'] ?></td>
                             <td><?= $r['theme_name'] ?></td>
                             <td><?= $r['member_n'] ?> / <?= $r['team_limit'] ?></td>
-                            <td><?= $r['status_text'] ?></td>
+                            <td><?= $r['team_status'] ?></td>
                             <td>
                                 <a href="./team_edit.php?team_id=<?= $r['team_id'] ?>">
                                     <i class="fa-solid fa-pen-to-square"></i>

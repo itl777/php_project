@@ -12,7 +12,7 @@ $sql = "DELETE FROM teams WHERE team_id=$team_id";
 $pdo->query($sql);
 
 # $_SERVER['HTTP_REFERER']: 從哪個頁面連過來的
-$comeFrom = '/../teams.php';
+$comeFrom = '/teams.php';
 if (isset($_SERVER['HTTP_REFERER'])) {
   $comeFrom = $_SERVER['HTTP_REFERER'];
 }
