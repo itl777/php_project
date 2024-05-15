@@ -2,13 +2,13 @@
 require __DIR__ . '/../config/pdo-connect.php';
 $title = '修改分店資料';
 
-$branchId = isset($_GET['branch_id']) ? intval($_GET['branch_id']) : 0;
+$branchId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($branchId < 1) {
     header('Location: branch_list.php');
     exit;
 }
 
-$sql = "SELECT * FROM `branches` WHERE branch_id={$branchId}";
+$sql = "SELECT * FROM `branches` WHERE id={$branchId}";
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
@@ -33,7 +33,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
 <style>
     form .mb-4 .form-text {
@@ -48,11 +48,12 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="col-10">
             <div class="card">
                 <div class="card-body">
-                    <form name="form1" class="p-3" onsubmit="sendData(event)">
+                    <form name="form1" class="p-3" onsubmit="sendData(event)"
+                        action="branch_edit.php?id=<?php echo $branchId; ?>" method="post">
 
                         <div class="mb-4 col-2">
-                            <label for="branch_id" class="form-label">編號</label>
-                            <input type="text" class="form-control" disabled value="<?= $row['branch_id'] ?>">
+                            <label for="id" class="form-label">編號</label>
+                            <input type="text" class="form-control" disabled value="<?= $row['id'] ?>">
                         </div>
 
                         <div class="mb-4 col-5">
@@ -63,7 +64,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
 
                         <div class="mb-4 col-10">
-                            <label class="form-label fw-bold">遊玩行程主題</label><br>
+                            <label for="" class="form-label fw-bold">遊玩行程主題</label><br>
                             <?php foreach ($themes as $theme): ?>
                                 <?php
                                 $isChecked = in_array($theme['theme_id'], $selectedThemes);
@@ -177,105 +178,106 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="location.href='theme_list.php'">到主題頁</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='branch_list.php'">到分店頁</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
             </div>
         </div>
     </div>
 </div>
 
-<?php include __DIR__ . '/../../parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
+
 
 
 <script>
-    const branchId = <?= $row['branch_id'] ?>; // 修改此行
-    const nameField = document.getElementById('branch_name');
-    const phoneField = document.getElementById('branch_phone');
-    const openTimeField = document.getElementById('open_time');
-    const closeTimeField = document.getElementById('close_time');
-    const statusField = document.getElementById('branch_status');
-    const addressField = document.getElementById('branch_address');
-    const form = document.form1;
+    const branchId = <?= $branchId ?>;
+    // const nameField = document.getElementById('branch_name');
+    // const phoneField = document.getElementById('branch_phone');
+    // const openTimeField = document.getElementById('open_time');
+    // const closeTimeField = document.getElementById('close_time');
+    // const statusField = document.getElementById('branch_status');
+    // const addressField = document.getElementById('branch_address');
+    // const form = document.form1;
 
 
     const sendData = e => {
         e.preventDefault();
 
-        nameField.style.border = '1px solid #CCCCCC';
-        nameField.nextElementSibling.innerText = '';
+        // nameField.style.border = '1px solid #CCCCCC';
+        // nameField.nextElementSibling.innerText = '';
 
-        phoneField.style.border = '1px solid #CCCCCC';
-        phoneField.nextElementSibling.innerText = '';
+        // phoneField.style.border = '1px solid #CCCCCC';
+        // phoneField.nextElementSibling.innerText = '';
 
-        openTimeField.style.border = '1px solid #CCCCCC';
-        openTimeField.nextElementSibling.innerText = '';
+        // openTimeField.style.border = '1px solid #CCCCCC';
+        // openTimeField.nextElementSibling.innerText = '';
 
-        closeTimeField.style.border = '1px solid #CCCCCC';
-        closeTimeField.nextElementSibling.innerText = '';
+        // closeTimeField.style.border = '1px solid #CCCCCC';
+        // closeTimeField.nextElementSibling.innerText = '';
 
-        statusField.style.border = '1px solid #CCCCCC';
-        statusField.nextElementSibling.innerText = '';
+        // statusField.style.border = '1px solid #CCCCCC';
+        // statusField.nextElementSibling.innerText = '';
 
-        addressField.style.border = '1px solid #CCCCCC';
-        addressField.nextElementSibling.innerText = '';
+        // addressField.style.border = '1px solid #CCCCCC';
+        // addressField.nextElementSibling.innerText = '';
 
         let isPass = true; // 表單有沒有通過檢查
 
-        if (nameField.value.trim() === '') {
-            isPass = false;
-            nameField.style.border = '1px solid tomato';
-            nameField.nextElementSibling.innerText = '請填寫分店名稱';
-        }
+        // if (nameField.value.trim() === '') {
+        //     isPass = false;
+        //     nameField.style.border = '1px solid tomato';
+        //     nameField.nextElementSibling.innerText = '請填寫分店名稱';
+        // }
 
-        const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
-        if (selectedThemes.length === 0) {
-            isPass = false;
-            const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
-            themeCheckboxes.forEach(checkbox => {
-                checkbox.nextElementSibling.style.color = 'tomato';
-            });
-            const themeError = document.querySelector('.mb-4 .form-text');
-            themeError.innerText = '請至少選擇一個主題';
-        } else {
-            const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
-            themeCheckboxes.forEach(checkbox => {
-                checkbox.nextElementSibling.style.color = ''; // 重置颜色
-            });
-        }
+        // const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
+        // if (selectedThemes.length === 0) {
+        //     isPass = false;
+        //     const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
+        //     themeCheckboxes.forEach(checkbox => {
+        //         checkbox.nextElementSibling.style.color = 'tomato';
+        //     });
+        //     const themeError = document.querySelector('.mb-4 .form-text');
+        //     themeError.innerText = '請至少選擇一個主題';
+        // } else {
+        //     const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
+        //     themeCheckboxes.forEach(checkbox => {
+        //         checkbox.nextElementSibling.style.color = ''; // 重置颜色
+        //     });
+        // }
 
-        if (phoneField.value.trim() === '') {
-            isPass = false;
-            phoneField.style.border = '1px solid tomato';
-            phoneField.nextElementSibling.innerText = '請填寫電話';
-        }
+        // if (phoneField.value.trim() === '') {
+        //     isPass = false;
+        //     phoneField.style.border = '1px solid tomato';
+        //     phoneField.nextElementSibling.innerText = '請填寫電話';
+        // }
 
-        if (openTimeField.value.trim() === '') {
-            isPass = false;
-            openTimeField.style.border = '1px solid tomato';
-            openTimeField.nextElementSibling.innerText = '請填寫開門時間';
-        }
+        // if (openTimeField.value.trim() === '') {
+        //     isPass = false;
+        //     openTimeField.style.border = '1px solid tomato';
+        //     openTimeField.nextElementSibling.innerText = '請填寫開門時間';
+        // }
 
-        if (closeTimeField.value.trim() === '') {
-            isPass = false;
-            closeTimeField.style.border = '1px solid tomato';
-            closeTimeField.nextElementSibling.innerText = '請填寫閉門時間';
-        }
+        // if (closeTimeField.value.trim() === '') {
+        //     isPass = false;
+        //     closeTimeField.style.border = '1px solid tomato';
+        //     closeTimeField.nextElementSibling.innerText = '請填寫閉門時間';
+        // }
 
-        if (statusField.value === '') {
-            isPass = false;
-            statusField.style.border = '1px solid tomato';
-            statusField.nextElementSibling.innerText = '請選擇營業狀態';
-        }
+        // if (statusField.value === '') {
+        //     isPass = false;
+        //     statusField.style.border = '1px solid tomato';
+        //     statusField.nextElementSibling.innerText = '請選擇營業狀態';
+        // }
 
-        if (addressField.value.trim() === '') {
-            isPass = false;
-            addressField.style.border = '1px solid tomato';
-            addressField.nextElementSibling.innerText = '請填寫地址';
-        }
+        // if (addressField.value.trim() === '') {
+        //     isPass = false;
+        //     addressField.style.border = '1px solid tomato';
+        //     addressField.nextElementSibling.innerText = '請填寫地址';
+        // }
 
         if (isPass) {
             const fd = new FormData(document.form1);
-            fd.append('branch_id', branchId); // 確保分店的 ID 被添加到 FormData 對象中
+            fd.append('id', branchId); // 確保分店的 ID 被添加到 FormData 對象中
 
             fetch('branch_edit_api.php', {
                 method: 'POST',

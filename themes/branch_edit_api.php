@@ -5,8 +5,9 @@ header('Content-Type: application/json');
 $output = [
     'success' => false,
 ];
+
 // 檢查是否傳入分店 ID
-if (!isset($_POST['branch_id'])) {
+if (!isset($_POST['id'])) {
     $output['error'] = '缺少分店 ID';
     echo json_encode($output);
     exit;
@@ -20,7 +21,7 @@ $sql = "UPDATE `branches` SET
         `open_time` = ?,
         `close_time` = ?,
         `branch_status` = ?
-        WHERE `branch_id` = ?";
+        WHERE `id` = ?";
 
 $stmt = $pdo->prepare($sql);
 
@@ -32,18 +33,10 @@ $stmt->execute([
     $_POST['open_time'],
     $_POST['close_time'],
     $_POST['branch_status'],
-    $_POST['branch_id']
+    $_POST['id']
 ]);
 
+$stmt->errorInfo();
 $output['success'] = !!$stmt->rowCount(); // 更新了幾筆數據
-
-if ($output['success']) {
-    // 获取最新的数据
-    $id = $_POST['branch_id'];
-    $sql = "SELECT * FROM `branches` WHERE branch_id=?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id]);
-    $output['row'] = $stmt->fetch();
-}
 
 echo json_encode($output);
