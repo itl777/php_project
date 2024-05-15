@@ -12,7 +12,7 @@ fetchUserListData();
 const userTable = function (data) {
   let userTable = "";
 
-  if (data !== undefined && data !== null && data !== '') {
+  if (data !== undefined && data !== null && data !== "") {
     data.forEach((item) => {
       userTable += `<tr onclick="editModalShow(${item["user_id"]})">`;
 
@@ -25,18 +25,19 @@ const userTable = function (data) {
       userTable += `<td class="align-middle">${item["account"]}</td>`;
 
       userTable += `<td class="align-middle">
-        <div class="btn-group" role="group">
         ${
           item["user_status"] === "0"
             ? '<i class="bi btn btn-warning bi-exclamation-triangle-fill"></i>'
             : ""
         }
+        </td>`;
+
+      userTable += `<td class="align-middle">
         ${
           item["blacklist"] === "1"
             ? '<i class="bi btn btn-danger bi-exclamation-circle-fill"></i>'
             : ""
         }
-        </div>
         </td>`;
       //原本的編輯按鈕，函式改加在整個tr上了
       // userTable += `<td class="align-middle"><button type="button" class="btn btn-warning" onclick="editModalShow(${item['user_id']})"><i class="bi bi-pencil-square"></i></button></td>`;
@@ -53,7 +54,7 @@ const userTablePagination = function (page, totalPages) {
   // 值>totalPages 就加 disabled class
   let userTablePagination = "";
 
-  userTablePagination += `<tr><td colspan=6>
+  userTablePagination += `<tr><td colspan=7>
       <nav>
       <ul class="pagination">
         <li class="page-item ${page <= 1 ? "disabled" : ""}">
