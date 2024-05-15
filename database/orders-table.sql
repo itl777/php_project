@@ -30,8 +30,11 @@ ADD FOREIGN KEY (order_status_id) REFERENCES order_status(id);
 
 CREATE TABLE `order_status` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `order_status_name` varchar(50) NOT NULL
+  `order_status_name` varchar(50) NOT NULL,
+  `out_of_warehouse` int NOT NULL DEFAULT '1'
 );
+
+
 
 CREATE TABLE `order_details` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -90,12 +93,12 @@ INSERT INTO `product_warehousing`(`product_id`, `quantity`, `created_at`, `last_
 
 
 INSERT INTO `order_status`(`order_status_name`) VALUES
-('待付款'),
-('付款失敗'),
-('已付款'),
-('已取消'),
-('理貨中'),
-('已出貨'),
-('配送中'),
-('已收貨'),
-('已完成')
+('待付款', 1),
+('付款失敗', 0),
+('已付款', 1),
+('已取消', 0),
+('理貨中', 1),
+('已出貨', 1),
+('配送中', 1),
+('已收貨', 1),
+('已完成', 1)
