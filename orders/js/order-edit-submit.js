@@ -1,34 +1,40 @@
-document.forms['orderEditForm'].addEventListener('submit', function (e) {
+document.orderEditForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  invoiceOptions ();
-  disabledInput ();
-  submitForm();
+
+  if (validateForm()) {
+    invoicePrepareToSubmit();
+    // invoiceOptions ();
+    toggleFormElements(true);
+    // disabledInput();
+    submitForm();
+  }
+
 });
 
 
 
-// 判斷發票要送出的欄位
-function invoiceOptions () {
-  // 使用會員載具，清空預設帶入的會員載具、統一編號
-  if (document.getElementById('useMemberInvoice').checked) {
-    document.getElementById('useMemberInvoice').setAttribute('name', 'memberInvoice');
-    document.getElementById('useMemberInvoice').value = 1;
-    document.getElementById('taxId').disabled = true;
-    document.getElementById('mobileInvoice').disabled = true;
-  }
+// // 判斷發票要送出的欄位
+// function invoiceOptions () {
+//   // 使用會員載具，清空預設帶入的會員載具、統一編號
+//   if (document.getElementById('useMemberInvoice').checked) {
+//     document.getElementById('useMemberInvoice').setAttribute('name', 'memberInvoice');
+//     document.getElementById('useMemberInvoice').value = 1;
+//     document.getElementById('taxId').disabled = true;
+//     document.getElementById('mobileInvoice').disabled = true;
+//   }
 
-  // 使用手機載具，清空統一編號
-  if (document.getElementById('useMobileInvoice').checked) {
-    document.getElementById('taxId').disabled = true;
-    document.getElementById('useMemberInvoice').disabled = true;
-  }
+//   // 使用手機載具，清空統一編號
+//   if (document.getElementById('useMobileInvoice').checked) {
+//     document.getElementById('taxId').disabled = true;
+//     document.getElementById('useMemberInvoice').disabled = true;
+//   }
 
-  // 使用統一編號，清空手機載具
-  if (document.getElementById('useTaxId').checked) {
-    document.getElementById('mobileInvoice').disabled = true;
-    document.getElementById('useMemberInvoice').disabled = true;
-  }
-}
+//   // 使用統一編號，清空手機載具
+//   if (document.getElementById('useTaxId').checked) {
+//     document.getElementById('mobileInvoice').disabled = true;
+//     document.getElementById('useMemberInvoice').disabled = true;
+//   }
+// }
 
 
 function disabledInput () {
@@ -65,5 +71,4 @@ function submitForm() {
     alert('發生錯誤，請稍後再試');
   });
 }
-
 

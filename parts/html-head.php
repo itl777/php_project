@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index_.php') {
       });
     }
   </script>
+  <link rel="stylesheet" href="../css/order-list.css">
 </head>
 
 <body>

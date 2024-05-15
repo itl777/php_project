@@ -20,6 +20,9 @@ $sql = "SELECT
   LEFT JOIN (
   SELECT order_product_id, SUM(order_quantity) AS total_ordered
   FROM order_details
+  INNER JOIN orders ON orders.id = order_details.order_id
+  INNER JOIN order_status ON order_status.id = orders.order_status_id
+  WHERE order_status.out_of_warehouse = 1
   GROUP BY order_product_id
   ) od ON p.product_id = od.order_product_id
   WHERE p.product_id LIKE ? OR p.product_name LIKE ?

@@ -15,8 +15,8 @@ $orderDetailsSql = "SELECT
   od.order_product_id,
   p.product_name,
   od.order_unit_price,
-  od.order_quantity AS ordered_quantity,
-  (COALESCE(ws.total_quantity, 0) - COALESCE(other_orders.total_ordered, 0)) AS stock_quantity
+  od.order_quantity AS order_quantity,
+  (COALESCE(ws.total_quantity, 0) - COALESCE(other_orders.total_order, 0)) AS stock_quantity
   FROM order_details AS od
   LEFT JOIN product_management AS p ON p.product_id = od.order_product_id
   LEFT JOIN (
@@ -25,7 +25,7 @@ $orderDetailsSql = "SELECT
       GROUP BY product_id
   ) ws ON ws.product_id = od.order_product_id
   LEFT JOIN (
-      SELECT order_product_id, SUM(order_quantity) AS total_ordered
+      SELECT order_product_id, SUM(order_quantity) AS total_order
       FROM order_details
       WHERE order_id <> ?
       GROUP BY order_product_id
