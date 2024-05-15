@@ -1,13 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.title = "訂單管理";
+  
 
   // 取得 url ?page=
   const currentPageParam = new URLSearchParams(window.location.search).get("page") || 1;
   const currentPage = parseInt(currentPageParam) || 1;
   fetchOrders(currentPage);
 
-  function fetchOrders(page) {
-    fetch(`api/order-list-api.php?page=${page}`) // 加載指定頁數的資料
+
+  document.getElementById('executeSearch').addEventListener('click', function() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const memberSearch = document.getElementById('memberSearch').value;
+    const productSearch = document.getElementById('productSearch').value;
+    const orderStatusElement = document.getElementById('orderStatus'); // 獲取 select 元素
+    const orderStatus = orderStatusElement.value;
+    fetchOrders(1, startDate, endDate, memberSearch, productSearch, orderStatus !== '請選擇' ? orderStatus : '');
+  });
+
+  document.getElementById('resetSearch').addEventListener('click', function() {
+    document.getElementById('startDate').value = '';
+    document.getElementById('endDate').value = '';
+    document.getElementById('memberSearch').value = '';
+    document.getElementById('productSearch').value = '';
+    document.getElementById('orderStatus').selectedIndex = 0;
+    fetchOrders(1); // 重置後重新載入資料
+  });
+
+
+  function fetchOrders(page, startDate = '', endDate = '', memberSearch = '', productSearch = '', orderStatus = '') {
+    const url = `api/order-list-api.php?page=${page}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&memberSearch=${encodeURIComponent(memberSearch)}&productSearch=${encodeURIComponent(productSearch)}&orderStatus=${encodeURIComponent(orderStatus)}`;
+    fetch(url)
       .then((response) => response.json())
       .then((result) => {
         // 解構賦值 Destructuring Assignment
@@ -19,29 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // page = Math.max(1, Math.min(page, totalPages));
 
         // 將新分頁的資料取出來
-        // data.forEach((order) => {
-        //   const row = `<tr>
-        //     <td>${order.order_id}</td>
-        //     <td>${order.order_date}</td>
-        //     <td>${order.member_name}</td>
-        //     <td>${order.payment_method}</td>
-        //     <td>${
-        //       order.city_name + order.district_name + order.order_address
-        //     }</td>
-        //     <td>${order.recipient_name}</td>
-        //     <td>${order.total_amount}</td>
-        //     <td>${order.order_status_name}</td>
-        //     <td>
-        //     <a href="order-edit.php?id=${
-        //       order.order_id
-        //     }" class="btn btn-primary me-2"><i class="fa-solid fa-pen-to-square"></i></a>
-        //     <a onclick="deleteOrder(${
-        //       order.order_id
-        //     })" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-        //     </td>
-        //     </tr>`;
-        //   tableBody.innerHTML += row;
-        // });
         data.forEach((order) => {
           const row = `
             <tr>
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <td>${order.order_date}</td>
               <td>${order.member_name}</td>
               <td>${order.payment_method}</td>
-              <td>${order.city_name + order.district_name + order.order_address}</td>
+              <td>${order.full_address}</td>
               <td>${order.recipient_name}</td>
               <td>${order.total_amount}</td>
               <td>${order.order_status_name}</td>
