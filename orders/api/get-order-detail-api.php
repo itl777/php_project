@@ -50,7 +50,7 @@ $orderDetailsSql = "SELECT
     FROM order_details AS od
     INNER JOIN orders AS o ON o.id = od.order_id
     INNER JOIN order_status AS os ON os.id = o.order_status_id
-    WHERE o.id <> ? AND os.out_of_warehouse = 0
+    WHERE o.id <> ? AND os.out_of_warehouse = 1
     GROUP BY od.order_product_id
   ) filtered_orders ON filtered_orders.order_product_id = od.order_product_id
   WHERE od.order_id = ?";

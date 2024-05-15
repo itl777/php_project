@@ -126,7 +126,7 @@ function loadOrderDetails(orderId) {
                 <input type="number" class="form-control" id="productQuantity${index + 1}" name="productQuantities[]" value="${item.order_quantity}" placeholder="商品數量">
                 <span class="helper-text"></span>
               </div>
-              <span>剩餘庫存：${item.stock_quantity-item.order_quantity}</span>
+              <span>剩餘庫存：${item.stock_quantity}</span>
               <p class="mb-0">商品單價：${item.order_unit_price}</p>
               <p class="mb-0">商品總金額：<span class="product-total-price">${item.order_quantity * item.order_unit_price}</span></p>
               <input type="text" class="d-none" id="productId${index + 1}" name="productIds[]" value="${item.order_product_id}">

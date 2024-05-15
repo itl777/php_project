@@ -19,29 +19,54 @@ document.addEventListener("DOMContentLoaded", function () {
         // page = Math.max(1, Math.min(page, totalPages));
 
         // 將新分頁的資料取出來
+        // data.forEach((order) => {
+        //   const row = `<tr>
+        //     <td>${order.order_id}</td>
+        //     <td>${order.order_date}</td>
+        //     <td>${order.member_name}</td>
+        //     <td>${order.payment_method}</td>
+        //     <td>${
+        //       order.city_name + order.district_name + order.order_address
+        //     }</td>
+        //     <td>${order.recipient_name}</td>
+        //     <td>${order.total_amount}</td>
+        //     <td>${order.order_status_name}</td>
+        //     <td>
+        //     <a href="order-edit.php?id=${
+        //       order.order_id
+        //     }" class="btn btn-primary me-2"><i class="fa-solid fa-pen-to-square"></i></a>
+        //     <a onclick="deleteOrder(${
+        //       order.order_id
+        //     })" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+        //     </td>
+        //     </tr>`;
+        //   tableBody.innerHTML += row;
+        // });
         data.forEach((order) => {
-          const row = `<tr>
-            <td>${order.order_id}</td>
-            <td>${order.order_date}</td>
-            <td>${order.member_name}</td>
-            <td>${order.payment_method}</td>
-            <td>${
-              order.city_name + order.district_name + order.order_address
-            }</td>
-            <td>${order.recipient_name}</td>
-            <td>${order.total_amount}</td>
-            <td>${order.order_status_name}</td>
-            <td>
-            <a href="order-edit.php?id=${
-              order.order_id
-            }" class="btn btn-primary me-2"><i class="fa-solid fa-pen-to-square"></i></a>
-            <a onclick="deleteOrder(${
-              order.order_id
-            })" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-            </td>
+          const row = `
+            <tr>
+              <td>${order.order_id}</td>
+              <td>${order.order_date}</td>
+              <td>${order.member_name}</td>
+              <td>${order.payment_method}</td>
+              <td>${order.city_name + order.district_name + order.order_address}</td>
+              <td>${order.recipient_name}</td>
+              <td>${order.total_amount}</td>
+              <td>${order.order_status_name}</td>
+              <td>
+                <a onclick="deleteOrder(${order.order_id})" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                <a href="order-edit.php?id=${order.order_id}" class="btn btn-primary ms-4"><i class="fa-solid fa-pen-to-square"></i></a>
+                <button onclick="toggleDetails(${order.order_id})" class="btn btn-link ms-2"><i class="fa-solid fa-caret-down"></i></button>
+              </td>
             </tr>`;
-          tableBody.innerHTML += row;
-        });
+          const detailsRow = `
+            <tr id="details_${order.order_id}" class="order-details" style="display: none;">
+              <td colspan="9">${buildDetailsTable(order.details)}</td>
+            </tr>`;
+          tableBody.innerHTML += row + detailsRow;
+      });
+      
+        
         updatePagination(page, totalPages);
         changeUrl(totalPages);
       })
@@ -186,4 +211,37 @@ function showToastFromStorage() {
     showToast(message, isError);
     sessionStorage.removeItem("toastMessage");
   }
+}
+
+
+function toggleDetails(orderId) {
+  const detailsRow = document.getElementById('details_' + orderId);
+  detailsRow.style.display = detailsRow.style.display === 'none' ? '' : 'none';
+}
+
+function buildDetailsTable(details) {
+  let tableContent = `
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>商品編號</th>
+          <th>商品名稱</th>
+          <th>商品單價</th>
+          <th>商品庫存</th>
+          <th>商品總金額</th>
+        </tr>
+      </thead>
+    <tbody>`;
+  details.forEach(detail => {
+      const totalPrice = detail.order_unit_price * detail.order_quantity;
+      tableContent += `<tr>
+          <td>${detail.order_product_id}</td>
+          <td>${detail.product_name}</td>
+          <td>${(parseInt(detail.order_unit_price))}</td>
+          <td>${detail.order_quantity}</td>
+          <td>${(parseInt(totalPrice))}</td>
+      </tr>`;
+  });
+  tableContent += '</tbody></table>';
+  return tableContent;
 }
