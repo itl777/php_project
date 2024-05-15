@@ -41,3 +41,8 @@
   color: red;
   font-size: 0.85rem;
 }
+
+
+tbody tr:hover {
+  background-color: #f2f2f2;
+}
