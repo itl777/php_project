@@ -17,13 +17,13 @@ if (!isset($_POST['chat_by'])) {
 }
 
 $sql = "INSERT INTO teams_chats(
-  `team_id`, `chat_by`, `chat_text`, `create_at`)
+  `chat_at`, `chat_by`, `chat_text`, `create_at`)
   VALUES
   (?, ?, ?,NOW())";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-  $_POST['team_id'],
+  $_POST['chat_at'],
   $_POST['chat_by'],
   $_POST['chat_text']
 ]);

@@ -85,7 +85,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
       <div class="modal-body">
           <form name="form1" onsubmit="sendData(event)">
           <div class="mb-3">
-              <input type="hidden" class="form-control" name="team_id" value="<?= $row['team_id'] ?>">
+              <input type="hidden" class="form-control" id="chat_at" name="chat_at" value="<?= $row['team_id'] ?>">
             </div>
           <div class="mb-3">
             <label for="chat_by" class="form-label">留言ID</label>
@@ -95,7 +95,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
           <div class="mb-3">
             <label for="chat_text" class="form-label">留言內容(上限200字)</label>
             <textarea class="form-control" id="chat_text" name="chat_text" rows="3"></textarea>
-             <div class="form-text"></div>
+            <div class="form-text"></div>
           </div>
           <button type="submit" class="btn btn-primary">完成留言</button>
           </form>
@@ -110,7 +110,29 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
+
+    const chat_text = document.form1.chat_text;
+
     let isPass = true; // 表單有沒有通過檢查
+
+    nameField.style.border = '1px solid #CCCCCC';
+    nameField.nextElementSibling.innerText = '';
+    chat_text.style.border = '1px solid #CCCCCC';
+    chat_text.nextElementSibling.innerText = '';
+
+    if (chat_text.value.length < 1) {
+      isPass = false;
+      chat_text.style.border = '1px solid red';
+      chat_text.nextElementSibling.innerText = '留言字數不足';
+    }
+    if (chat_text.value.length > 200) {
+      isPass = false;
+      chat_text.style.border = '1px solid red';
+      chat_text.nextElementSibling.innerText = '留言超出限制';
+    }
+
+    
+
 
     // 有通過檢查, 才要送表單
     if (isPass) {
