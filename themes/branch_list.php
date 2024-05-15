@@ -89,7 +89,7 @@ if ($totalRows) {
                   <th scope="col">結束時間</th>
                   <th scope="col">分店狀態</th>
                   <th scope="col"><i class="fa-solid fa-user-check"> 預約</i></th>
-                  <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
+                  <th scope="col"><i class="fa-solid fa-pen-to-square"> 編輯</i></th>
                   <th scope="col"><i class="fa-solid fa-trash"></i></th>
                 </tr>
               </thead>
@@ -106,12 +106,12 @@ if ($totalRows) {
                     <td><a href="branch_reservation_details.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-user-check"> 預約</i></a></td>
                     <td>
-                      <a href="branch_edit.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-pen-to-square"></i>
+                      <a class="btn btn-primary" href="branch_edit.php?id=<?= $r['id'] ?>">
+                        <i class="fa-solid fa-pen-to-square"> 編輯</i>
                       </a>
                     </td>
-                    <td><a href="branch_delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
-                        <i class="fa-solid fa-trash text-danger"></i>
+                    <td><a class="btn btn-danger" href="reservation-delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                        <i class="fa-solid fa-trash"></i> 刪除
                       </a></td>
                   </tr>
                 <?php endforeach; ?>
@@ -121,33 +121,23 @@ if ($totalRows) {
             <div class="col-12 d-flex justify-content-end mt-5">
               <nav aria-label="Page navigation example m-auto">
                 <ul class="pagination">
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
+
+                  <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                    if ($i >= 1 and $i <= $totalPages) : ?>
-                      <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
-                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                      </li>
-                  <?php endif;
-                  endfor ?>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
+                    <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                      <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                  <?php endfor ?>
+                  <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
                       <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-right"></i>
-                    </a>
-                  </li>
+
                 </ul>
               </nav>
             </div>
@@ -188,7 +178,7 @@ if ($totalRows) {
           <td>${branch.branch_status}</td>
           <td><a href="branch_content.php?id=${branch.id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
           <td><a href="branch_edit.php?id=${branch.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-          <td><a href="branch_delete.php?id=${branch.id}" onclick="return confirm('是否要刪除編號為${branch.id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
+          <td><a class="btn btn-danger" href="branch_delete.php?id=${branch.id}" onclick="return confirm('是否要刪除編號為${branch.id}的資料')"><i class="fa-solid fa-trash"></i> 刪除</a></td>
         `;
           tableBody.appendChild(row);
         });

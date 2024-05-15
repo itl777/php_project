@@ -104,8 +104,7 @@ $rows = $rows->fetchAll();
                   <th scope="col">主題名稱</th>
                   <th scope="col">人數</th>
                   <th scope="col">預約時間</th>
-                  <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
-                  <th scope="col"><i class="fa-solid fa-trash"></i></th>
+                  <th scope="col"><i class="fa-solid fa-trash"> 刪除</i></th>
                 </tr>
               </thead>
               <tbody>
@@ -114,17 +113,12 @@ $rows = $rows->fetchAll();
                     <td><?= $r['id'] ?></td>
                     <td><?= $r['user_name'] ?></td>
                     <td><?= $r['mobile_phone'] ?></td>
-                    <td><?= $r['account'] ?></td> <!-- 這裡是 users 表中的信箱資料嗎？如果是，應該改成對應的欄位 -->
+                    <td><?= $r['account'] ?></td>
                     <td><?= $r['theme_name'] ?></td>
                     <td><?= $r['participants'] ?></td>
                     <td><?= $r['re_datetime'] ?></td>
-                    <td>
-                      <a href="reservation_edit.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                      </a>
-                    </td>
-                    <td><a href="reservation-delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
-                        <i class="fa-solid fa-trash text-danger"></i>
+                    <td><a class="btn btn-danger" href="reservation-delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                        <i class="fa-solid fa-trash text-white"></i> 刪除
                       </a></td>
                   </tr>
                 <?php endforeach; ?>
@@ -136,33 +130,23 @@ $rows = $rows->fetchAll();
             <div class="col-12 d-flex justify-content-end mt-5">
               <nav aria-label="Page navigation example m-auto">
                 <ul class="pagination">
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
+
+                  <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                    if ($i >= 1 and $i <= $totalPages) : ?>
-                      <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
-                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                      </li>
-                  <?php endif;
-                  endfor ?>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
+                    <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                      <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                  <?php endfor ?>
+                  <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
                       <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-right"></i>
-                    </a>
-                  </li>
+
                 </ul>
               </nav>
             </div>
@@ -201,13 +185,8 @@ $rows = $rows->fetchAll();
             <td>${reservation.participants}</td>
             <td>${reservation.re_datetime}</td>
             <td>
-              <a href="reservation_edit.php?id=${reservation.id}">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </a>
-            </td>
-            <td>
-              <a href="reservation-delete.php?id=${reservation.id}" onclick="return confirm('是否要刪除編號為${reservation.id}的資料')">
-                <i class="fa-solid fa-trash text-danger"></i>
+              <a class="btn btn-danger" href="reservation-delete.php?id=${reservation.id}" onclick="return confirm('是否要刪除編號為${reservation.id}的資料')">
+              <i class="fa-solid fa-trash text-white"> 刪除</i>
               </a>
             </td>
           `;

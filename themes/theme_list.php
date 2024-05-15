@@ -124,33 +124,23 @@ if ($totalRows) {
             <div class="col-12 d-flex justify-content-end mt-5">
               <nav aria-label="Page navigation example m-auto">
                 <ul class="pagination">
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
+
+                  <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                    if ($i >= 1 and $i <= $totalPages) : ?>
-                      <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
-                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                      </li>
-                  <?php endif;
-                  endfor ?>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
+                    <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                      <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                  <?php endfor ?>
+                  <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
                       <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-right"></i>
-                    </a>
-                  </li>
+
                 </ul>
               </nav>
             </div>
