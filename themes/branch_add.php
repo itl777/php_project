@@ -123,7 +123,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
 </div>
 
-<?php include __DIR__ . '/../../parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
   const nameField = document.getElementById('branch_name');
