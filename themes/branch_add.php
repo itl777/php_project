@@ -221,7 +221,6 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // 有通過檢查, 才要送表單
     if (isPass) {
       const fd = new FormData(document.form1);
-      fd.append('id', branchId); // 確保分店的 ID 被添加到 FormData 對象中
 
       fetch('branch_add_api.php', {
         method: 'POST',
