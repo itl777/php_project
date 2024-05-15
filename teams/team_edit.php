@@ -23,9 +23,20 @@ $stmt2 = $pdo->prepare($sql2);
 $stmt2->execute();
 $status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
+/* fetch 留言 串用戶暱稱*/
+$sql_c = "SELECT nick_name, chat_text, create_at
+        FROM teams_chats
+        join `users` on chat_by = users.user_id
+        WHERE chat_at={$team_id}";
+
+$stmt_c = $pdo->prepare($sql_c);
+$stmt_c->execute();
+$chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 <style>
   form .mb-3 .form-text {
     color: red;
@@ -66,16 +77,28 @@ $status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($status as $status_i): ?>
                   <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="team_status" id="teams_status_<?php echo $status_i['status_id']?>" value="<?php echo $status_i['status_id']?>" <?php if ($status_i['status_id'] == $row['team_status']) echo 'checked'; ?>>
-	              <label class="form-check-label" for="inlineRadio<?php echo $status_i['status_id']?>"><?php echo $status_i['status_text']?></label>
-</div>
-            <?php endforeach; ?>
-
+                <label class="form-check-label" for="inlineRadio<?php echo $status_i['status_id']?>"><?php echo $status_i['status_text']?></label>
+                  </div>
+                <?php endforeach; ?>
             </div>
-                <button type="submit" class="btn btn-primary">修改</button>
+            <button type="submit" class="btn btn-primary">修改</button>
           </form>
         </div>
       </div>
     </div>
+    <!-- <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">編輯留言</h5>
+        <?php foreach ($chats as $chat_i): ?>
+          <h5>留言者：<?php echo $chat_i['nick_name']; ?></h5>
+          <p>內文：<?php echo $chat_i['chat_text']; ?></p>
+          <p>留言時間：<?php echo $chat_i['create_at']; ?></p>
+          <hr>
+        <?php endforeach; ?>
+        </div>
+      </div>
+    </div> -->
   </div>
 </div>
 <!-- Modal -->
@@ -143,7 +166,22 @@ fetch('./api-get-themes.php')
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
-    let isPass = true; // 表單有沒有通過檢查
+    nameField.style.border = '1px solid #CCCCCC';
+    nameField.nextElementSibling.innerText = '';
+    team_limit.style.border = '1px solid #CCCCCC';
+    team_limit.nextElementSibling.innerText = '';
+    // TODO: 欄位資料檢查
+    let isPass = true;  // 表單有沒有通過檢查
+    if (nameField.value.length < 2) {
+      isPass = false;
+      nameField.style.border = '1px solid red';
+      nameField.nextElementSibling.innerText = '團隊名稱至少2個字';
+    }
+    if (parseInt(team_limit.value) > 8) {
+      isPass = false;
+      team_limit.style.border = '1px solid red';
+      team_limit.nextElementSibling.innerText = '團員上限為8人';
+    }
 
     // 有通過檢查, 才要送表單
     if (isPass) {

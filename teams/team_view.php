@@ -8,45 +8,29 @@ if ($team_id < 1) {
   exit;
 }
 
-$sql = "SELECT * FROM teams 
+$sql = "SELECT team_id, team_title, leader_id, nick_name, theme_desc, avatar, tour, theme_name, team_limit, count(join_user_id) as member_n
+        FROM teams 
         join `users` on leader_id = users.user_id
         join `themes` on `tour` = themes.theme_id
+        left join `teams_members` on team_id = join_team_id
         WHERE team_id={$team_id}";
-
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
-  header('Location: /../team_list.php');
+  header('Location: ./teams.php');
   exit;
 };
-
-$sql_c = "SELECT * FROM teams_chats
-        join `users` on chat_by = users.user_id";
-
-$row_c = $pdo->query($sql_c)->fetch();
-
-
-
-// 讀取所有themes資料，放入$tours，用來將teams.tour對應到themes.theme_name
-$sql1 = "SELECT * FROM themes";
-$stmt1 = $pdo->prepare($sql1);
-$stmt1->execute();
-$tours = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-
-$sql2 = "SELECT * FROM teams_status";
-$stmt2 = $pdo->prepare($sql2);
-$stmt2->execute();
-$status = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-
-$sql3 = "SELECT * FROM teams_chats join `users` on chat_by = users.user_id";
-$stmt3 = $pdo->prepare($sql3);
-$stmt3->execute();
-$chats = $stmt3->fetchAll(PDO::FETCH_ASSOC);
-
-// echo json_encode($row);
+/* fetch 留言 串用戶暱稱*/
+$sql_c = "SELECT nick_name, chat_text, create_at
+        FROM teams_chats
+        join `users` on chat_by = users.user_id
+        WHERE chat_at={$team_id}";
+$stmt_c = $pdo->prepare($sql_c);
+$stmt_c->execute();
+$chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 <style>
   form .mb-3 .form-text {
     color: red;
@@ -56,31 +40,36 @@ $chats = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 <div class="container">
   <div class="row">
     <div class="col-12">
-    <a href="../team_list.php"><button type="button" class="btn btn-primary">回到團隊列表</button></a>
+    <a href="./teams.php"><button type="button" class="btn btn-primary">回到團隊列表</button></a>
     </div>
 
     <div class="col-12">
       <div class="card px-5 py-3">
         <h3><?= $row['team_title'] ?></h3>
-        <p>團長: <?= $row['nick_name'] ?></p>
-        <p>人數: n / <?= $row['team_limit'] ?></p>
-        <p>行程: <?= $row['theme_id'],' - ', $row['theme_name']; ?></p>
+        <div class="row">
+          <div class="col-6">
+            <p>行程: <?=$row['theme_name']; ?></p>
+            <p>行程說明: <?=$row['theme_desc']; ?></p>
+            <p>目前人數: <?= $row['member_n']?> / <?= $row['team_limit'] ?></p>
+          </div>
+          <div class="col-6">
+            <p>團長: <?= $row['nick_name'] ?></p>
+            <p><img src="../users/images/<?=$row['avatar']?>" alt="" class=""></p>
+          </div>
       </div>
     </div>
+    
     <div class="col-12">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addChat">新增留言</button>
     </div>
     <div class="col-12">
+    <?php foreach ($chats as $chat_i): ?>
       <div class="card px-3 pt-2">
-      <?php foreach ($chats as $chat_i): ?>
-        <?php if ($chat_i['chat_at'] == $row['team_id']): ?>
-        <h4><?php echo $chat_i['nick_name']; ?></h4>
-        <p><?php echo $chat_i['chat_text']; ?></p>
-        <p><?php echo $chat_i['create_at']; ?></p>
-          <hr>
-        <?php endif; ?>
-            <?php endforeach; ?>
+          <h4><?php echo $chat_i['nick_name']; ?></h4>
+          <p><?php echo $chat_i['chat_text']; ?></p>
+          <p><?php echo $chat_i['create_at']; ?></p>
       </div>
+      <?php endforeach; ?>
     </div>
   </div>
 
