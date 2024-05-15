@@ -38,10 +38,12 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="mb-4 col-10">
               <label class="form-label fw-bold">遊玩行程主題</label><br>
-              <?php foreach ($themes as $theme) : ?>
+              <?php foreach ($themes as $theme): ?>
                 <div class="form-check form-check-inline me-3 mb-3">
-                  <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]" value="<?php echo $theme['theme_id']; ?>">
-                  <label class="form-check-label" for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
+                  <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>"
+                    name="theme_id[]" value="<?php echo $theme['theme_id']; ?>">
+                  <label class="form-check-label"
+                    for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
                 </div>
               <?php endforeach; ?>
               <div class="form-text"></div>
@@ -83,7 +85,8 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
               <div class="mb-4 col-10">
                 <label for="branch_address" class="form-label fw-bold">地址</label>
-                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3" placeholder="請輸入地址"></textarea>
+                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3"
+                  placeholder="請輸入地址"></textarea>
                 <div class="form-text"></div>
               </div>
             </div>
@@ -99,7 +102,8 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <!-- Modal bt 彈跳視窗-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -111,7 +115,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
           資料新增成功 d(`･∀･)b
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="location.href='theme_list.php'">到主題頁</button>
+          <button type="button" class="btn btn-primary" onclick="location.href='branch_list.php'">到分店頁</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
         </div>
       </div>
@@ -211,13 +215,6 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       addressField.nextElementSibling.innerText = '請填寫地址';
     }
 
-    // 重置其他欄位樣式和錯誤訊息
-    // const fields = [form.branch_phone, form.open_time, form.close_time, form.branch_status, form.branch_address];
-    // fields.forEach(field => {
-    //   field.style.border = '';
-    //   field.nextElementSibling.innerText = '';
-    // });
-
 
 
     // 有通過檢查, 才要送表單
@@ -225,14 +222,14 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
       fetch('branch_add_api.php', {
-          method: 'POST',
-          body: fd, // Content-Type: multipart/form-data
-        }).then(r => r.json())
+        method: 'POST',
+        body: fd, // Content-Type: multipart/form-data
+      }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
             myModal.show();
-          } else {}
+          } else { }
         })
         .catch(ex => console.log(ex))
     }
