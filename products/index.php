@@ -15,7 +15,7 @@ include 'db_select/select_category.php';
 
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include 'components/navbar.php' ?>
+<?php include '../parts/bt-navbar.php' ?>
 
 <!-- 主內容 -->
 <div class="container mt-5">
