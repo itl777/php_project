@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = '修改主題資料';
 
 $theme_id = isset($_GET['theme_id']) ? intval($_GET['theme_id']) : 0;
@@ -19,8 +19,8 @@ if (empty($row)) {
 $pageName = 'theme_add';
 ?>
 
-<?php include __DIR__ . '/../../parts/html-head.php' ?>
-<?php include __DIR__ . '/../../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/navbar.php' ?>
 
 <style>
   form .mb-4 .form-text {
@@ -198,7 +198,7 @@ $pageName = 'theme_add';
   </div>
 </div>
 
-<?php include __DIR__ . '/../../parts/scripts.php' ?>
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
   const nameField = document.getElementById('theme_name');
@@ -413,4 +413,4 @@ $pageName = 'theme_add';
   const myModal = new bootstrap.Modal('#staticBackdrop')
   const myModal2 = new bootstrap.Modal('#staticBackdrop2')
 </script>
-<?php include __DIR__ . '/../../parts/html-foot.php' ?>
+<?php include __DIR__ . '/../parts/html-foot.php' ?>

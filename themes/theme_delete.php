@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $id = isset($_GET['theme_id']) ? intval($_GET['theme_id']) : 0;
 if ($id < 1) {
     header('Location: theme_list.php');
