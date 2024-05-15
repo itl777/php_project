@@ -1,5 +1,5 @@
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include '../parts/bt-navbar.php' ?>
+<?php include 'components/navbar.php' ?>
 
 <div class="container mt-5 py-2">
     <div class="row mt-5">

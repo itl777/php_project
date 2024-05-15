@@ -7,7 +7,7 @@ include 'db_select/select_product.php';
 
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include '../parts/bt-navbar.php' ?>
+<?php include 'components/navbar.php' ?>
 
 
 <!-- 新增form -->

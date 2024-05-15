@@ -1,6 +1,6 @@
 <?php include 'db_select/select_coupon.php' ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include 'components/2navbar.php' ?>
+<?php include 'components/navbar.php' ?>
 
 
 

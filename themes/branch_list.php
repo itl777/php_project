@@ -39,7 +39,7 @@ if ($totalRows) {
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include '../products/components/2navbar.php' ?>
+<?php include '../products/components/navbar.php' ?>
 
 <style>
   .align-middle {
