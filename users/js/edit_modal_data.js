@@ -42,7 +42,7 @@ const ModalData = function (user_data, address_data) {
             <img src="images/${
               user_data.avatar || "default.gif"
             }" id="avatar_img" alt="頭像" class="rounded-circle opacity-100" style="width: 200px;height: 200px;transition: all 500ms ease-out;object-fit: cover;">  
-          <button type="button" class="btn btn-primary" onclick="avatar_upload.click()">上傳頭像</button>
+          <button type="button" class="btn btn-primary my-3" onclick="avatar_upload.click()">上傳頭像</button>
         </div>
       </div>`;
 
@@ -268,20 +268,10 @@ const ModalData = function (user_data, address_data) {
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
     </div >
 
 
-    <div class="row align-items-center">
+    <div class="row align-items-center my-2">
       <div class="col-6">
         <div class="row">
           <div class="col-4">
@@ -292,39 +282,24 @@ const ModalData = function (user_data, address_data) {
           </div>
         </div>
       </div>
+      <div class="col-6">
+      <div class="row">
+        <div class="col-4">
+          <span class="col-form-label">修改時間</span>
+        </div>
+        <div class="col-8">
+          <span class="col-form-label">${
+            user_data.last_modified_at || ""
+          }</span>
+        </div>
+      </div>
     </div>
-
-    <div class="row align-items-center">
-      <div class="col-6">
-        <div class="row">
-          <div class="col-4">
-            <span class="col-form-label">修改時間</span>
-          </div>
-          <div class="col-8">
-            <span class="col-form-label">${
-              user_data.last_modified_at || ""
-            }</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="row">
-          <div class="col-4">
-            <span class="col-form-label">修改人員</span>
-          </div>
-          <div class="col-8">
-            <span class="col-form-label">${
-              user_data.last_modified_by || ""
-            }</span>
-          </div>
-        </div>
-      </div>
     </div>`;
   }
 
   ModalData += `<div class="row align-items-center">
       <div class="col-12 d-flex justify-content-end">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+        <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">關閉</button>
         <button type="submit" class="btn btn-primary">送出</button>
       </div>
     </div>`;
