@@ -1,10 +1,11 @@
 const selectForm = document.querySelector('#selectForm');
+
+let pageNow = '';
 selectForm.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
     selectData();
   }
 });
-
 selectForm.addEventListener('change', function (event) {
   selectData();
 });
@@ -12,8 +13,14 @@ selectForm.addEventListener('change', function (event) {
 
 const selectData = function () {
 
-  event.preventDefault();
+  // event.preventDefault();
   let formData = {}
+  // if (page !== undefined && page !== null && page !== ''){
+  //   formData['page'] = page;
+  // } else {
+  //   formData['page'] = pageNow;
+  // }
+
   Array.from(selectForm.elements).forEach(item => {
     formData[item.name] = item.value;
   });
@@ -34,7 +41,8 @@ const selectData = function () {
       console.log(data);
       userTable(data['user_data']);
       userTablePagination(data['page'], data['totalPages']);
-
+      pageNow = data['page'];
     })
-
 };
+
+selectData();

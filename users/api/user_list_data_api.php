@@ -92,13 +92,15 @@ if ($totalRows) {
     avatar
     FROM `users` WHERE ";
   $sql = select($sql, $select_sql);
-  $sql = $sql . " ORDER BY user_id ";
+  $sql = $sql . " ORDER BY user_id  DESC ";
   if (!empty($data['desc'])) {
-    $sql = $sql . " DESC ";
+    $sql = rtrim($sql, " DESC ");
   }
 
   $sql = $sql . sprintf(" LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
+  // echo $sql;
+  // exit;
 
   $user_data = $pdo->query($sql)->fetchAll();
 }

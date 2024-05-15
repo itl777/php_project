@@ -76,7 +76,7 @@ try {
     )";
     $stmt1 = $pdo->prepare($sql1);
 
-    for ($i = 0; $i < 10; $i++) {
+    for ($i = 0; $i < 1; $i++) {
         $account = 'email' . getRandomText(8, $number) . '@test.com';
         $password = password_hash($account, PASSWORD_DEFAULT);
         $name = getRandomArray($lasts) . getRandomArray($firsts);
@@ -111,23 +111,32 @@ try {
         ]);
     }
 
-    echo json_encode([
-        $stmt1->rowCount(), // 影響的資料筆數
-        $pdo->lastInsertId(), // 最新的新增資料的主鍵
-    ]);
+
+    $output = [];
+
+    $output['success'] = boolval($stmt1->rowCount());
+    $output['user_id'] = $pdo->lastInsertId();
+
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
 
     /////////////////////////////////////////////////////////////////////////
-
 
     // 提交事務
     $pdo->commit();
 
-    echo "新增記錄成功";
 } catch (PDOException $e) {
     // 如果出現錯誤，回滾事務
     $pdo->rollBack();
 
-    echo "新增記錄失敗：" . $e->getMessage();
+
+    $output = [
+
+    ];
+
+    $output['success'] = '新增記錄失敗';
+    $output['error_message'] = $e->getMessage();
+
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
 }
 
 
