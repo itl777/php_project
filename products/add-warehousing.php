@@ -14,7 +14,7 @@ include 'db_select/select_product.php';
 <div class="container mt-5 py-2">
     <div class="row mt-5">
         <div class="col-10 mx-auto">
-            <h2 class="text-center p-3 mt-3">商品入庫</h2>
+            <h2 class="text-center p-3 mt-3"><i class="fa-solid fa-ghost"></i></i>商品入庫</h2>
             <!-- ---- -->
 
 
