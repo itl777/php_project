@@ -16,6 +16,20 @@ if (empty($row)) {
     exit;
 }
 
+// 獲取主題資料
+$sql = "SELECT theme_id, theme_name FROM themes";
+$stmt = $pdo->query($sql);
+$themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// 初始化已选择的主题数组
+$selectedThemes = [];
+
+// 检查是否有已选择的主题，并存储到 $selectedThemes 中
+if (!empty($row['theme_id'])) {
+    $selectedThemes = explode(',', $row['theme_id']);
+}
+
+
 $pageName = 'branch_add';
 ?>
 
@@ -51,13 +65,16 @@ $pageName = 'branch_add';
                         <div class="mb-4 col-10">
                             <label class="form-label fw-bold">遊玩行程主題</label><br>
                             <?php foreach ($themes as $theme) : ?>
+                                <?php
+                                $isChecked = in_array($theme['theme_id'], $selectedThemes);
+                                ?>
                                 <div class="form-check form-check-inline me-3 mb-3">
-                                    <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]" value="<?php echo $theme['theme_id']; ?>">
+                                    <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]" value="<?php echo $theme['theme_id']; ?>" <?php echo ($isChecked) ? 'checked' : ''; ?>>
                                     <label class="form-check-label" for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
                                 </div>
                             <?php endforeach; ?>
-                            <div class="form-text"></div>
                         </div>
+
 
                         <div class="mb-4 col-5">
                             <label for="branch_phone" class="form-label fw-bold">電話</label>
@@ -83,23 +100,25 @@ $pageName = 'branch_add';
                                 <label for="branch_status" class="form-label fw-bold">營業狀態</label>
                                 <select class="form-select" aria-label="Default select example" id="branch_status" name="branch_status">
                                     <option value="" selected disabled>請選擇狀態</option>
-                                    <option value="新開幕"><?= $row['branch_status'] == "新開幕" ? 'selected' : '' ?>新開幕</option>
-                                    <option value="營業中"><?= $row['branch_status'] == "營業中" ? 'selected' : '' ?>營業中</option>
-                                    <option value="裝潢"><?= $row['branch_status'] == "裝潢中" ? 'selected' : '' ?>裝潢中</option>
-                                    <option value="停止營業"><?= $row['branch_status'] == "停止營業" ? 'selected' : '' ?>停止營業</option>
+                                    <option value="新開幕" <?= $row['branch_status'] == "新開幕" ? 'selected' : '' ?>>新開幕</option>
+                                    <option value="營業中" <?= $row['branch_status'] == "營業中" ? 'selected' : '' ?>>營業中</option>
+                                    <option value="裝潢中" <?= $row['branch_status'] == "裝潢中" ? 'selected' : '' ?>>裝潢中</option>
+                                    <option value="停止營業" <?= $row['branch_status'] == "停止營業" ? 'selected' : '' ?>>停止營業</option>
                                 </select>
                                 <div class="form-text"></div>
                             </div>
 
+
                             <div class="mb-4 col-10">
                                 <label for="branch_address" class="form-label fw-bold">地址</label>
-                                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3" placeholder="請輸入地址" <?= $row['branch_address'] ?>></textarea>
+                                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3" placeholder="請輸入地址"><?= $row['branch_address'] ?></textarea>
                                 <div class="form-text"></div>
                             </div>
+
                         </div>
 
                         <div class="d-flex justify-content-end me-3">
-                            <button type="submit" class="btn btn-primary">新增</button>
+                            <button type="submit" class="btn btn-primary">編輯</button>
                         </div>
                     </form>
                 </div>
@@ -113,21 +132,23 @@ $pageName = 'branch_add';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">新增成功</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">修改成功</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-success" role="alert">
-                    資料新增成功 d(`･∀･)b
+                    資料修改成功 d(`･∀･)b
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="location.href='theme_list.php'">到主題頁</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="location.href='branch_list.php'">到分店頁</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -152,6 +173,7 @@ $pageName = 'branch_add';
 <?php include __DIR__ . '/../../parts/scripts.php' ?>
 
 <script>
+    const id = document.getElementById('id').value;
     const nameField = document.getElementById('branch_name');
     const phoneField = document.getElementById('branch_phone');
     const openTimeField = document.getElementById('open_time');
@@ -162,6 +184,10 @@ $pageName = 'branch_add';
 
     const sendData = e => {
         e.preventDefault();
+
+
+        const fd = new FormData(document.form1);
+        fd.append('id', id); // 添加 id 字段到 FormData 对象中
 
         nameField.style.border = '1px solid #CCCCCC';
         nameField.nextElementSibling.innerText = '';
@@ -181,13 +207,7 @@ $pageName = 'branch_add';
         addressField.style.border = '1px solid #CCCCCC';
         addressField.nextElementSibling.innerText = '';
 
-        // TODO: 欄位資料檢查
-
         let isPass = true; // 表單有沒有通過檢查
-        // 清除主题选择的错误信息
-        // const themeError = document.querySelector('.theme-error');
-        // themeError.innerText = '';
-
 
         if (nameField.value.trim() === '') {
             isPass = false;
@@ -195,7 +215,6 @@ $pageName = 'branch_add';
             nameField.nextElementSibling.innerText = '請填寫分店名稱';
         }
 
-        // 检查勾选框是否有选中主题
         const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
         if (selectedThemes.length === 0) {
             isPass = false;
@@ -203,7 +222,8 @@ $pageName = 'branch_add';
             themeCheckboxes.forEach(checkbox => {
                 checkbox.nextElementSibling.style.color = 'tomato';
             });
-            themeError.innerText = '请至少选择一个主题';
+            const themeError = document.querySelector('.mb-4 .form-text');
+            themeError.innerText = '請至少選擇一個主題';
         } else {
             const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
             themeCheckboxes.forEach(checkbox => {
@@ -241,16 +261,6 @@ $pageName = 'branch_add';
             addressField.nextElementSibling.innerText = '請填寫地址';
         }
 
-        // 重置其他欄位樣式和錯誤訊息
-        // const fields = [form.branch_phone, form.open_time, form.close_time, form.branch_status, form.branch_address];
-        // fields.forEach(field => {
-        //   field.style.border = '';
-        //   field.nextElementSibling.innerText = '';
-        // });
-
-
-
-        // 有通過檢查, 才要送表單
         if (isPass) {
             const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
@@ -262,7 +272,9 @@ $pageName = 'branch_add';
                     console.log(data);
                     if (data.success) {
                         myModal.show();
-                    } else {}
+                    } else {
+                        myModal2.show();
+                    }
                 })
                 .catch(ex => console.log(ex))
         }
@@ -270,4 +282,5 @@ $pageName = 'branch_add';
     const myModal = new bootstrap.Modal('#staticBackdrop')
     const myModal2 = new bootstrap.Modal('#staticBackdrop2')
 </script>
+
 <?php include __DIR__ . '/../../parts/html-foot.php' ?>
