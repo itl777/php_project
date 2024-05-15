@@ -97,15 +97,14 @@ $title = '會員管理系統';
 
 
 <!-- modal -->
-
 <?php include __DIR__ . '/include/edit_modal.php' ?>
 <?php include __DIR__ . '/include/address_modal.php' ?>
 <?php include __DIR__ . '/include/success_modal.php' ?>
 
 
 <!-- scripts_map -->
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <?php include __DIR__ . '/include/scripts_map.php' ?>
-
 
 
 <?php include __DIR__ . '/../parts/html-foot.php' ?>
