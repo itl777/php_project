@@ -45,14 +45,15 @@ $pageName = 'theme_add';
 
             <div class="mb-4 col-5">
               <label for="theme_name" class="form-label">主題名稱</label>
-              <input type="text" class="form-control" id="theme_name" name="theme_name" value="<?= $row['theme_name'] ?>">
+              <input type="text" class="form-control" id="theme_name" name="theme_name"
+                value="<?= $row['theme_name'] ?>">
               <div class="form-text"></div>
             </div>
 
             <div class="mb-4 col-5">
               <label for="theme_img" class="form-label">主題圖片</label>
               <input type="file" class="form-control" name="uploadFile[]" multiple="multiple" id="theme_img">
-              <?php if (!empty($row['uploaded_image'])) : ?>
+              <?php if (!empty($row['uploaded_image'])): ?>
                 <img src="<?= $row['uploaded_image'] ?>" alt="Uploaded Image">
               <?php endif; ?>
             </div>
@@ -60,7 +61,8 @@ $pageName = 'theme_add';
 
             <div class="mb-4 col-8">
               <label for="theme_desc" class="form-label">主題描述</label>
-              <textarea class="form-control" id="theme_desc" name="theme_desc" cols="30" rows="3"><?= $row['theme_desc'] ?></textarea>
+              <textarea class="form-control" id="theme_desc" name="theme_desc" cols="30"
+                rows="3"><?= $row['theme_desc'] ?></textarea>
               <div class="form-text"></div>
             </div>
 
@@ -84,7 +86,8 @@ $pageName = 'theme_add';
               </div>
               <div class="mb-4 col-5">
                 <label for="suitable_players" class="form-label">適合遊玩人數</label>
-                <input type="text" class="form-control" id="suitable_players" name="suitable_players" value="<?= $row['suitable_players'] ?>">
+                <input type="text" class="form-control" id="suitable_players" name="suitable_players"
+                  value="<?= $row['suitable_players'] ?>">
                 <div class="form-text"></div>
               </div>
             </div>
@@ -92,7 +95,8 @@ $pageName = 'theme_add';
             <div class="row">
               <div class="mb-4 col-5">
                 <label for="start_time" class="form-label">開始時間</label>
-                <input type="text" class="form-control" id="start_time" name="start_time" value="<?= $row['start_time'] ?>">
+                <input type="text" class="form-control" id="start_time" name="start_time"
+                  value="<?= $row['start_time'] ?>">
                 <div class="form-text"></div>
               </div>
 
@@ -127,7 +131,8 @@ $pageName = 'theme_add';
             <div class="row">
               <div class="mb-4 col-5">
                 <label for="start_date" class="form-label">開始日</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" value="<?= $row['start_date'] ?>">
+                <input type="date" class="form-control" id="start_date" name="start_date"
+                  value="<?= $row['start_date'] ?>">
                 <div class="form-text"></div>
               </div>
               <div class="mb-4 col-5">
@@ -149,7 +154,8 @@ $pageName = 'theme_add';
 </div>
 
 <!-- Modal bt 彈跳視窗-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -171,7 +177,8 @@ $pageName = 'theme_add';
 </div>
 
 
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -389,9 +396,9 @@ $pageName = 'theme_add';
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
       fetch('theme_edit_api.php', {
-          method: 'POST',
-          body: fd, // Content-Type: multipart/form-data
-        }).then(r => r.json())
+        method: 'POST',
+        body: fd, // Content-Type: multipart/form-data
+      }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {

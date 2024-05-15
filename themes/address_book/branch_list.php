@@ -14,7 +14,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(id) FROM `branches`";
+$t_sql = "SELECT COUNT(branch_id) FROM `branches`";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -30,7 +30,7 @@ if ($totalRows) {
   }
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM `branches` ORDER BY id  LIMIT %s, %s",
+    "SELECT * FROM `branches` ORDER BY branch_id  LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -41,36 +41,23 @@ if ($totalRows) {
 <?php include __DIR__ . '/../../parts/html-head.php' ?>
 <?php include __DIR__ . '/../../parts/navbar.php' ?>
 
+
 <div class="container-fluid pt-5">
   <div class="container">
     <div class="row">
-      <!-- 左邊選單 -->
-      <div class="accordion accordion-flush col-2" id="accordionFlushExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="flush-headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-              行程管理
-            </button>
-          </h2>
-          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body d-flex ">
-              <div class="d-flex flex-column bd-highlight mb-3">
-                <div class="p-2 bd-highlight "><a class="link-secondary" href="branch_list.php" style="text-decoration: none;">分店管理</a></div>
-                <div class="p-2 bd-highlight"><a class="link-secondary" href="theme_list.php" style="text-decoration: none;">主題管理</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- 右邊表格 -->
-      <div class="col-10">
+      <div class="col-12">
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">分店列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+              aria-selected="true">分店列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增分店</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+              aria-selected="false">新增分店</button>
           </li>
           <li class="ms-auto">
             <!-- 查詢 -->
@@ -110,9 +97,9 @@ if ($totalRows) {
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r) : ?>
+                <?php foreach ($rows as $r): ?>
                   <tr>
-                    <td><?= $r['id'] ?></td>
+                    <td><?= $r['branch_id'] ?></td>
                     <td><?= $r['branch_name'] ?></td>
                     <td><?= htmlentities($r['branch_address']) ?></td>
                     <td><?= $r['branch_phone'] ?></td>
@@ -120,16 +107,17 @@ if ($totalRows) {
                     <td><?= $r['close_time'] ?></td>
                     <td><?= $r['branch_status'] ?></td>
                     <td>
-                      <a href="branch_content.php?id=<?= $r['id'] ?>">
+                      <a href="branch_content.php?id=<?= $r['branch_id'] ?>">
                         <i class="fa-solid fa-file-lines text-secondary"></i>
                       </a>
                     </td>
                     <td>
-                      <a href="branch_edit.php?id=<?= $r['id'] ?>">
+                      <a href="branch_edit.php?id=<?= $r['branch_id'] ?>">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="branch_delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                    <td><a href="branch_delete.php?id=<?= $r['branch_id'] ?>"
+                        onclick="return confirm('是否要刪除編號為<?= $r['branch_id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
                   </tr>
@@ -150,12 +138,12 @@ if ($totalRows) {
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                    if ($i >= 1 and $i <= $totalPages) : ?>
+                  <?php for ($i = $page - 5; $i <= $page + 5; $i++):
+                    if ($i >= 1 and $i <= $totalPages): ?>
                       <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
                         <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                       </li>
-                  <?php endif;
+                    <?php endif;
                   endfor ?>
                   <li class="page-item">
                     <a class="page-link" href="#">
@@ -182,13 +170,6 @@ if ($totalRows) {
 </div>
 
 
-
-
-
-
-
-
-
-
 <?php include __DIR__ . '/../../parts/scripts.php' ?>
+
 <?php include __DIR__ . '/../..//parts/html-foot.php' ?>
