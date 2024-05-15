@@ -60,12 +60,13 @@ if ($totalRows) {
               aria-selected="false">新增分店</button>
           </li>
           <li class="ms-auto">
+
             <!-- 查詢 -->
             <div class="container ms-5">
               <form id="searchForm" class="mb-3">
                 <div class="row">
                   <div class="col-8">
-                    <input type="text" class="form-control" placeholder="输入分店名稱" name="theme_name">
+                    <input type="text" class="form-control" placeholder="输入分店名稱" name="branch_name">
                   </div>
                   <div class="col-4">
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -81,7 +82,7 @@ if ($totalRows) {
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table class="table table-striped">
+            <table id="branchListTable" class="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -91,6 +92,7 @@ if ($totalRows) {
                   <th scope="col">營業時間</th>
                   <th scope="col">結束時間</th>
                   <th scope="col">分店狀態</th>
+                  <th scope="col"><i class="fa-solid fa-user-check"> 預約</i></th>
                   <th scope="col"><i class="fa-solid fa-file-lines"></i>
                   <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
                   <th scope="col"><i class="fa-solid fa-trash"></i></th>
@@ -106,6 +108,11 @@ if ($totalRows) {
                     <td><?= $r['open_time'] ?></td>
                     <td><?= $r['close_time'] ?></td>
                     <td><?= $r['branch_status'] ?></td>
+                    <td>
+                      <a href="reservation_list.php?id=<?= $r['id'] ?>">
+                        <i class="fa-solid fa-user-check"> 預約</i></i>
+                      </a>
+                    </td>
                     <td>
                       <a href="branch_content.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-file-lines text-secondary"></i>
@@ -171,5 +178,44 @@ if ($totalRows) {
 
 
 <?php include __DIR__ . '/../parts/scripts.php' ?>
+
+<script>
+  document.getElementById('searchForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // 阻止表单提交
+
+    var formData = new FormData(this);
+    var queryString = new URLSearchParams(formData).toString(); // 将表单数据转换为 URL 查询字符串
+
+    fetch('branch_list_search.php?' + queryString) // 将查询字符串附加到 URL 中
+      .then(response => response.json())
+      .then(data => {
+        var tableBody = document.createElement('tbody');
+        data.forEach(branch => {
+          var row = document.createElement('tr');
+          row.innerHTML = `
+          <td>${branch.id}</td>
+          <td>${branch.branch_name}</td>
+          <td>${branch.branch_address}</td>
+          <td>${branch.branch_phone}</td>
+          <td>${branch.open_time}</td>
+          <td>${branch.close_time}</td>
+          <td>${branch.branch_status}</td>
+          <td><a href="branch_content.php?id=${branch.id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
+          <td><a href="branch_edit.php?id=${branch.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+          <td><a href="branch_delete.php?id=${branch.id}" onclick="return confirm('是否要刪除編號為${branch.id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
+        `;
+          tableBody.appendChild(row);
+        });
+        // 更新表格内容
+        var branchListTable = document.getElementById('branchListTable');
+        branchListTable.innerHTML = '';
+        branchListTable.appendChild(tableBody);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+
+</script>
 
 <?php include __DIR__ . '/../parts/html-foot.php' ?>
