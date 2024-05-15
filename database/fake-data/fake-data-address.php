@@ -58,7 +58,7 @@ try {
 
   $stmt2 = $pdo->prepare($sql2);
 
-  for ($i = 0; $i < 10; $i++) {
+  for ($i = 0; $i < 1; $i++) {
     $FK_user_id = rand(1, $users_rows['count']);
 
     $result = $district_data[rand(0, count($district_data) - 1)];
