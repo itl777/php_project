@@ -42,7 +42,7 @@ INSERT INTO `teams` (`team_id`, `team_title`, `leader_id`, `team_limit`, `tour`,
 (7, '第7團', 7, 1, 5, '2024-05-10 14:47:18', '2024-05-10 14:47:18'),
 (8, '第8團', 8, 3, 8, '2024-05-10 14:47:18', '2024-05-10 14:47:18'),
 (9, '第9團', 4, 2, 2, '2024-05-10 14:47:18', '2024-05-10 14:47:18'),
-(10, '第10團', 12, 3, 12, '2024-05-10 14:47:18', '2024-05-10 14:47:18'),
+(10, '第10團', 9, 3, 11, '2024-05-10 14:47:18', '2024-05-10 14:47:18'),
 (11, '勇氣之團', 10, 3, 3, '2024-05-13 09:10:14', '2024-05-13 09:10:14'),
 (12, '我只是來打牌的', 9, 3, 5, '2024-05-13 09:14:26', '2024-05-13 09:14:26');
 
@@ -93,7 +93,7 @@ INSERT INTO `teams_members` (`join_team_id`, `join_user_id`, `create_at`) VALUES
 --
 
 CREATE TABLE `teams_status` (
-  `status_id` int NOT NULL,
+  `status_id` int NOT NULL PRIMARY KEY,
   `status_text` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

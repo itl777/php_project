@@ -30,11 +30,11 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, team_status/**status_text**/, count(join_user_id) as member_n
+        "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, status_text, count(join_user_id) as member_n
         FROM `teams` 
         join `users` on leader_id = users.user_id
         join `themes` on tour = themes.theme_id
-        -- join `teams_status` on team_status = teams_status.status_id
+        join `teams_status` on team_status = status_id
         left join `teams_members` on team_id = join_team_id
         GROUP BY team_id
         ORDER BY team_id ASC LIMIT %s, %s",
@@ -98,7 +98,6 @@ if ($totalRows) {
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th scope="col"><i class="fa-solid fa-trash"></i></th>
                         <th scope="col">#</th>
                         <th scope="col">團隊名稱</th>
                         <th scope="col">開團者</th>
@@ -111,9 +110,6 @@ if ($totalRows) {
                 <tbody>
                     <?php foreach ($rows as $r) : ?>
                         <tr>
-                            <td><a href="javascript: deleteOne(<?= $r['team_id'] ?>)">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a></td>
                             <td><?= $r['team_id'] ?></td>
                             <td>
                             <a href="./team_view.php?team_id=<?= $r['team_id'] ?>">
@@ -121,7 +117,7 @@ if ($totalRows) {
                             <td><?= $r['nick_name'] ?></td>
                             <td><?= $r['theme_name'] ?></td>
                             <td><?= $r['member_n'] ?> / <?= $r['team_limit'] ?></td>
-                            <td><?= $r['team_status'] ?></td>
+                            <td><?= $r['status_text'] ?></td>
                             <td>
                                 <a href="./team_edit.php?team_id=<?= $r['team_id'] ?>">
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -135,11 +131,11 @@ if ($totalRows) {
     </div>
 </div>
 
-<?php include __DIR__ . '/../parts/scripts.php' ?>
+<?php include __DIR__ . '/js/scripts.php' ?>
 <script>
     const deleteOne = (team_id) => {
     if (confirm(`是否要刪除編號為 ${team_id} 的資料?`)) {
-      location.href = `/teams/team_delete.php?team_id=${team_id}`;
+      location.href = `/team_delete.php?team_id=${team_id}`;
     }
   }
 </script>
