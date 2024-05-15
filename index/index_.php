@@ -2,7 +2,7 @@
 $title = "首頁";
 $pageName = 'index';
 ?>
-<?php include __DIR__ . '/../parts/html-head.php' ?>
+<?php include __DIR__ . '/../parts/html-head-2.php' ?>
 
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 

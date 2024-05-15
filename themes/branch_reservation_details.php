@@ -53,7 +53,7 @@ $rows->execute([$branchId]);
 $rows = $rows->fetchAll();
 ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<?php include '../products/components/navbar.php' ?>
 <style>
   .align-middle {
     display: flex;
@@ -73,13 +73,10 @@ $rows = $rows->fetchAll();
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-4" role="presentation">
-            <a href="branch_list.php"><button type="button" class="btn btn-outline-primary rounded-pill"><i
-                  class="fa-solid fa-arrow-left"></i> 回分店</button></a>
+            <a href="branch_list.php"><button type="button" class="btn btn-outline-primary rounded-pill"><i class="fa-solid fa-arrow-left"></i> 回分店</button></a>
           </li>
           <li class="nav-item me-5" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">預約列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">預約列表</button>
           </li>
           <li class="ms-auto">
 
@@ -120,7 +117,7 @@ $rows = $rows->fetchAll();
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r): ?>
+                <?php foreach ($rows as $r) : ?>
                   <tr>
                     <td>
                       <div class="align-middle"><?= $r['id'] ?></div>
@@ -144,8 +141,7 @@ $rows = $rows->fetchAll();
                       <div class="align-middle"><?= $r['re_datetime'] ?></div>
                     </td>
                     <td>
-                      <a class="btn btn-danger" href="reservation-delete.php?id=<?= $r['id'] ?>"
-                        onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                      <a class="btn btn-danger" href="reservation-delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-white"></i> 刪除
                       </a>
                     </td>
@@ -167,7 +163,7 @@ $rows = $rows->fetchAll();
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++): ?>
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
                     <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                       <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                     </li>
@@ -195,7 +191,7 @@ $rows = $rows->fetchAll();
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
-  document.getElementById('searchForm').addEventListener('submit', function (event) {
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault(); // 阻止表單提交
 
     var formData = new FormData(this);

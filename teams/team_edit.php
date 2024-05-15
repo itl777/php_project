@@ -153,11 +153,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
       data.forEach(theme => {
         const option = document.createElement('option');
         option.value = theme.theme_id;
-        option.textContent = $ {
-          theme.theme_id
-        } - $ {
-          theme.theme_name
-        };
+        option.textContent = `${theme.theme_id} - ${theme.theme_name}`;
 
         // 檢查是否該選項應該被設置為 selected
         if (theme.theme_id == <?php echo $row['theme_id']; ?>) {
@@ -167,6 +163,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
       });
     })
     .catch(error => console.error('Error:', error));
+
 
 
   const sendData = e => {
