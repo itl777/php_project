@@ -14,7 +14,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(branch_id) FROM `branches`";
+$t_sql = "SELECT COUNT(id) FROM `branches`";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -30,7 +30,7 @@ if ($totalRows) {
   }
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM `branches` ORDER BY branch_id  LIMIT %s, %s",
+    "SELECT * FROM `branches` ORDER BY id LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -39,7 +39,7 @@ if ($totalRows) {
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
 
 <div class="container-fluid pt-5">
@@ -50,10 +50,14 @@ if ($totalRows) {
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">分店列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+              aria-selected="true">分店列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增分店</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+              aria-selected="false">新增分店</button>
           </li>
           <li class="ms-auto">
             <!-- 查詢 -->
@@ -93,9 +97,9 @@ if ($totalRows) {
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r) : ?>
+                <?php foreach ($rows as $r): ?>
                   <tr>
-                    <td><?= $r['branch_id'] ?></td>
+                    <td><?= $r['id'] ?></td>
                     <td><?= $r['branch_name'] ?></td>
                     <td><?= htmlentities($r['branch_address']) ?></td>
                     <td><?= $r['branch_phone'] ?></td>
@@ -103,16 +107,17 @@ if ($totalRows) {
                     <td><?= $r['close_time'] ?></td>
                     <td><?= $r['branch_status'] ?></td>
                     <td>
-                      <a href="branch_content.php?id=<?= $r['branch_id'] ?>">
+                      <a href="branch_content.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-file-lines text-secondary"></i>
                       </a>
                     </td>
                     <td>
-                      <a href="branch_edit.php?id=<?= $r['branch_id'] ?>">
+                      <a href="branch_edit.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="branch_delete.php?id=<?= $r['branch_id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['branch_id'] ?>的資料')">
+                    <td><a href="branch_delete.php?id=<?= $r['id'] ?>"
+                        onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
                   </tr>
@@ -133,12 +138,12 @@ if ($totalRows) {
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                    if ($i >= 1 and $i <= $totalPages) : ?>
+                  <?php for ($i = $page - 5; $i <= $page + 5; $i++):
+                    if ($i >= 1 and $i <= $totalPages): ?>
                       <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
                         <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                       </li>
-                  <?php endif;
+                    <?php endif;
                   endfor ?>
                   <li class="page-item">
                     <a class="page-link" href="#">
