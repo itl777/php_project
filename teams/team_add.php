@@ -13,10 +13,10 @@ $pageName = 'team_add';
 </style>
 <div class="container">
   <div class="row">
-    <div class="col-6">
-      <div class="card">
+    <div class="col-6 pt-3 ">
+      <div class="card mb-4">
+        <div class="card-header">新增團隊</div>
         <div class="card-body">
-          <h5 class="card-title">新建團隊</h5>
           <form name="form1" onsubmit="sendData(event)">
             <div class="mb-3">
               <label for="team_title" class="form-label">團隊名稱</label>
@@ -44,7 +44,7 @@ $pageName = 'team_add';
           </form>
         </div>
       </div>
-    </div>
+    </div>  
   </div>
 </div>
 <!-- Modal -->
@@ -89,25 +89,28 @@ $pageName = 'team_add';
   .catch(error => console.error('Error:', error));
 
   const nameField = document.form1.team_title;
-  const limit = document.form1.team_limit;
+  const team_limit = document.form1.team_limit;
   $count_m_sql = "SELECT COUNT(team_leader) FROM teams where team_leader = #team_leader";
+  $user_m_sql = "SELECT user_id FROM users";
 
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
     nameField.style.border = '1px solid #CCCCCC';
     nameField.nextElementSibling.innerText = '';
+    team_limit.style.border = '1px solid #CCCCCC';
+    team_limit.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
     let isPass = true;  // 表單有沒有通過檢查
     if (nameField.value.length < 2) {
       isPass = false;
       nameField.style.border = '1px solid red';
-      nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+      nameField.nextElementSibling.innerText = '團隊名稱至少2個字';
     }
-    if (limit > 8) {
+    if (parseInt(team_limit.value) > 8) {
       isPass = false;
-      nameField.style.border = '1px solid red';
-      nameField.nextElementSibling.innerText = '團員上限為8人';
+      team_limit.style.border = '1px solid red';
+      team_limit.nextElementSibling.innerText = '團員上限為8人';
     }
 
     // 有通過檢查, 才要送表單

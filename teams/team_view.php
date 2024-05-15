@@ -8,7 +8,7 @@ if ($team_id < 1) {
   exit;
 }
 
-$sql = "SELECT team_id, team_title, leader_id, nick_name, tour, theme_name, team_limit, count(join_user_id) as member_n
+$sql = "SELECT team_id, team_title, leader_id, nick_name, theme_desc, avatar, tour, theme_name, team_limit, count(join_user_id) as member_n
         FROM teams 
         join `users` on leader_id = users.user_id
         join `themes` on `tour` = themes.theme_id
@@ -40,17 +40,25 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 <div class="container">
   <div class="row">
     <div class="col-12">
-    <a href="../team_list.php"><button type="button" class="btn btn-primary">回到團隊列表</button></a>
+    <a href="./teams.php"><button type="button" class="btn btn-primary">回到團隊列表</button></a>
     </div>
 
     <div class="col-12">
       <div class="card px-5 py-3">
         <h3><?= $row['team_title'] ?></h3>
-        <p>團長: <?= $row['nick_name'] ?></p>
-        <p>人數: <?= $row['member_n']?> / <?= $row['team_limit'] ?></p>
-        <p>行程: <?=$row['theme_name']; ?></p>
+        <div class="row">
+          <div class="col-6">
+            <p>行程: <?=$row['theme_name']; ?></p>
+            <p>行程說明: <?=$row['theme_desc']; ?></p>
+            <p>目前人數: <?= $row['member_n']?> / <?= $row['team_limit'] ?></p>
+          </div>
+          <div class="col-6">
+            <p>團長: <?= $row['nick_name'] ?></p>
+            <p><img src="../users/images/<?=$row['avatar']?>" alt="" class=""></p>
+          </div>
       </div>
     </div>
+    
     <div class="col-12">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addChat">新增留言</button>
     </div>
