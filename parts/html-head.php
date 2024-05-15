@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_URI'] !== '/iSpanProject/index/index_.php') {
     const loginData = function(e) {
       e.preventDefault();
       let sendData = new FormData(document.loginForm); // 沒有外觀的表單物件
-      fetch(`http://localhost/iSpanProject/parts/login_api.php`, {
+      fetch(`../parts/login_api.php`, {
         method: 'POST',
         body: sendData,
       }).then(r => r.json()).then(data => {
