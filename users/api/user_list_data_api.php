@@ -7,11 +7,6 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 
 //TODO 前端要給的資料
-if (isset($data['page'])) {
-  $page = $data['page'];
-} else {
-  $page = 1;
-}
 $perPage = 20; # 每頁有幾筆
 
 
@@ -75,6 +70,21 @@ $totalPages = ceil($totalRows / $perPage); # 總頁數
 
 
 
+
+
+if (isset($data['page'])) {
+  $page = $data['page'];
+
+  if ($page > $totalPages) {
+    $page = $totalPages;
+  } else if ($page < 1) {
+    $page = 1;
+  } else {
+    $page = $data['page'];
+  }
+} else {
+  $page = 1;
+}
 
 
 

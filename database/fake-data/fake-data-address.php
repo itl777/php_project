@@ -10,6 +10,8 @@ try {
 
   $firsts = ["冠廷", "冠宇", "宗翰", "家豪", "彥廷", "承翰", "柏翰", "宇軒", "家瑋", "冠霖", "雅婷", "雅筑", "怡君", "佳穎", "怡萱", "宜庭", "郁婷", "怡婷", "詩涵", "鈺婷"];
 
+  $road = ["民族路", "民權路", "中正路", "中山路", "仁愛路", "忠孝路", "三民路", "松江路", "合江街", "青海路", "華西街", "北平路", "重慶南路", "永康街", "長沙街", "承德路", "南京路", "西安路", "長春路", "長安路", "鳳林路", "漢口街", "迪化街", "更新街", "信義路"];
+
   $number = '0123456789';
 
   $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -41,6 +43,7 @@ try {
   $users_rows = $pdo->query($sql_users)->fetch();
 
 
+
   $sql2 = "INSERT INTO `address`(
 `user_id`,
 `district_id`,
@@ -64,7 +67,7 @@ try {
     $result = $district_data[rand(0, count($district_data) - 1)];
 
     $district_id = $result['id'];
-    $address_line = '完整地址' . getRandomText(rand(0, 80), $number);
+    $address_line = $road[rand(1, 25)] . rand(1, 150) . '巷' . rand(1, 150) . '號';
     $receiver = getRandomArray($lasts) . getRandomArray($firsts);
     $mobile_phone = '09' . getRandomText(8, $number);
     $type = '0';
