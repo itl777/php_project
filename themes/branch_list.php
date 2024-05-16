@@ -39,7 +39,8 @@ if ($totalRows) {
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<?php include '../products/components/navbar.php' ?>
+
 <style>
   .align-middle {
     display: flex;
@@ -59,14 +60,10 @@ if ($totalRows) {
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">分店列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">分店列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-              aria-selected="false">新增分店</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增分店</button>
           </li>
           <li class="ms-auto">
 
@@ -107,7 +104,7 @@ if ($totalRows) {
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r): ?>
+                <?php foreach ($rows as $r) : ?>
                   <tr>
                     <td>
                       <div class="align-middle"><?= $r['id'] ?></div>
@@ -131,8 +128,7 @@ if ($totalRows) {
                       <div class="align-middle"><?= $r['branch_status'] ?></div>
                     </td>
                     <td>
-                      <div class="align-middle"><a href="branch_reservation_details.php?id=<?= $r['id'] ?>"><i
-                            class="fa-solid fa-user-check"> 預約</i></a></div>
+                      <div class="align-middle"><a href="branch_reservation_details.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-user-check"> 預約</i></a></div>
                     </td>
                     <td>
                       <div>
@@ -143,8 +139,7 @@ if ($totalRows) {
                     </td>
                     <td>
                       <div>
-                        <a class="btn btn-danger" href="branch_delete.php?id=<?= $r['id'] ?>"
-                          onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                        <a class="btn btn-danger" href="branch_delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
                           <i class="fa-solid fa-trash"></i> 刪除
                         </a>
                       </div>
@@ -164,7 +159,7 @@ if ($totalRows) {
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++): ?>
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
                     <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                       <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                     </li>
@@ -193,7 +188,7 @@ if ($totalRows) {
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
-  document.getElementById('searchForm').addEventListener('submit', function (event) {
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault(); // 阻止表單提交
 
     var formData = new FormData(this);

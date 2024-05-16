@@ -3,7 +3,7 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-if ($_SERVER['REQUEST_URI'] !== '/ispanproject/index/index_.php') {
+if ($_SERVER['REQUEST_URI'] !== '/iSpanproject/index/index_.php') {
   if (!isset($_SESSION['admin'])) {
     header('Location: ../index/index_.php');
     exit;
