@@ -1,5 +1,5 @@
 <!-- 導覽列 -->
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark sticky-top">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="../index/index_.php">密室逃脫</a>
     <!-- Sidebar Toggle-->
@@ -26,8 +26,9 @@
         </li>
     </ul>
 </nav>
-<div id="layoutSidenav" class="min-vh-100">
-    <div id="layoutSidenav_nav">
+
+<div id="layoutSidenav" class=" z-index-1" style="height: calc(100vh - 56px);">
+    <div id="layoutSidenav_nav" class="" >
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
@@ -76,6 +77,7 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-ghost"></i></i></div>
                         揪團系統
                     </a>
+
                 </div>
             </div>
 
