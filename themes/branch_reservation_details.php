@@ -106,7 +106,7 @@ $rows = $rows->fetchAll();
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table id="themeListTable" class="table table-striped">
+            <table id="themeListTable" class="table table-striped table-hover">
               <thead>
                 <tr id="themeListTableHead">
                   <th scope="col">#</th>
