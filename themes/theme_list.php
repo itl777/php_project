@@ -40,6 +40,16 @@ if ($totalRows) {
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<style>
+  .cell-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    /* 使內容垂直置中 */
+    margin-top: 5px;
+  }
+</style>
+
 
 <div class="container-fluid p-5">
   <!-- 分頁膠囊   -->
@@ -50,10 +60,14 @@ if ($totalRows) {
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">主題列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+              aria-selected="true">主題列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增主題</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+              aria-selected="false">新增主題</button>
           </li>
           <li class="ms-auto">
 
@@ -78,7 +92,7 @@ if ($totalRows) {
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table id="themeListTable" class="table table-striped">
+            <table id="themeListTable" class="table table-striped table-hover">
               <thead>
                 <tr id="themeListTableHead">
                   <th scope="col">#</th>
@@ -94,31 +108,55 @@ if ($totalRows) {
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r) : ?>
+                <?php foreach ($rows as $r): ?>
                   <tr>
-                    <td><?= $r['theme_id'] ?></td>
-                    <td><?= $r['theme_name'] ?></td>
-                    <td><?= $r['difficulty'] ?></td>
-                    <td><?= $r['suitable_players'] ?></td>
-                    <td><?= $r['theme_time'] ?></td>
-                    <td><?= $r['start_date'] ?></td>
-                    <td><?= $r['end_date'] ?></td>
                     <td>
-                      <a class="btn btn-dark" href="theme_content.php?theme_id=<?= $r['theme_id'] ?>">
-                        <i class="fa-solid fa-file-lines"> 檢視</i>
-                      </a>
+                      <div class="cell-content"><?= $r['theme_id'] ?></div>
                     </td>
                     <td>
-                      <a class="btn btn-primary" href="theme_edit.php?theme_id=<?= $r['theme_id'] ?>">
-                        <i class="fa-solid fa-pen-to-square"> 編輯</i>
-                      </a>
+                      <div class="cell-content"><?= $r['theme_name'] ?></div>
                     </td>
-                    <td><a class="btn btn-danger" href="theme_delete.php?theme_id=<?= $r['theme_id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['theme_id'] ?>的資料')">
-                        <i class="fa-solid fa-trash text-white"> 刪除</i>
-                      </a></td>
+                    <td>
+                      <div class="cell-content"><?= $r['difficulty'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['suitable_players'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['theme_time'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['start_date'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['end_date'] ?></div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-dark" href="theme_content.php?theme_id=<?= $r['theme_id'] ?>">
+                          <i class="fa-solid fa-file-lines"> 檢視</i>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-primary" href="theme_edit.php?theme_id=<?= $r['theme_id'] ?>">
+                          <i class="fa-solid fa-pen-to-square"> 編輯</i>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-danger" href="theme_delete.php?theme_id=<?= $r['theme_id'] ?>"
+                          onclick="return confirm('是否要刪除編號為<?= $r['theme_id'] ?>的資料')">
+                          <i class="fa-solid fa-trash text-white"> 刪除</i>
+                        </a>
+                      </div>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
+
             </table>
             <!-- 分頁按鈕 -->
             <div class="col-12 d-flex justify-content-end mt-5">
@@ -130,7 +168,7 @@ if ($totalRows) {
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++): ?>
                     <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                       <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                     </li>
@@ -158,7 +196,7 @@ if ($totalRows) {
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
-  document.getElementById('searchForm').addEventListener('submit', function(event) {
+  document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault(); // 阻止表單提交
 
     var formData = new FormData(this);

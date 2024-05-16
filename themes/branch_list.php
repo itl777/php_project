@@ -40,6 +40,15 @@ if ($totalRows) {
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<style>
+  .align-middle {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-top: 10px;
+    /* 這個是為了讓內容在垂直方向上居中對齊 */
+  }
+</style>
 
 
 <div class="container-fluid p-5">
@@ -82,7 +91,7 @@ if ($totalRows) {
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table id="branchListTable" class="table table-striped">
+            <table id="branchListTable" class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -92,7 +101,7 @@ if ($totalRows) {
                   <th scope="col">營業時間</th>
                   <th scope="col">結束時間</th>
                   <th scope="col">分店狀態</th>
-                  <th scope="col"><i class="fa-solid fa-user-check"> 預約</i></th>
+                  <th scope="col"><i class="fa-solid fa-user-check"> 預約清單</i></th>
                   <th scope="col"><i class="fa-solid fa-pen-to-square"> 編輯</i></th>
                   <th scope="col"><i class="fa-solid fa-trash"></i></th>
                 </tr>
@@ -100,27 +109,50 @@ if ($totalRows) {
               <tbody>
                 <?php foreach ($rows as $r): ?>
                   <tr>
-                    <td><?= $r['id'] ?></td>
-                    <td><?= $r['branch_name'] ?></td>
-                    <td><?= htmlentities($r['branch_address']) ?></td>
-                    <td><?= $r['branch_phone'] ?></td>
-                    <td><?= $r['open_time'] ?></td>
-                    <td><?= $r['close_time'] ?></td>
-                    <td><?= $r['branch_status'] ?></td>
-                    <td><a href="branch_reservation_details.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-user-check"> 預約</i></a></td>
                     <td>
-                      <a class="btn btn-primary" href="branch_edit.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-pen-to-square"> 編輯</i>
-                      </a>
+                      <div class="align-middle"><?= $r['id'] ?></div>
                     </td>
-                    <td><a class="btn btn-danger" href="branch_delete.php?id=<?= $r['id'] ?>"
-                        onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
-                        <i class="fa-solid fa-trash"></i> 刪除
-                      </a></td>
+                    <td>
+                      <div class="align-middle"><?= $r['branch_name'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= htmlentities($r['branch_address']) ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= $r['branch_phone'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= $r['open_time'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= $r['close_time'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= $r['branch_status'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><a href="branch_reservation_details.php?id=<?= $r['id'] ?>"><i
+                            class="fa-solid fa-user-check"> 預約</i></a></div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-primary" href="branch_edit.php?id=<?= $r['id'] ?>">
+                          <i class="fa-solid fa-pen-to-square"> 編輯</i>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-danger" href="branch_delete.php?id=<?= $r['id'] ?>"
+                          onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                          <i class="fa-solid fa-trash"></i> 刪除
+                        </a>
+                      </div>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
+
             </table>
             <!-- 分頁按鈕 -->
             <div class="col-12 d-flex justify-content-end mt-5">
