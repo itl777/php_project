@@ -4,7 +4,7 @@ $title = "修改團隊資料";
 
 $team_id = isset($_GET['team_id']) ? intval($_GET['team_id']) : 0;
 if ($team_id < 1) {
-  header('Location: /../teams.php');
+  header('Location: teams.php');
   exit;
 }
 
@@ -15,7 +15,7 @@ $sql = "SELECT * FROM teams
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
-  header('Location: /../teams.php');
+  header('Location: teams.php');
   exit;
 }
 $sql2 = "SELECT * FROM teams_status";
@@ -35,6 +35,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
+<?php include __DIR__ . '/../parts/login_api.php' ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 <style>
@@ -60,7 +61,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="mb-3">
               <label for="leader_id" class="form-label">團長</label>
-              <input type="int" class="form-control" id="leader_id" name="leader_id" readonly value="<?= $row['leader_id'], ' - ', $row['nick_name'] ?>">
+              <input type="int" class="form-control" id="leader_id" name="leader_id" disabled value="<?= $row['leader_id'], ' - ', $row['nick_name'] ?>">
               <div class="form-text"></div>
             </div>
             <div class="mb-3">

@@ -3,6 +3,7 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = "新增團隊";
 $pageName = 'team_add';
 ?>
+<?php include __DIR__ . '/../parts/api-check-user.php' ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 <style>

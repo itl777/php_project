@@ -49,8 +49,6 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <div class="form-text"></div>
             </div>
 
-
-
             <div class="mb-4 col-5">
               <label for="branch_phone" class="form-label fw-bold">電話</label>
               <input type="text" class="form-control" id="branch_phone" name="branch_phone" placeholder="請輸入電話">
@@ -158,10 +156,6 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // TODO: 欄位資料檢查
 
     let isPass = true; // 表單有沒有通過檢查
-    // 清除主题选择的错误信息
-    // const themeError = document.querySelector('.theme-error');
-    // themeError.innerText = '';
-
 
     if (nameField.value.trim() === '') {
       isPass = false;
@@ -169,7 +163,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       nameField.nextElementSibling.innerText = '請填寫分店名稱';
     }
 
-    // 检查勾选框是否有选中主题
+    // 檢查有沒有勾選
     const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
     if (selectedThemes.length === 0) {
       isPass = false;
@@ -177,7 +171,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       themeCheckboxes.forEach(checkbox => {
         checkbox.nextElementSibling.style.color = 'tomato';
       });
-      themeError.innerText = '请至少选择一个主题';
+      themeError.innerText = '請至少選擇一個主題';
     } else {
       const themeCheckboxes = document.querySelectorAll('input[name="theme_id[]"]');
       themeCheckboxes.forEach(checkbox => {
@@ -215,11 +209,9 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       addressField.nextElementSibling.innerText = '請填寫地址';
     }
 
-
-
     // 有通過檢查, 才要送表單
     if (isPass) {
-      const fd = new FormData(document.form1); // 沒有外觀的表單物件
+      const fd = new FormData(document.form1);
 
       fetch('branch_add_api.php', {
         method: 'POST',
@@ -228,12 +220,16 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .then(data => {
           console.log(data);
           if (data.success) {
-            myModal.show();
-          } else { }
+            myModal.show(); // 顯示成功的模態框
+          } else {
+            // 顯示失敗的模態框
+          }
         })
         .catch(ex => console.log(ex))
+
     }
   };
-  const myModal = new bootstrap.Modal('#staticBackdrop')
+  const myModal = new bootstrap.Modal('#staticBackdrop');
+
 </script>
 <?php include __DIR__ . '/../parts/html-foot.php' ?>

@@ -11,27 +11,21 @@ $output = [
 ];
 
 // TODO: 欄位資料檢查
-if (!isset($_POST['chat_by'])) {
+if (!isset($_POST['join_user_id'])) {
   echo json_encode($output);
   exit; # 結束 php 程式
 }
 
-$sql = "INSERT INTO teams_chats(
-  `team_id`, `chat_by`, `chat_text`, `create_at`)
+$sql = "INSERT INTO teams_members(
+  `join_team_id`, `join_user_id`, `create_at`)
   VALUES
-  (?, ?, ?,NOW())";
+  (?, ?,NOW())";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-  $_POST['team_id'],
-  $_POST['chat_by'],
-  $_POST['chat_text']
+  $_POST['join_team_id'],
+  $_POST['join_user_id']
 ]);
 
-
-$output['success'] = !!$stmt->rowCount(); # 新增了幾筆
-$output['chat_id'] = $pdo->lastInsertId(); # 取得最近的新增資料的primary key
-
-// echo json_encode($output);
-
+$output['success'] = !!$stmt->rowCount();
 echo json_encode($output);

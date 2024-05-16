@@ -1,63 +1,64 @@
 <?php
 
-$title = '分店總覽';
-$pageName = 'branch_list';
-?>
-<?php
+$title = '預約清單頁';
+$pageName = 'branch_reservation_details';
 
 require __DIR__ . '/../config/pdo-connect.php';
 
-$perPage = 20; # 每一頁最多有幾筆
+$perPage = 20; // 每一頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
   header("Location:?page=1");
   exit;
 }
 
-$t_sql = "SELECT COUNT(id) FROM `branches`";
-
-# 總筆數
+// 獲取總筆數
+$t_sql = "SELECT COUNT(id) FROM `reservations` WHERE branch_id = 1"; // 只查詢分店 ID 為 1 的預約訂單
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
-$totalPages = '';
-$rows = [];
-if ($totalRows) {
-  # 總頁數
-  $totalPages = ceil($totalRows / $perPage);
-  if ($page > $totalPages) {
-    header("Location:?page={$totalPages}");
-    exit; // 結束這支程式
-  }
-  # 取得分頁資料
-  $sql = sprintf(
-    "SELECT * FROM `branches` ORDER BY id LIMIT %s, %s",
-    ($page - 1) * $perPage,
-    $perPage
-  );
-  $rows = $pdo->query($sql)->fetchAll();
-}
-?>
+// 計算總頁數
+$totalPages = ceil($totalRows / $perPage);
 
+// 如果請求的頁數大於總頁數，將用戶重新導向到最後一頁
+if ($page > $totalPages) {
+  header("Location:?page={$totalPages}");
+  exit; // 結束程式
+}
+
+// 取得分頁資料
+$sql = sprintf(
+  "SELECT r.*, u.name AS user_name, u.mobile_phone, u.account, t.theme_name, b.branch_name
+   FROM `reservations` AS r 
+   LEFT JOIN `users` AS u ON r.user_id = u.user_id 
+   LEFT JOIN `themes` AS t ON r.theme_id = t.theme_id
+   LEFT JOIN `branches` AS b ON r.branch_id = b.id
+   WHERE r.branch_id = 1  -- 只查詢分店 ID 為 1 的預約訂單
+   ORDER BY r.id 
+   LIMIT %s, %s",
+  ($page - 1) * $perPage,
+  $perPage
+);
+$rows = $pdo->query($sql)->fetchAll();
+?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
-
 <div class="container-fluid p-5">
-  <div class="container-fluid ">
+  <!-- 分頁膠囊   -->
+  <div class="container-fluid px-3">
     <div class="row">
       <!-- 右邊表格 -->
-      <div class="col-12">
+      <div class="col">
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
-          <li class="nav-item me-3" role="presentation">
+          <li class="nav-item me-4" role="presentation">
+            <a href="branch_list.php"><button type="button" class="btn btn-outline-primary rounded-pill"><i
+                  class="fa-solid fa-arrow-left"></i> 回分店</button></a>
+          </li>
+          <li class="nav-item me-5" role="presentation">
             <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
               data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">分店列表</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-              aria-selected="false">新增分店</button>
+              aria-selected="true">預約列表</button>
           </li>
           <li class="ms-auto">
 
@@ -77,22 +78,23 @@ if ($totalRows) {
           </li>
         </ul>
 
+
+
         <!-- 清單 -->
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table id="branchListTable" class="table table-striped">
+            <table id="themeListTable" class="table table-striped">
               <thead>
-                <tr>
+                <tr id="themeListTableHead">
                   <th scope="col">#</th>
-                  <th scope="col">分店名</th>
-                  <th scope="col">地址</th>
+                  <th scope="col">姓名</th>
                   <th scope="col">電話</th>
-                  <th scope="col">營業時間</th>
-                  <th scope="col">結束時間</th>
-                  <th scope="col">分店狀態</th>
-                  <th scope="col"><i class="fa-solid fa-user-check"> 預約</i></th>
+                  <th scope="col">信箱</th>
+                  <th scope="col">主題名稱</th>
+                  <th scope="col">人數</th>
+                  <th scope="col">預約時間</th>
                   <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
                   <th scope="col"><i class="fa-solid fa-trash"></i></th>
                 </tr>
@@ -101,30 +103,28 @@ if ($totalRows) {
                 <?php foreach ($rows as $r): ?>
                   <tr>
                     <td><?= $r['id'] ?></td>
-                    <td><?= $r['branch_name'] ?></td>
-                    <td><?= htmlentities($r['branch_address']) ?></td>
-                    <td><?= $r['branch_phone'] ?></td>
-                    <td><?= $r['open_time'] ?></td>
-                    <td><?= $r['close_time'] ?></td>
-                    <td><?= $r['branch_status'] ?></td>
+                    <td><?= $r['user_name'] ?></td>
+                    <td><?= $r['mobile_phone'] ?></td>
+                    <td><?= $r['account'] ?></td> <!-- 這裡是 users 表中的信箱資料嗎？如果是，應該改成對應的欄位 -->
+                    <td><?= $r['theme_name'] ?></td>
+                    <td><?= $r['participants'] ?></td>
+                    <td><?= $r['re_datetime'] ?></td>
                     <td>
-                      <a href="branch_reservation_details.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-user-check"> 預約</i></i>
-                      </a>
-                    </td>
-                    <td>
-                      <a href="branch_edit.php?id=<?= $r['id'] ?>">
+                      <a href="reservation_edit.php?id=<?= $r['id'] ?>">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
                     </td>
-                    <td><a href="branch_delete.php?id=<?= $r['id'] ?>"
+                    <td><a href="reservation-delete.php?id=<?= $r['id'] ?>"
                         onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
                         <i class="fa-solid fa-trash text-danger"></i>
                       </a></td>
                   </tr>
                 <?php endforeach; ?>
+
               </tbody>
             </table>
+
+
             <!-- 分頁按鈕 -->
             <div class="col-12 d-flex justify-content-end mt-5">
               <nav aria-label="Page navigation example m-auto">
@@ -162,7 +162,7 @@ if ($totalRows) {
           </div>
           <!-- 新增主題 -->
           <div class="tab-pane fade mb-5" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <?php include __DIR__ . '/branch_add.php' ?>
+            <?php include __DIR__ . '/theme_add.php' ?>
           </div>
         </div>
       </div>
@@ -170,46 +170,39 @@ if ($totalRows) {
   </div>
 </div>
 
-
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
-  document.getElementById('searchForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // 阻止表单提交
+  // document.getElementById('searchForm').addEventListener('submit', function (event) {
+  //   event.preventDefault(); // 阻止表單提交
 
-    var formData = new FormData(this);
-    var queryString = new URLSearchParams(formData).toString(); // 将表单数据转换为 URL 查询字符串
+  //   var formData = new FormData(this);
+  //   var queryString = new URLSearchParams(formData).toString(); // 將表單數據轉換為 URL 查詢字符串
 
-    fetch('branch_list_search.php?' + queryString) // 将查询字符串附加到 URL 中
-      .then(response => response.json())
-      .then(data => {
-        var tableBody = document.createElement('tbody');
-        data.forEach(branch => {
-          var row = document.createElement('tr');
-          row.innerHTML = `
-          <td>${branch.id}</td>
-          <td>${branch.branch_name}</td>
-          <td>${branch.branch_address}</td>
-          <td>${branch.branch_phone}</td>
-          <td>${branch.open_time}</td>
-          <td>${branch.close_time}</td>
-          <td>${branch.branch_status}</td>
-          <td><a href="branch_content.php?id=${branch.id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
-          <td><a href="branch_edit.php?id=${branch.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-          <td><a href="branch_delete.php?id=${branch.id}" onclick="return confirm('是否要刪除編號為${branch.id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
-        `;
-          tableBody.appendChild(row);
-        });
-        // 更新表格内容
-        var branchListTable = document.getElementById('branchListTable');
-        branchListTable.innerHTML = '';
-        branchListTable.appendChild(tableBody);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  });
-
+  //   fetch('theme_list_search.php?' + queryString) // 將查詢字符串附加到 URL 中
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       var tableBody = document.createElement('tbody');
+  //       data.forEach(theme => {
+  //         var row = document.createElement('tr');
+  //         row.innerHTML = `
+  //       <td>${theme.theme_id}</td>
+  //       <td>${theme.theme_name}</td>
+  //       <td>${theme.difficulty}</td>
+  //       <td>${theme.suitable_players}</td>
+  //       <td>${theme.theme_time}</td>
+  //       <td>${theme.start_date}</td>
+  //       <td>${theme.end_date}</td>
+  //       <td><a href="theme_content.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
+  //       <td><a href="theme_edit.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+  //       <td><a href="theme_delete.php?theme_id=${theme.theme_id}" onclick="return confirm('是否要刪除編號為${theme.theme_id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
+  //     `;
+  //         tableBody.appendChild(row);
+  //       });
+  //       document.getElementById('themeListTable').innerHTML = '';
+  //       document.getElementById('themeListTable').appendChild(tableBody)
+  //     });
+  // });
 </script>
 
 <?php include __DIR__ . '/../parts/html-foot.php' ?>

@@ -16,11 +16,13 @@ if (empty($row)) {
   exit;
 }
 
+
 $pageName = 'theme_add';
 ?>
 
+
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/navbar.php' ?>
+<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
 <style>
   form .mb-4 .form-text {
@@ -53,8 +55,8 @@ $pageName = 'theme_add';
             <div class="mb-4 col-5">
               <label for="theme_img" class="form-label">主題圖片</label>
               <input type="file" class="form-control" name="uploadFile[]" multiple="multiple" id="theme_img">
-              <?php if (!empty($row['uploaded_image'])): ?>
-                <img src="<?= $row['uploaded_image'] ?>" alt="Uploaded Image">
+              <?php if (!empty($row['theme_img'])): ?>
+                <img class="w-100 mt-2" src="imgs/<?= $row['theme_img'] ?>" alt="Uploaded Image">
               <?php endif; ?>
             </div>
 
