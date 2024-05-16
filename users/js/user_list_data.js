@@ -14,7 +14,7 @@ const userTable = function (data) {
 
   if (data !== undefined && data !== null && data !== "") {
     data.forEach((item) => {
-      userTable += `<tr onclick="editModalShow(${item["user_id"]})" class=" ${item["user_status"] === "0" ? 'table-secondary' : ""}">`;
+      userTable += `<tr onclick="editModalShow(${item["user_id"]})" class=" ${item["user_status"] === "0" ? 'bg-secondary bg-opacity-25' : ""}">`;
 
       userTable += `<td class="align-middle text-center" style="width: 50px;"><img src="images/${item["avatar"]}" class="rounded-circle" style="width: 40px;height: 40px;object-fit: cover;"></td>`;
       userTable += `<td class="align-middle text-center" style="width: 100px;">${item["user_id"]}</td>`;
@@ -31,7 +31,7 @@ const userTable = function (data) {
         </td>`;
       //原本的編輯按鈕，函式改加在整個tr上了
       // userTable += `<td class="align-middle"><button type="button" class="btn btn-warning" onclick="editModalShow(${item['user_id']})"><i class="bi bi-pencil-square"></i></button></td>`;
-      userTable += `<tr>`;
+      userTable += `</tr>`;
     });
   }
   $("#userList tbody").empty();
@@ -44,7 +44,7 @@ const userTablePagination = function (page, totalPages) {
   // 值>totalPages 就加 disabled class
   let userTablePagination = "";
 
-  userTablePagination += `<tr><td colspan=6>
+  userTablePagination += `<tr class="border-0"><td colspan=6 class="border-0" style="border-radius: 0  0  0.5rem 0.5rem;">
       <nav class="d-flex justify-content-end">
       <ul class="pagination m-0">
         <li class="page-item ${page <= 1 ? "disabled" : ""}">

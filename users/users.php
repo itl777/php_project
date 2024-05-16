@@ -28,7 +28,7 @@ header("Access-Control-Allow-Origin: *");
             <input type="text" name="nick_name" class="form-control mx-1" placeholder="暱稱">
             <input type="text" name="user_id" class="form-control mx-1" placeholder="會員編號">
             <input type="text" name="mobile_phone" class="form-control mx-1" placeholder="電話號碼">
-            <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+            <button class="btn btn-outline-dark" type="button"><i class="bi bi-search"></i></button>
           </div>
         </div>
 
@@ -37,7 +37,7 @@ header("Access-Control-Allow-Origin: *");
 
           <div class="col-4 g-3 d-flex gap-3 ms-1">
             <button type="button" class="btn btn-warning" onclick="addModalShow()">新增</button>
-            <button type="button" class="btn btn-primary" onclick="quickAdd(pageNow)">快速新增</button>
+            <button type="button" class="btn btn-dark" onclick="quickAdd(pageNow)">快速新增</button>
           </div>
 
 
@@ -78,13 +78,13 @@ header("Access-Control-Allow-Origin: *");
         <table class="table table-bordered table-hover" id="userList">
           <thead>
             <!-- column start -->
-            <tr class="table-dark">
-              <th class="text-center"><i class="bi bi-image"></i></th>
+            <tr class="table-dark border-0">
+              <th class="text-center border-0" style="border-radius: 0.5rem 0 0 0;"><i class="bi bi-image"></i></th>
               <th class="text-center">會員編號</th>
               <th class="text-center">姓名</th>
               <th class="text-center">性別</th>
               <th class="ps-3">帳號</th>
-              <th class="text-center">黑名單</th>
+              <th class="text-center" style="border-radius: 0 0.5rem 0 0;">黑名單</th>
             </tr>
             <!-- column end -->
           </thead>
