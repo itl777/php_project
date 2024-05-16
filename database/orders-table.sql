@@ -92,7 +92,7 @@ INSERT INTO `product_warehousing`(`product_id`, `quantity`, `created_at`, `last_
 (20, 40, NOW(), NOW()), (20, 85, NOW(), NOW());
 
 
-INSERT INTO `order_status`(`order_status_name`) VALUES
+INSERT INTO `order_status`(`order_status_name`, `out_of_warehouse`) VALUES
 ('待付款', 1),
 ('付款失敗', 0),
 ('已付款', 1),

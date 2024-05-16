@@ -5,9 +5,9 @@
 
 
 
-<div class="container mt-5 py-2">
+<div class="container mt-3 py-2">
     <div class="col-10 col-lg-6">
-        <h2>優惠券列表</h2>
+        <h2 class="p-3 mt-3">優惠券列表</h2>
     </div>
     <div class="row">
 

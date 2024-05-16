@@ -79,7 +79,7 @@ VALUES
 (NULL, '中秋折扣', '0.8', '1', '一般會員', '500', '2024-05-13 01:24:14', '2024-05-13 01:24:14', '員3', '2024-05-13 01:24:14');
 
 
--- order
+-- order-------------------------------------------------------------------------------
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `customer_order_id` varchar(255),
@@ -221,7 +221,7 @@ CREATE TABLE `teams` (
   `last_modified_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- teams data
+-- teams data----------------------------------------------------------------
 INSERT INTO `teams` (`team_id`, `team_title`, `leader_id`, `team_limit`, `tour`, `create_at`, `last_modified_at`) VALUES
 (1, '第一團', 2, 1, 3, '2024-05-10 14:47:18', '2024-05-10 14:47:18'),
 (2, '第二團', 5, 4, 3, '2024-05-10 14:47:18', '2024-05-13 09:12:08'),
@@ -293,7 +293,7 @@ INSERT INTO `teams_status` (`status_id`, `status_text`) VALUES
 (2, '準備成團'),
 (3, '已成團');
 
--- b2b_user
+-- b2b_user---------------------------------------------------
 INSERT INTO web_page (page_name)
 VALUES
 ('users'),
@@ -316,7 +316,7 @@ VALUES
 
 INSERT INTO b2b_user (account,password,b2b_name,roles_id,b2b_user_status,created_at,last_modified_at)
 VALUES('admin','$2y$10$VIEau.JS64xoeldwBXyxiuFC2Q1UF28zTAE9.G2V0H4Udyumit99.','管理員',1,1,NOW(),NOW());
--- users
+-- users-------------------------------------------------------------------------------
 CREATE TABLE city (
 id INT AUTO_INCREMENT PRIMARY KEY,
 city_name VARCHAR(20) NOT NULL);
@@ -806,10 +806,9 @@ FOREIGN KEY (user_id) REFERENCES users(user_id),
 FOREIGN KEY (district_id) REFERENCES district(id));
 
 
--- 行程
+-- 行程-----------------------------------------------------------------------------------
 
-create database themes_database;
-use themes_database;
+
 
 -- Themes table
 CREATE TABLE themes (
@@ -844,7 +843,7 @@ VALUES
 ('星際探險', '09:00:00', '10:30:00', 90, 60, '在太空船上進行一次星際探險，找到失踪的船員和他們的秘密。', 5, '4~6人', 'space_exploration.jpg', 600, '2025-01-01', '2026-01-01'),
 ('失落的實驗室', '09:00:00', '10:30:00', 90, 30, '在一個神秘的實驗室中尋找脫逃的方法，記住，時間是有限的！', 4, '5~8人', 'ultimate_challenge.jpg', 600, '2025-02-01', '2026-02-01');
 
--- Branches table
+-- Branches table--------------------------------------------------------------
 CREATE TABLE branches (
     id INT AUTO_INCREMENT PRIMARY KEY,
     branch_name VARCHAR(20),

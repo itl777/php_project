@@ -1,13 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.title = "訂單管理";
+  
 
   // 取得 url ?page=
   const currentPageParam = new URLSearchParams(window.location.search).get("page") || 1;
   const currentPage = parseInt(currentPageParam) || 1;
   fetchOrders(currentPage);
 
-  function fetchOrders(page) {
-    fetch(`api/order-list-api.php?page=${page}`) // 加載指定頁數的資料
+
+  document.getElementById('executeSearch').addEventListener('click', function() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const memberSearch = document.getElementById('memberSearch').value;
+    const productSearch = document.getElementById('productSearch').value;
+    const orderStatusElement = document.getElementById('orderStatus'); // 獲取 select 元素
+    const orderStatus = orderStatusElement.value;
+    fetchOrders(1, startDate, endDate, memberSearch, productSearch, orderStatus !== '請選擇' ? orderStatus : '');
+  });
+
+  document.getElementById('resetSearch').addEventListener('click', function() {
+    document.getElementById('startDate').value = '';
+    document.getElementById('endDate').value = '';
+    document.getElementById('memberSearch').value = '';
+    document.getElementById('productSearch').value = '';
+    document.getElementById('orderStatus').selectedIndex = 0;
+    fetchOrders(1); // 重置後重新載入資料
+  });
+
+
+  function fetchOrders(page, startDate = '', endDate = '', memberSearch = '', productSearch = '', orderStatus = '') {
+    const url = `api/order-list-api.php?page=${page}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&memberSearch=${encodeURIComponent(memberSearch)}&productSearch=${encodeURIComponent(productSearch)}&orderStatus=${encodeURIComponent(orderStatus)}`;
+    fetch(url)
       .then((response) => response.json())
       .then((result) => {
         // 解構賦值 Destructuring Assignment
@@ -20,28 +43,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // 將新分頁的資料取出來
         data.forEach((order) => {
-          const row = `<tr>
-            <td>${order.order_id}</td>
-            <td>${order.order_date}</td>
-            <td>${order.member_name}</td>
-            <td>${order.payment_method}</td>
-            <td>${
-              order.city_name + order.district_name + order.order_address
-            }</td>
-            <td>${order.recipient_name}</td>
-            <td>${order.total_amount}</td>
-            <td>${order.order_status_name}</td>
-            <td>
-            <a href="order-edit.php?id=${
-              order.order_id
-            }" class="btn btn-primary me-2"><i class="fa-solid fa-pen-to-square"></i></a>
-            <a onclick="deleteOrder(${
-              order.order_id
-            })" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-            </td>
+          const row = `
+            <tr>
+              <td>${order.order_id}</td>
+              <td>${order.order_date}</td>
+              <td>${order.member_name}</td>
+              <td>${order.payment_method}</td>
+              <td>${order.full_address}</td>
+              <td>${order.recipient_name}</td>
+              <td>${order.total_amount}</td>
+              <td>${order.order_status_name}</td>
+              <td>
+                <a onclick="deleteOrder(${order.order_id})" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                <a href="order-edit.php?id=${order.order_id}" class="btn btn-primary ms-4"><i class="fa-solid fa-pen-to-square"></i></a>
+                <button onclick="toggleDetails(${order.order_id})" class="btn btn-link ms-2"><i class="fa-solid fa-caret-down"></i></button>
+              </td>
             </tr>`;
-          tableBody.innerHTML += row;
-        });
+          const detailsRow = `
+            <tr id="details_${order.order_id}" class="order-details" style="display: none;">
+              <td colspan="9">${buildDetailsTable(order.details)}</td>
+            </tr>`;
+          tableBody.innerHTML += row + detailsRow;
+      });
+      
+        
         updatePagination(page, totalPages);
         changeUrl(totalPages);
       })
@@ -186,4 +211,37 @@ function showToastFromStorage() {
     showToast(message, isError);
     sessionStorage.removeItem("toastMessage");
   }
+}
+
+
+function toggleDetails(orderId) {
+  const detailsRow = document.getElementById('details_' + orderId);
+  detailsRow.style.display = detailsRow.style.display === 'none' ? '' : 'none';
+}
+
+function buildDetailsTable(details) {
+  let tableContent = `
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>商品編號</th>
+          <th>商品名稱</th>
+          <th>商品單價</th>
+          <th>商品庫存</th>
+          <th>商品總金額</th>
+        </tr>
+      </thead>
+    <tbody>`;
+  details.forEach(detail => {
+      const totalPrice = detail.order_unit_price * detail.order_quantity;
+      tableContent += `<tr>
+          <td>${detail.order_product_id}</td>
+          <td>${detail.product_name}</td>
+          <td>${(parseInt(detail.order_unit_price))}</td>
+          <td>${detail.order_quantity}</td>
+          <td>${(parseInt(totalPrice))}</td>
+      </tr>`;
+  });
+  tableContent += '</tbody></table>';
+  return tableContent;
 }
