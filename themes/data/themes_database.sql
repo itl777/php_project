@@ -1,26 +1,27 @@
 create database themes_database;
 use themes_database;
 
-CREATE TABLE `themes` (
-  `theme_id` int(11) NOT NULL,
-  `theme_name` varchar(20) DEFAULT NULL,
-  `start_time` varchar(10) DEFAULT NULL,
-  `end_time` varchar(10) DEFAULT NULL,
-  `theme_time` varchar(10) DEFAULT NULL,
-  `intervals` varchar(10) DEFAULT NULL,
-  `theme_desc` varchar(250) DEFAULT NULL,
-  `difficulty` int(11) DEFAULT NULL,
-  `suitable_players` varchar(10) DEFAULT NULL,
-  `theme_img` varchar(255) DEFAULT NULL,
-  `price` varchar(10) DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `last_modified_by` varchar(255) DEFAULT NULL,
-  `last_modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `themes` (`theme_id`, `theme_name`, `start_time`, `end_time`, `theme_time`, `intervals`, `theme_desc`, `difficulty`, `suitable_players`, `theme_img`, `price`, `start_date`, `end_date`, `created_at`, `last_modified_by`, `last_modified_at`) VALUES
+CREATE TABLE themes (
+  theme_id INT AUTO_INCREMENT PRIMARY KEY ,
+  theme_name varchar(20) DEFAULT NULL,
+  start_time varchar(10) DEFAULT NULL,
+  end_time varchar(10) DEFAULT NULL,
+  theme_time varchar(10) DEFAULT NULL,
+  intervals varchar(10) DEFAULT NULL,
+  theme_desc varchar(250) DEFAULT NULL,
+  difficulty int DEFAULT NULL,
+  suitable_players varchar(10) DEFAULT NULL,
+  theme_img varchar(255) DEFAULT NULL,
+  price varchar(10) DEFAULT NULL,
+  start_date date DEFAULT NULL,
+  end_date date DEFAULT NULL,
+  created_at timestamp NOT NULL DEFAULT current_timestamp(),
+  last_modified_by varchar(255) DEFAULT NULL,
+  last_modified_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ;
+
+INSERT INTO themes (theme_id, theme_name, start_time, end_time, theme_time, intervals, theme_desc, difficulty, suitable_players, theme_img, price, start_date, end_date, created_at, last_modified_by, last_modified_at) VALUES
 (1, '尋找失落的寶藏', '09:00:00', '10:30:00', '90', '30', '在古老的山洞中尋找失落的寶藏，需要解開謎題才能找到寶藏。', 3, '3~5人', '1.jpg', '500', '2024-05-01', '2025-05-01', '2024-05-15 14:19:56', NULL, '2024-05-15 14:38:13'),
 (2, '廢棄的實驗室', '09:00:00', '10:30:00', '90', '30', '在一個被遺棄的實驗室中尋找失踪的科學家和他的實驗。', 4, '4~6人', '7.jpg', '600', '2024-06-01', '2025-06-01', '2024-05-15 14:19:56', NULL, '2024-05-15 14:33:01'),
 (3, '進擊的巨人', '09:00:00', '10:00:00', '60', '30', '面對巨型巨人的進擊，找到一個逃脫的方法。', 5, '3~5人', '12.jpg', '700', '2024-07-01', '2025-07-01', '2024-05-15 14:19:56', NULL, '2024-05-15 14:33:23'),
@@ -33,32 +34,31 @@ INSERT INTO `themes` (`theme_id`, `theme_name`, `start_time`, `end_time`, `theme
 (10, '神秘的研究所', '09:00:00', '10:30:00', '90', '30', '在一個神秘的實驗室中尋找脫逃的方法，記住，時間是有限的！', 4, '5~8人', '12.jpg', '600', '2025-02-01', '2026-02-01', '2024-05-15 14:19:56', NULL, '2024-05-15 16:16:55');
 
 
-CREATE TABLE `branches` (
-  `id` int(11) NOT NULL,
-  `branch_name` varchar(20) DEFAULT NULL,
-  `branch_address` varchar(50) DEFAULT NULL,
-  `branch_phone` varchar(20) DEFAULT NULL,
-  `open_time` varchar(20) DEFAULT NULL,
-  `close_time` varchar(20) DEFAULT NULL,
-  `branch_status` varchar(20) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `last_modified_by` varchar(255) DEFAULT NULL,
-  `last_modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE branches (
+  id INT AUTO_INCREMENT PRIMARY KEY ,
+  branch_name varchar(20) DEFAULT NULL,
+  branch_address varchar(50) DEFAULT NULL,
+  branch_phone varchar(20) DEFAULT NULL,
+  open_time varchar(20) DEFAULT NULL,
+  close_time varchar(20) DEFAULT NULL,
+  branch_status varchar(20) DEFAULT NULL,
+  created_at timestamp NOT NULL DEFAULT current_timestamp(),
+  last_modified_by varchar(255) DEFAULT NULL,
+  last_modified_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ;
 
 
-INSERT INTO `branches` (`id`, `branch_name`, `branch_address`, `branch_phone`, `open_time`, `close_time`, `branch_status`, `created_at`, `last_modified_by`, `last_modified_at`) VALUES
+INSERT INTO branches (id, branch_name, branch_address, branch_phone, open_time, close_time, branch_status, created_at, last_modified_by, last_modified_at) VALUES
 (1, '塊陶阿-台北分店', '台北市大安區永恆街4號3樓', '02-12345678', '09:00:00', '21:00:00', '新開幕', '2024-05-15 14:19:56', 'Admin', '2024-05-15 21:58:35'),
 (2, '塊陶阿-台中分店', '台中市三民區一中街27號5樓', '04-23456789', '09:00:00', '21:00:00', '營業中', '2024-05-15 14:19:56', 'Admin', '2024-05-15 21:58:45'),
 (3, '塊陶阿-高雄分店', '高雄市鳳山區四維路50號2樓', '06-34567890', '09:00:00', '21:00:00', '營業中', '2024-05-15 14:19:56', 'Admin', '2024-05-15 21:59:02');
 
-CREATE TABLE `branch_themes` (
-  `id` int(11) NOT NULL,
-  `branch_id` int(11) DEFAULT NULL,
-  `theme_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE branch_themes (
+  id INT AUTO_INCREMENT PRIMARY KEY ,
+  branch_id int ,
+  theme_id int );
 
-INSERT INTO `branch_themes` (`id`, `branch_id`, `theme_id`) VALUES
+INSERT INTO branch_themes (id, branch_id, theme_id) VALUES
 (26, 1, 1),
 (27, 1, 3),
 (28, 1, 8),
@@ -72,17 +72,17 @@ INSERT INTO `branch_themes` (`id`, `branch_id`, `theme_id`) VALUES
 (36, 2, 9);
 
 
-CREATE TABLE `reservations` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `branch_id` int(11) DEFAULT NULL,
-  `theme_id` int(11) DEFAULT NULL,
-  `re_datetime` datetime DEFAULT NULL,
-  `participants` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE reservations (
+  id INT AUTO_INCREMENT PRIMARY KEY ,
+  user_id int,
+  branch_id int,
+  theme_id int,
+  re_datetime datetime,
+  participants int,
+  created_at timestamp NOT NULL DEFAULT current_timestamp()
+) ;
 
-INSERT INTO `reservations` (`id`, `user_id`, `branch_id`, `theme_id`, `re_datetime`, `participants`, `created_at`) VALUES
+INSERT INTO reservations (id, user_id, branch_id, theme_id, re_datetime, participants, created_at) VALUES
 (1, 1, 1, 1, '2024-05-11 09:00:00', 4, '2024-05-15 14:19:56'),
 (2, 21, 2, 2, '2024-05-12 09:30:00', 5, '2024-05-15 14:19:56'),
 (3, 33, 3, 3, '2024-05-13 10:00:00', 3, '2024-05-15 14:19:56'),
@@ -115,25 +115,24 @@ INSERT INTO `reservations` (`id`, `user_id`, `branch_id`, `theme_id`, `re_dateti
 
 
 
-CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
-  `account` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `nick_name` varchar(50) NOT NULL,
-  `gender` char(1) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
-  `mobile_phone` char(10) DEFAULT NULL,
-  `invoice_carrier_id` char(8) DEFAULT NULL,
-  `tax_id` char(8) DEFAULT NULL,
-  `avatar` varchar(100) DEFAULT NULL,
-  `note` varchar(200) DEFAULT NULL,
-  `user_status` char(1) DEFAULT NULL,
-  `blacklist` char(1) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_modified_at` datetime DEFAULT NULL,
-  `last_modified_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE users (
+user_id INT AUTO_INCREMENT PRIMARY KEY ,
+account VARCHAR(100) NOT NULL UNIQUE KEY  ,
+password VARCHAR(255) NOT NULL  ,
+name VARCHAR(20) NOT NULL  ,
+nick_name VARCHAR(50) NOT NULL  ,
+gender CHAR(1)   ,
+birthday DATE   ,
+mobile_phone CHAR(10)   ,
+invoice_carrier_id CHAR(8)   ,
+tax_id CHAR(8),
+avatar VARCHAR(100),
+note VARCHAR(200),
+user_status CHAR(1),
+blacklist CHAR(1),
+created_at DATETIME NOT NULL DEFAULT now()  ,
+last_modified_at DATETIME,
+last_modified_by INT);
 
 
 INSERT INTO `users` (`user_id`, `account`, `password`, `name`, `nick_name`, `gender`, `birthday`, `mobile_phone`, `invoice_carrier_id`, `tax_id`, `avatar`, `note`, `user_status`, `blacklist`, `created_at`, `last_modified_at`, `last_modified_by`) VALUES
