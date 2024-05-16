@@ -76,26 +76,16 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-ghost"></i></i></div>
                         揪團系統
                     </a>
-
-
-
-
-
                 </div>
             </div>
 
 
             <div class="sb-sidenav-footer">
-<<<<<<< HEAD
-                <div class="small">Logged in as:</div>
-=======
                 <?php if (isset($_SESSION['admin'])) : ?>
-                    <div class="small">Logged in as: <?= $_SESSION['admin']['nickname'] ?></div>
+                    <div class="small">登入者：<?= $_SESSION['admin']['nickname'] ?></div>
                 <?php else : ?>
-                    <div class="small">Logged in as: </div>
+                    <div class="small">登入者：</div>
                 <?php endif ?>
-                Start Bootstrap
->>>>>>> origin/it
             </div>
         </nav>
     </div>
