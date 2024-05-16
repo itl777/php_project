@@ -35,7 +35,6 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<?php include __DIR__ . '/../parts/login_api.php' ?>
 <?php include __DIR__ . '/../parts/html-head.php' ?>
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 <style>
@@ -142,6 +141,9 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include __DIR__ . './js/scripts.php' ?>
 <script>
+  
+  const team_title = document.form1.team_title;
+  const team_limit = document.form1.team_limit;
 
     /* get themes */
 fetch('./api-get-themes.php')
@@ -164,16 +166,17 @@ fetch('./api-get-themes.php')
   .catch(error => console.error('Error:', error));
 
 
+
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
-    nameField.style.border = '1px solid #CCCCCC';
-    nameField.nextElementSibling.innerText = '';
+    team_title.style.border = '1px solid #CCCCCC';
+    team_title.nextElementSibling.innerText = '';
     team_limit.style.border = '1px solid #CCCCCC';
     team_limit.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
     let isPass = true;  // 表單有沒有通過檢查
-    if (nameField.value.length < 2) {
+    if (team_title.value.length < 2) {
       isPass = false;
       nameField.style.border = '1px solid red';
       nameField.nextElementSibling.innerText = '團隊名稱至少2個字';
