@@ -34,7 +34,9 @@ $sql = "INSERT INTO `product_management`(
       `status`, 
       `created_at`, 
       `last_modified_by`, 
+      `product_img`,
       `last_modified_at`) VALUES (
+        ?,
         ?,
         ?,
         ?,
@@ -81,6 +83,8 @@ for ($i = 0; $i < 15; $i++) {
     shuffle($firsts);
     $last_modified_by = $lasts[1] . $firsts[1];
 
+    $img =  rand(1, 15);
+
 
     $stmt->execute([
         $product_name,
@@ -93,7 +97,8 @@ for ($i = 0; $i < 15; $i++) {
         $age,
         $status,
         $created_at,
-        $last_modified_by
+        $last_modified_by,
+        $img
     ]);
 }
 

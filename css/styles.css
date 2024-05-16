@@ -10,6 +10,7 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+<<<<<<< HEAD
  #layoutSidenav{
   height: calc(100vh - 56px);
   min-height: calc(100vh - 56px) !important;
@@ -17,6 +18,61 @@
 .container{
   overflow: auto;
 }
+=======
+
+
+ .home-container {
+  background-color: #2c2f36;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-container img {
+  width: 192px;
+  height: 192px;
+}
+
+
+
+.home-container img {
+
+    animation-name: zoomInLeft;
+    animation-duration: 3s;
+    animation-fill-mode: both;
+    /* animation-iteration-count: infinite; */
+    }
+    @-webkit-keyframes zoomInLeft {
+    0% {
+    opacity: 0;
+    transform: scale3d(.1, .1, .1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    }
+    60% {
+    opacity: 1;
+    transform: scale3d(.475, .475, .475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+    }
+    }
+    @keyframes zoomInLeft {
+    0% {
+    opacity: 0;
+    transform: scale3d(.1, .1, .1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    }
+    60% {
+    opacity: 1;
+    transform: scale3d(.475, .475, .475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+    }
+    
+ 
+  } 
+
+
+>>>>>>> origin/ez003612
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;

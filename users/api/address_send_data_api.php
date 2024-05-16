@@ -51,8 +51,8 @@ try {
 
 
   if (!empty($update)) {
-    $sql1 = 
-    "INSERT INTO `address` (
+    $sql1 =
+      "INSERT INTO `address` (
       `id`,
       `user_id`, 
       `district_id`, 
@@ -63,49 +63,49 @@ try {
 
     $sql2 = [];
 
-      $isFirst = true;
-      foreach ($update as $item) {
-        $insert_row = [];
-        $address_id = intval($item['address_id']);
-        if (strlen($address_id) <= 0) {
-          $output['code'] = 101;
-          echo json_encode($output, JSON_UNESCAPED_UNICODE);
-          exit;
-        }
-        $district_id = $item['district_id'];
-        if (strlen($district_id) <= 0) {
-          $output['code'] = 105;
-          echo json_encode($output, JSON_UNESCAPED_UNICODE);
-          exit;
-        }
-        $addressLine = "'" . $item['addressLine'] . "'";
-        if (strlen($addressLine) <= 0) {
-          $output['code'] = 103;
-          echo json_encode($output, JSON_UNESCAPED_UNICODE);
-          exit;
-        }
-        $recipient_name = "'" . $item['recipient_name'] . "'";
-        if (strlen($recipient_name) < 2) {
-          $output['code'] = 106;
-          echo json_encode($output, JSON_UNESCAPED_UNICODE);
-          exit;
-        }
-        $mobile_phone = "'" . $item['mobile_phone'] . "'";
-        if (!preg_match("/09[0-9]{2}[0-9]{6}/", $mobile_phone) && strlen($data['mobile_phone']) != 10) {
-          $output['code'] = 104;
-          echo json_encode($output, JSON_UNESCAPED_UNICODE);
-          exit;
-        }
+    $isFirst = true;
+    foreach ($update as $item) {
+      $insert_row = [];
+      $address_id = intval($item['address_id']);
+      if (strlen($address_id) <= 0) {
+        $output['code'] = 101;
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
+      }
+      $district_id = $item['district_id'];
+      if (strlen($district_id) <= 0) {
+        $output['code'] = 105;
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
+      }
+      $addressLine = "'" . $item['addressLine'] . "'";
+      if (strlen($addressLine) <= 0) {
+        $output['code'] = 103;
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
+      }
+      $recipient_name = "'" . $item['recipient_name'] . "'";
+      if (strlen($recipient_name) < 2) {
+        $output['code'] = 106;
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
+      }
+      $mobile_phone = "'" . $item['mobile_phone'] . "'";
+      if (!preg_match("/09[0-9]{2}[0-9]{6}/", $mobile_phone) && strlen($data['mobile_phone']) != 10) {
+        $output['code'] = 104;
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
+      }
 
 
-        $insert_row = '(' . implode(',', [$address_id, $user_id, $district_id, $addressLine, $recipient_name, $mobile_phone]) . ')';
+      $insert_row = '(' . implode(',', [$address_id, $user_id, $district_id, $addressLine, $recipient_name, $mobile_phone]) . ')';
 
-        $sql2[] = $insert_row;
-      };
+      $sql2[] = $insert_row;
+    };
 
 
     $sql3 =
-    "ON DUPLICATE KEY UPDATE 
+      "ON DUPLICATE KEY UPDATE 
       `user_id` = VALUES(user_id),
       `district_id` = VALUES(district_id), 
       `address` = VALUES(address), 
@@ -114,13 +114,13 @@ try {
 
 
 
-      $sql = $sql1 . implode(',',$sql2) . $sql3;
+    $sql = $sql1 . implode(',', $sql2) . $sql3;
 
-      $stmt2 = $pdo->prepare($sql);
-      $stmt2->execute();
-      
-      $output['success_update'] = boolval($stmt2->rowCount());
-    };
+    $stmt2 = $pdo->prepare($sql);
+    $stmt2->execute();
+
+    $output['success_update'] = boolval($stmt2->rowCount());
+  };
 
 
 
@@ -129,8 +129,6 @@ try {
   $output['code'] = 200;
 
   echo json_encode($output, JSON_UNESCAPED_UNICODE);
-
-
 } catch (Exception $e) {
   // 如果有任何一步出現問題，則執行回滾
   $pdo->rollBack();

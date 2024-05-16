@@ -6,6 +6,7 @@ $pageName = 'index';
 
 <?php include __DIR__ . '/../parts/bt-navbar.php' ?>
 
+<<<<<<< HEAD
 <div class="container">
     <div class="row">
         <div class="col-12 text-center pt-4">
@@ -13,7 +14,13 @@ $pageName = 'index';
             <img src="../teams/img/escape.jpeg" width="800" alt="" class="rounded-circle">
         </div>
     </div>
+=======
+<div class="container-fluid home-container">
+ <img src="../imgs/ghost.png" alt="">
+    
+>>>>>>> origin/ez003612
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+<?php include __DIR__ . '/../parts/scripts.php' ?>
 <?php include __DIR__ . '/../parts/html-foot.php' ?>

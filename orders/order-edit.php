@@ -72,7 +72,7 @@
           </div>
 
           <!-- 常用地址視窗 -->
-          <div class="modal fade" id="addressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          <div class="modal fade modal-lg" id="addressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="addressModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -137,6 +137,7 @@
               <label for="address" class="form-label">地址</label>
               <input type="text" class="form-control" id="address" name="address">
               <span class="helper-text"></span>
+              <span class="helper-text address-helper-text"></span>
             </div>
           </div>
 
@@ -226,13 +227,13 @@
 
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
+<script src="js/order-status-list.js"></script>
 <script src="js/get-order.js"></script>
 <script src="js/order-general.js"></script>
-<script src="js/order-status-list.js"></script>
+<script src="js/get-member-address-fetch.js"></script>
 <script src="js/search-member.js"></script>
 <!-- <script src="js/address.js"></script> -->
 <script src="js/city-district-selection.js"></script>
-<script src="js/get-member-address-fetch.js"></script>
 <script src="js/order-invoice.js"></script>
 <script src="js/search-product.js"></script>
 <script src="js/order-edit-submit.js"></script>

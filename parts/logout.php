@@ -4,4 +4,4 @@ session_start();
 
 unset($_SESSION['admin']);
 
-header('Location: http://localhost/iSpanProject/index_.php');
+header('Location: ../index/index_.php');

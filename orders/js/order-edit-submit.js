@@ -37,11 +37,11 @@ document.orderEditForm.addEventListener('submit', function (e) {
 // }
 
 
-function disabledInput () {
-  document.getElementById('city').disabled = true;
-  document.getElementById('useMobileInvoice').disabled = true;
-  document.getElementById('useTaxId').disabled = true;
-}
+// function disabledInput () {
+//   document.getElementById('city').disabled = true;
+//   document.getElementById('useMobileInvoice').disabled = true;
+//   document.getElementById('useTaxId').disabled = true;
+// }
 
 
 
@@ -72,3 +72,21 @@ function submitForm() {
   });
 }
 
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  // 帶入常用地址後清空 helper text
+  document.querySelector('#addressModal .btn-primary').addEventListener ('click', function () {
+    document.querySelector('.address-helper-text').textContent = '';
+  });
+
+  // 選擇商品後清空 helper text
+  document.querySelector('.product-id-dropdown').addEventListener ('click', function () {
+    if (document.querySelector('.product-helper-text').textContent !== '') {
+      document.querySelector('.product-helper-text').textContent = '';
+    }
+  });
+
+
+});
